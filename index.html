@@ -34,6 +34,7 @@
     input {
       background: transparent;
       color: inherit;
+      width: 100%;
       min-width: 0;
       max-width: 100%;
     }
@@ -52,22 +53,22 @@
 </head>
 <body class="antialiased w-full max-w-[1600px] mx-auto px-3 py-3 md:px-8 md:py-6 space-y-3.5 md:space-y-5">
 
-  <!-- Header (Guaranteed to fit 375px iPhone screen without clipping) -->
-  <div class="flex items-center justify-between gap-2">
-    <div class="flex items-center gap-1.5 shrink-0">
-      <span class="text-lg md:text-xl">📋</span>
-      <h1 class="text-base md:text-xl font-bold text-slate-900 tracking-tight whitespace-nowrap">每日记录</h1>
-      <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-xs font-bold whitespace-nowrap" id="day-badge">Day 2 · 11-04</span>
-      <span class="text-xs text-slate-400 ml-1 hidden sm:inline whitespace-nowrap" id="sync-status">✓ 云端已同步</span>
+  <!-- Header (Guaranteed to fit even 320px/375px iPhone screen without clipping) -->
+  <div class="flex items-center justify-between gap-1.5 w-full">
+    <div class="flex items-center gap-1 min-w-0">
+      <span class="text-base sm:text-xl shrink-0">📋</span>
+      <h1 class="text-sm sm:text-xl font-bold text-slate-900 tracking-tight whitespace-nowrap">每日记录</h1>
+      <span class="px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[11px] font-bold whitespace-nowrap" id="day-badge">Day 2</span>
+      <span class="text-xs text-slate-400 ml-1 hidden lg:inline whitespace-nowrap" id="sync-status">✓ 云端已同步</span>
     </div>
-    <div class="flex items-center gap-1.5 shrink-0">
-      <button onclick="addNewRow()" id="add-day-btn" class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-xl text-xs font-semibold bg-slate-900 text-white active:scale-95 hover:bg-slate-800 shadow-xs transition cursor-pointer whitespace-nowrap">
-        + 新增一天
+    <div class="flex items-center gap-1 shrink-0">
+      <button onclick="addNewRow()" id="add-day-btn" class="px-2 py-1.5 sm:px-3 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold bg-slate-900 text-white active:scale-95 hover:bg-slate-800 shadow-xs transition cursor-pointer whitespace-nowrap">
+        + 新一天
       </button>
-      <button onclick="manualSyncButton()" class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-xl text-xs font-medium bg-white text-slate-700 border border-slate-200 active:scale-95 hover:bg-slate-50 shadow-xs transition cursor-pointer whitespace-nowrap" id="mobile-sync-btn">
+      <button onclick="manualSyncButton()" class="px-2 py-1.5 sm:px-3 sm:py-2 rounded-xl text-[11px] sm:text-xs font-medium bg-white text-slate-700 border border-slate-200 active:scale-95 hover:bg-slate-50 shadow-xs transition cursor-pointer whitespace-nowrap" id="mobile-sync-btn">
         ☁️ 同步
       </button>
-      <button onclick="location.replace(location.pathname + '?v=' + Date.now())" title="刷新应用版本" class="px-2 py-1.5 md:px-2.5 md:py-2 rounded-xl text-xs font-medium bg-white text-slate-500 border border-slate-200 active:scale-95 hover:bg-slate-50 shadow-xs transition cursor-pointer whitespace-nowrap">
+      <button onclick="location.replace(location.pathname + '?v=' + Date.now())" title="刷新应用版本" class="px-1.5 py-1.5 sm:px-2.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-medium bg-white text-slate-500 border border-slate-200 active:scale-95 hover:bg-slate-50 shadow-xs transition cursor-pointer whitespace-nowrap">
         🔄
       </button>
     </div>
@@ -886,8 +887,8 @@
       render();
       const addBtn = document.getElementById('add-day-btn');
       if (addBtn) {
-        addBtn.textContent = `✓ 已加 Day ${rows.length}`;
-        setTimeout(() => { addBtn.textContent = '+ 新增一天'; }, 1500);
+        addBtn.textContent = `✓ Day ${rows.length}`;
+        setTimeout(() => { addBtn.textContent = '+ 新一天'; }, 1500);
       }
       saveLocal();
     }
@@ -905,7 +906,7 @@
       ensureRowMacros(r);
 
       const dayBadge = document.getElementById('day-badge');
-      if (dayBadge) dayBadge.textContent = `Day ${rows.length} · ${r.date.slice(5)}`;
+      if (dayBadge) dayBadge.textContent = `Day ${rows.length}`;
 
       const latestAm = [...rows].reverse().find(x => x.amWeight != null)?.amWeight ?? 90.8;
       const latestPm = [...rows].reverse().find(x => x.pmWeight != null)?.pmWeight ?? 91.2;
@@ -1128,7 +1129,9 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 1;
-      const w = canvas.parentElement.clientWidth - 28 || 320;
+      const rectW = canvas.parentElement.getBoundingClientRect().width - 28;
+      const maxAllowedW = document.documentElement.clientWidth - 52;
+      const w = Math.max(240, Math.min(rectW || 300, maxAllowedW));
       const h = 135;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
