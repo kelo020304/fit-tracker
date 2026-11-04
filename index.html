@@ -113,17 +113,17 @@
 
   <!-- Desktop Table -->
   <div class="hidden md:block bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden">
-    <table class="w-full text-left border-collapse text-sm">
+    <table class="w-full text-left border-collapse text-sm table-fixed">
       <thead>
         <tr class="border-b border-slate-100 text-xs text-slate-500 bg-slate-50/70">
-          <th class="py-3 px-4 font-semibold w-28">📅 日期</th>
-          <th class="py-3 px-3 font-semibold w-24">🌅 早 (kg)</th>
-          <th class="py-3 px-3 font-semibold w-24">🌙 晚 (kg)</th>
+          <th class="py-3 px-3 font-semibold w-[76px]">📅 日期</th>
+          <th class="py-3 px-2 font-semibold w-[76px]">🌅 早(kg)</th>
+          <th class="py-3 px-2 font-semibold w-[76px]">🌙 晚(kg)</th>
           <th class="py-3 px-3 font-semibold">🥚 早饭</th>
           <th class="py-3 px-3 font-semibold">🍱 午饭</th>
           <th class="py-3 px-3 font-semibold">🥗 晚饭 / 加餐</th>
-          <th class="py-3 px-3 font-semibold w-20">💧 饮水</th>
-          <th class="py-3 px-4 font-semibold">🏸 活动量</th>
+          <th class="py-3 px-2 font-semibold w-[72px]">💧 饮水</th>
+          <th class="py-3 px-3 font-semibold w-[130px]">🏸 活动量</th>
         </tr>
       </thead>
       <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
@@ -323,45 +323,42 @@
 
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
-        <tr class="hover:bg-slate-50/80 transition">
-          <td class="py-3 px-4 text-xs font-semibold text-slate-500 font-mono whitespace-nowrap">${r.date.slice(5)}</td>
-          <td class="py-3 px-3">
+        <tr class="hover:bg-slate-50/80 transition align-top">
+          <td class="py-3 px-3 text-xs font-semibold text-slate-500 font-mono whitespace-nowrap">${r.date.slice(5)}</td>
+          <td class="py-2.5 px-2">
             <input type="number" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'amWeight', this.value)"
-              class="w-16 font-bold text-emerald-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1.5 py-1" />
+              class="w-14 font-bold text-emerald-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
           </td>
-          <td class="py-3 px-3">
+          <td class="py-2.5 px-2">
             <input type="number" step="0.1" value="${r.pmWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'pmWeight', this.value)"
-              class="w-16 font-bold text-blue-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1.5 py-1" />
+              class="w-14 font-bold text-blue-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
           </td>
-          <td class="py-3 px-3">
-            <input type="text" value="${r.breakfast || ''}" placeholder="点击输入..."
-              onchange="updateField(${i}, 'breakfast', this.value)"
-              class="w-full text-slate-700 placeholder-slate-300 focus:bg-slate-100 rounded-md px-2 py-1" />
+          <td class="py-2.5 px-3">
+            <div contenteditable="true" data-placeholder="点击输入..."
+              onblur="updateField(${i}, 'breakfast', this.innerText.trim())"
+              class="w-full text-slate-700 leading-relaxed break-words whitespace-pre-wrap focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-h-[24px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.breakfast || ''}</div>
           </td>
-          <td class="py-3 px-3">
-            <input type="text" value="${r.lunch || ''}" placeholder="点击输入..."
-              onchange="updateField(${i}, 'lunch', this.value)"
-              class="w-full text-slate-700 placeholder-slate-300 focus:bg-slate-100 rounded-md px-2 py-1" />
+          <td class="py-2.5 px-3">
+            <div contenteditable="true" data-placeholder="点击输入..."
+              onblur="updateField(${i}, 'lunch', this.innerText.trim())"
+              class="w-full text-slate-700 leading-relaxed break-words whitespace-pre-wrap focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-h-[24px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.lunch || ''}</div>
           </td>
-          <td class="py-3 px-3">
-            <input type="text" value="${r.dinner || ''}" placeholder="点击输入..."
-              onchange="updateField(${i}, 'dinner', this.value)"
-              class="w-full text-slate-700 placeholder-slate-300 focus:bg-slate-100 rounded-md px-2 py-1" />
+          <td class="py-2.5 px-3">
+            <div contenteditable="true" data-placeholder="点击输入..."
+              onblur="updateField(${i}, 'dinner', this.innerText.trim())"
+              class="w-full text-slate-700 leading-relaxed break-words whitespace-pre-wrap focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-h-[24px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.dinner || ''}</div>
           </td>
-          <td class="py-3 px-3">
-            <div class="flex items-center gap-1">
-              <input type="number" step="0.5" value="${r.water ?? 0}"
-                onchange="updateField(${i}, 'water', this.value)"
-                class="w-12 font-semibold text-sky-600 focus:bg-slate-100 rounded-md px-1.5 py-1" />
-              <span class="text-xs text-slate-400">杯</span>
-            </div>
+          <td class="py-2.5 px-2 whitespace-nowrap">
+            <input type="number" step="0.5" value="${r.water ?? 0}"
+              onchange="updateField(${i}, 'water', this.value)"
+              class="w-10 font-semibold text-sky-600 focus:bg-slate-100 rounded-md px-1 py-0.5 text-center" /><span class="text-xs text-slate-400">杯</span>
           </td>
-          <td class="py-3 px-4">
-            <input type="text" value="${r.activity || ''}" placeholder="点击输入..."
-              onchange="updateField(${i}, 'activity', this.value)"
-              class="w-full text-slate-700 placeholder-slate-300 focus:bg-slate-100 rounded-md px-2 py-1" />
+          <td class="py-2.5 px-3">
+            <div contenteditable="true" data-placeholder="点击输入..."
+              onblur="updateField(${i}, 'activity', this.innerText.trim())"
+              class="w-full text-slate-700 leading-relaxed break-words whitespace-pre-wrap focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-h-[24px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.activity || ''}</div>
           </td>
         </tr>
       `).join('');
