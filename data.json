@@ -3,22 +3,32 @@
     "date": "2026-11-03",
     "amWeight": null,
     "pmWeight": 91.2,
+    "hrv": null,
     "breakfast": "-",
     "lunch": "常规午餐",
     "dinner": "沙县鸡腿饭 + 2卤蛋",
     "water": 2,
     "activity": "羽毛球",
-    "supplements": ["甘氨酸镁"]
+    "supplements": ["甘氨酸镁"],
+    "calories": 1310,
+    "protein": 78,
+    "carbs": 125,
+    "fat": 42
   },
   {
     "date": "2026-11-04",
     "amWeight": 90.8,
     "pmWeight": null,
+    "hrv": 42,
     "breakfast": "2茶叶蛋 + 光明优倍",
     "lunch": "Subway 照烧鸡加蛋",
-    "dinner": "下午: 巧克力蛋白粉",
-    "water": 2.5,
-    "activity": "-",
-    "supplements": ["蛋白粉"]
+    "dinner": "蛋白粉 + 食堂奥尔良鸡排豆腐双蔬饭",
+    "water": 4,
+    "activity": "深蹲 + 弓箭步",
+    "supplements": ["蛋白粉"],
+    "calories": 1278,
+    "protein": 110,
+    "carbs": 96,
+    "fat": 41
   }
 ]

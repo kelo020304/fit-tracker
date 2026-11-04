@@ -349,16 +349,22 @@
       } catch (e) {}
     }
 
-    function applyCloudPayload(data) {
+    function applyCloudPayload(data, forceApply) {
       if (!data) return false;
       const cloudTime = Number(data.updatedAt) || 0;
-      if (cloudTime > localUpdatedAt || !localUpdatedAt) {
+      if (forceApply || cloudTime >= localUpdatedAt || !localUpdatedAt) {
         if (Array.isArray(data.rows) && data.rows.length > 0) {
-          rows = data.rows;
-          rows.forEach(ensureRowMacros);
+          const map = new Map();
+          DEFAULT_DATA.forEach(r => map.set(r.date, JSON.parse(JSON.stringify(r))));
+          rows.forEach(r => map.set(r.date, r));
+          data.rows.forEach(r => {
+            ensureRowMacros(r);
+            map.set(r.date, r);
+          });
+          rows = Array.from(map.values()).sort((a, b) => a.date.localeCompare(b.date));
         }
         if (data.latestMealPhoto && data.latestMealPhoto.title) {
-          latestMealPhoto = data.latestMealPhoto;
+          latestMealPhoto = Object.assign({}, latestMealPhoto, data.latestMealPhoto);
         }
         localUpdatedAt = cloudTime;
         localDirty = false;
@@ -378,7 +384,7 @@
             const env = JSON.parse(ev.data);
             if (env && env.message) {
               const data = JSON.parse(env.message);
-              applyCloudPayload(data);
+              applyCloudPayload(data, false);
             }
           } catch (e) {}
         };
@@ -421,10 +427,6 @@
     }
 
     async function smartSync(silent) {
-      if (localDirty) {
-        await saveLocal();
-        return;
-      }
       if (!silent) showStatus('正在同步...');
       let bestData = null;
       let bestTime = 0;
@@ -462,14 +464,17 @@
       } catch (e) {}
 
       if (bestData) {
-        if (bestTime >= localUpdatedAt) {
-          applyCloudPayload(bestData);
+        if (bestTime >= localUpdatedAt || !silent) {
+          applyCloudPayload(bestData, !silent);
           showStatus('✓ 云端已同步');
           return;
-        } else {
+        } else if (localDirty) {
           await saveLocal();
           return;
         }
+      } else if (localDirty) {
+        await saveLocal();
+        return;
       }
       showStatus('✓ 已是最新');
     }
@@ -505,22 +510,41 @@
         protein: latestMealPhoto.protein ?? 0,
         carbs: latestMealPhoto.carbs ?? 0,
         fat: latestMealPhoto.fat ?? 0,
-        note: (latestMealPhoto.note || '').slice(0, 48)
+        note: (latestMealPhoto.note || '').slice(0, 36)
       } : null;
 
-      const payload = {
+      const fullPayload = {
         updatedAt: localUpdatedAt,
         rows: cleanRows,
         latestMealPhoto: cleanPhoto
       };
+      // Keep PERM_DB_URL payload under 900 chars (restful-api.dev has a 1000-char limit)
+      let permPayload = fullPayload;
+      if (JSON.stringify(permPayload).length > 880) {
+        permPayload = {
+          updatedAt: localUpdatedAt,
+          rows: cleanRows.slice(-1),
+          latestMealPhoto: cleanPhoto ? {
+            photoUrl: cleanPhoto.photoUrl,
+            mealSlot: cleanPhoto.mealSlot,
+            isSingleMeal: cleanPhoto.isSingleMeal,
+            time: cleanPhoto.time,
+            title: cleanPhoto.title.slice(0, 24),
+            calories: cleanPhoto.calories,
+            protein: cleanPhoto.protein,
+            carbs: cleanPhoto.carbs,
+            fat: cleanPhoto.fat
+          } : null
+        };
+      }
 
       try {
         const [r1, r2] = await Promise.allSettled([
-          fetch(STATE_SYNC_URL, { method: 'POST', body: JSON.stringify(payload) }),
+          fetch(STATE_SYNC_URL, { method: 'POST', body: JSON.stringify(fullPayload) }),
           fetch(PERM_DB_URL, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: 'captain-fit-tracker', data: payload })
+            body: JSON.stringify({ name: 'captain-fit-tracker', data: permPayload })
           })
         ]);
         if ((r1.status === 'fulfilled' && r1.value.ok) || (r2.status === 'fulfilled' && r2.value.ok)) {
