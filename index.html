@@ -5,817 +5,506 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="队长75kg" />
-  <meta name="theme-color" content="#0b0f17" />
-  <link rel="manifest" href="/manifest.json" />
-  <title>队长75kg · 状态看板</title>
+  <meta name="apple-mobile-web-app-title" content="每日记录" />
+  <meta name="theme-color" content="#09090b" />
+  <link rel="manifest" href="./manifest.json" />
+  <title>每日记录</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
-      --background: #0b0f17;
-      --foreground: #f1f5f9;
-      --card: #151c28;
-      --secondary: #1e293b;
-      --secondary-foreground: #e2e8f0;
-      --muted-foreground: #94a3b8;
-      --border: #263248;
+      --bg: #09090b;
+      --card: #121215;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
     }
     body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
       padding-top: max(1rem, env(safe-area-inset-top));
       padding-bottom: max(2rem, env(safe-area-inset-bottom));
       -webkit-tap-highlight-color: transparent;
     }
+    input, textarea {
+      background: transparent;
+      color: inherit;
+    }
+    input:focus {
+      outline: none;
+    }
   </style>
 </head>
-<body class="bg-[var(--background)] text-[var(--foreground)] antialiased p-4 md:p-6 select-none">
-  <div class="max-w-5xl mx-auto space-y-5">
+<body class="antialiased px-4 py-6 md:px-8 max-w-5xl mx-auto space-y-6">
 
-    <!-- Header Banner -->
-    <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <div>
-        <div class="flex items-center gap-2.5 flex-wrap">
-          <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
-            🏸 国家一级羽毛球运动员 · 肌核唤醒计划
-          </span>
-          <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/15 text-blue-400 border border-blue-500/30">
-            ⏳ 20天双线倒计时
-          </span>
-        </div>
-        <h1 class="text-xl md:text-2xl font-bold mt-2 text-[var(--foreground)]">
-          队长每日状态与体重交互看板 (91.2kg → 75.0kg)
-        </h1>
-        <p class="text-sm text-[var(--muted-foreground)] mt-1">
-          支持直接在面板点击打卡/修改，或在聊天框告诉军师实时同步更新
-        </p>
-      </div>
-      <div class="flex items-center gap-2 self-start md:self-center">
-        <button onclick="openModal()" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition cursor-pointer">
-          + 新增 / 编辑某日打卡
-        </button>
-        <button onclick="resetDefaultData()" class="px-3 py-2.5 rounded-xl text-xs font-medium bg-[var(--secondary)] text-[var(--secondary-foreground)] border border-[var(--border)] hover:opacity-80 transition cursor-pointer" title="同步最新对话数据">
-          ↻ 同步对话数据
-        </button>
-      </div>
+  <!-- Minimalist Header -->
+  <div class="flex items-center justify-between">
+    <div class="flex items-baseline gap-3">
+      <h1 class="text-xl font-semibold tracking-tight">每日记录</h1>
+      <span class="text-xs text-zinc-400" id="sync-status">点击表格可直接修改</span>
     </div>
-
-    <!-- Top 4 KPI Cards -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-      <!-- Card 1: Morning Weight -->
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-sm">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-medium text-[var(--muted-foreground)]">今日早晨空腹体重</span>
-          <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-500" id="kpi-weight-diff">↓ 0.4 kg</span>
-        </div>
-        <div class="mt-2 flex items-baseline gap-1.5">
-          <span class="text-2xl md:text-3xl font-extrabold text-[var(--foreground)]" id="kpi-morning-weight">90.8</span>
-          <span class="text-xs text-[var(--muted-foreground)]">kg (目标 75.0)</span>
-        </div>
-        <div class="mt-3 w-full bg-[var(--secondary)] h-2 rounded-full overflow-hidden">
-          <div id="kpi-weight-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 8%"></div>
-        </div>
-        <p class="text-xs text-[var(--muted-foreground)] mt-1.5" id="kpi-sub-goal">距破90大关(89.9kg)仅差 <strong class="text-emerald-500">0.9 kg</strong></p>
-      </div>
-
-      <!-- Card 2: Zeekr Cup Water Tracker -->
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-sm">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-medium text-[var(--muted-foreground)]">今日极氪杯饮水</span>
-          <span class="text-xs font-semibold text-sky-400" id="kpi-water-ml">500 / 2000 ml</span>
-        </div>
-        <div class="mt-2 flex items-center justify-between">
-          <div class="flex items-baseline gap-1">
-            <span class="text-2xl md:text-3xl font-extrabold text-[var(--foreground)]" id="kpi-water-cups">1.0</span>
-            <span class="text-xs text-[var(--muted-foreground)]">/ 4 杯</span>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <button onclick="adjustTodayWater(-0.5)" class="w-8 h-8 rounded-lg bg-[var(--secondary)] border border-[var(--border)] text-sm font-bold flex items-center justify-center hover:opacity-80 cursor-pointer">-</button>
-            <button onclick="adjustTodayWater(0.5)" class="px-2.5 h-8 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold flex items-center justify-center cursor-pointer">+半杯</button>
-            <button onclick="adjustTodayWater(1)" class="px-2.5 h-8 rounded-lg bg-sky-500 hover:bg-sky-400 text-white text-xs font-semibold flex items-center justify-center cursor-pointer">+1杯</button>
-          </div>
-        </div>
-        <div class="mt-3 flex gap-1.5" id="water-pills"></div>
-        <p class="text-xs text-[var(--muted-foreground)] mt-1.5">脂肪水解反应 + 冲刷高钠水肿</p>
-      </div>
-
-      <!-- Card 3: Protein & Calories -->
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-sm">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-medium text-[var(--muted-foreground)]">今日蛋白质 / 热量账本</span>
-          <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-400" id="kpi-cal-badge">650 kcal</span>
-        </div>
-        <div class="mt-2 flex items-baseline gap-1.5">
-          <span class="text-2xl md:text-3xl font-extrabold text-[var(--foreground)]" id="kpi-protein">50</span>
-          <span class="text-xs text-[var(--muted-foreground)]">/ 115 g 蛋白质</span>
-        </div>
-        <div class="mt-3 w-full bg-[var(--secondary)] h-2 rounded-full overflow-hidden">
-          <div id="kpi-protein-bar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 44%"></div>
-        </div>
-        <p class="text-xs text-[var(--muted-foreground)] mt-1.5" id="kpi-protein-hint">16:30 摇1勺熊猫粉 (+24g)</p>
-      </div>
-
-      <!-- Card 4: Apple Watch HRV -->
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-sm">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-medium text-[var(--muted-foreground)]">Apple Watch 日间 HRV</span>
-          <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-400">皮质醇晴雨表</span>
-        </div>
-        <div class="mt-2 flex items-baseline gap-1.5">
-          <span class="text-2xl md:text-3xl font-extrabold text-[var(--foreground)]" id="kpi-hrv">42</span>
-          <span class="text-xs text-[var(--muted-foreground)]">ms (目标 55~70+)</span>
-        </div>
-        <div class="mt-3 w-full bg-[var(--secondary)] h-2 rounded-full overflow-hidden">
-          <div id="kpi-hrv-bar" class="bg-purple-500 h-full rounded-full transition-all duration-500" style="width: 52%"></div>
-        </div>
-        <p class="text-xs text-[var(--muted-foreground)] mt-1.5">早饭垫底+茶氨酸+甘氨酸镁调参中</p>
-      </div>
+    <div class="flex items-center gap-2">
+      <button onclick="addNewRow()" class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-zinc-100 text-zinc-900 hover:bg-white transition cursor-pointer">
+        + 新增一天
+      </button>
+      <button onclick="syncFromCloud()" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-900 text-zinc-300 border border-zinc-800 hover:border-zinc-700 transition cursor-pointer">
+        同步
+      </button>
     </div>
-
-    <!-- Today Quick Interactive Console -->
-    <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-3 border-b border-[var(--border)]">
-        <div>
-          <h2 class="text-base font-bold text-[var(--foreground)] flex items-center gap-2">
-            <span>⚡ 今日实时快捷控制台</span>
-            <span class="text-xs font-normal text-[var(--muted-foreground)]" id="today-date-label">Day 2 · 2026-11-04 (周二)</span>
-          </h2>
-        </div>
-        <span class="text-xs text-emerald-500 font-medium" id="save-toast">✓ 所有修改自动保存于本地</span>
-      </div>
-
-      <!-- Quick Supplements & Habits Checkboxes -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 mt-4" id="today-habit-toggles">
-        <!-- Populated by JS -->
-      </div>
-
-      <!-- Quick Weight & Meal Editor for Today -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 pt-3 border-t border-[var(--border)]">
-        <div class="flex items-center gap-2">
-          <label class="text-xs text-[var(--muted-foreground)] whitespace-nowrap">🌅 早晨空腹(kg):</label>
-          <input type="number" step="0.1" id="quick-am-weight" onchange="quickUpdateToday()" class="w-full px-3 py-1.5 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" placeholder="如 90.8" />
-        </div>
-        <div class="flex items-center gap-2">
-          <label class="text-xs text-[var(--muted-foreground)] whitespace-nowrap">🌙 睡前体重(kg):</label>
-          <input type="number" step="0.1" id="quick-pm-weight" onchange="quickUpdateToday()" class="w-full px-3 py-1.5 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" placeholder="今晚洗完澡填" />
-        </div>
-        <div class="flex items-center gap-2">
-          <label class="text-xs text-[var(--muted-foreground)] whitespace-nowrap">⌚ 日间HRV(ms):</label>
-          <input type="number" step="1" id="quick-hrv" onchange="quickUpdateToday()" class="w-full px-3 py-1.5 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" placeholder="如 42" />
-        </div>
-      </div>
-    </div>
-
-    <!-- Weight & HRV Dual Trend Chart -->
-    <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-        <div>
-          <h2 class="text-base font-bold text-[var(--foreground)]">📈 早晚体重双曲线 & 破90大关走势图</h2>
-          <p class="text-xs text-[var(--muted-foreground)]">绿线：早晨空腹基准体重 ｜ 蓝虚线：夜间睡前体重 ｜ 橙线：90.0kg 破九线</p>
-        </div>
-        <div class="flex items-center gap-4 text-xs">
-          <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>早晨空腹(kg)</span>
-          <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-sky-400 inline-block"></span>夜间睡前(kg)</span>
-          <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-purple-400 inline-block"></span>HRV(ms)</span>
-        </div>
-      </div>
-      <div class="w-full overflow-x-auto">
-        <canvas id="weightChart" height="220" class="w-full"></canvas>
-      </div>
-    </div>
-
-    <!-- Daily Log Cards / Table (Responsive for both PC & Mobile) -->
-    <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h2 class="text-base font-bold text-[var(--foreground)]">📋 每日全维打卡档案（早晚体重 · 三餐 · 饮水 · 运动 · 补剂）</h2>
-          <p class="text-xs text-[var(--muted-foreground)]">点击任意一天的「编辑」可随时补充晚饭、夜重或活动记录</p>
-        </div>
-      </div>
-
-      <!-- Desktop Table View -->
-      <div class="hidden md:block overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="border-b border-[var(--border)] text-xs text-[var(--muted-foreground)]">
-              <th class="py-3 px-3 font-semibold">日期 / 天数</th>
-              <th class="py-3 px-3 font-semibold">早 / 晚体重</th>
-              <th class="py-3 px-3 font-semibold">三餐 & 蛋白质内容</th>
-              <th class="py-3 px-3 font-semibold">饮水 & 咖啡</th>
-              <th class="py-3 px-3 font-semibold">运动 & 活动量</th>
-              <th class="py-3 px-3 font-semibold">补剂 / HRV / 睡眠</th>
-              <th class="py-3 px-3 font-semibold text-right">操作</th>
-            </tr>
-          </thead>
-          <tbody id="desktop-table-body" class="divide-y divide-[var(--border)] text-sm">
-            <!-- Populated by JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Mobile Card View -->
-      <div class="md:hidden space-y-3.5" id="mobile-cards-container">
-        <!-- Populated by JS -->
-      </div>
-    </div>
-
   </div>
 
-  <!-- Add / Edit Modal -->
-  <div id="editModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
-    <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl max-w-lg w-full p-5 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-[var(--border)] pb-3">
-        <h3 class="text-base font-bold text-[var(--foreground)]" id="modal-title">新增 / 编辑每日打卡</h3>
-        <button onclick="closeModal()" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] cursor-pointer">✕ 关闭</button>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">日期 (YYYY-MM-DD)</label>
-          <input type="date" id="form-date" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">标签 (如 Day 2 · 周二)</label>
-          <input type="text" id="form-dayLabel" placeholder="Day 3 · 周三" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">🌅 早晨空腹体重 (kg)</label>
-          <input type="number" step="0.1" id="form-amWeight" placeholder="如 90.4" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">🌙 夜间睡前体重 (kg)</label>
-          <input type="number" step="0.1" id="form-pmWeight" placeholder="如 91.0" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">🚰 极氪杯饮水 (杯)</label>
-          <input type="number" step="0.5" id="form-waterCups" placeholder="如 4" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">⌚ 日间 HRV (ms)</label>
-          <input type="number" step="1" id="form-hrv" placeholder="如 45" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-      </div>
-
-      <div class="space-y-2.5">
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">🌅 早餐内容</label>
-          <input type="text" id="form-breakfast" placeholder="如：全家2个茶叶蛋 + 光明优倍鲜奶" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">🥪 午餐内容</label>
-          <input type="text" id="form-lunch" placeholder="如：Subway 6寸照烧鸡+鸡蛋双拼（无酱）" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">🍫 下午加餐 / 蛋白粉</label>
-          <input type="text" id="form-snack" placeholder="如：16:30 蔚来杯摇1勺巧克力熊猫蛋白粉" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">🍗 晚餐内容</label>
-          <input type="text" id="form-dinner" placeholder="如：沙县去皮鸡腿饭(半份饭)+2个卤蛋 / 隔壁组聚餐控卡" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div>
-          <label class="text-xs text-[var(--muted-foreground)] block mb-1">🏸 运动 & 活动量</label>
-          <input type="text" id="form-activity" placeholder="如：下午具身实验采数据 + 晚上羽毛球2小时" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="text-xs text-[var(--muted-foreground)] block mb-1">💪 预估蛋白质 (g)</label>
-            <input type="number" id="form-protein" placeholder="如 115" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-          </div>
-          <div>
-            <label class="text-xs text-[var(--muted-foreground)] block mb-1">🔥 预估总热量 (kcal)</label>
-            <input type="number" id="form-calories" placeholder="如 1550" class="w-full px-3 py-2 rounded-lg text-sm bg-[var(--secondary)] border border-[var(--border)] text-[var(--foreground)]" />
-          </div>
-        </div>
-      </div>
-
-      <div class="flex justify-end gap-2 pt-3 border-t border-[var(--border)]">
-        <button onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-medium bg-[var(--secondary)] text-[var(--secondary-foreground)] cursor-pointer">取消</button>
-        <button onclick="saveModalData()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer">保存打卡记录</button>
+  <!-- Compact Top Strip -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <!-- Morning Weight -->
+    <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
+      <div class="text-xs text-zinc-400">当前早起体重</div>
+      <div class="mt-1.5 flex items-baseline gap-1.5">
+        <span class="text-2xl font-semibold tracking-tight" id="stat-am">90.8</span>
+        <span class="text-xs text-zinc-500">kg</span>
+        <span class="text-xs text-emerald-400 ml-auto" id="stat-diff">-0.4 kg</span>
       </div>
     </div>
+
+    <!-- Night Weight -->
+    <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
+      <div class="text-xs text-zinc-400">昨晚睡前体重</div>
+      <div class="mt-1.5 flex items-baseline gap-1.5">
+        <span class="text-2xl font-semibold tracking-tight" id="stat-pm">91.2</span>
+        <span class="text-xs text-zinc-500">kg</span>
+        <span class="text-xs text-zinc-500 ml-auto">目标 75.0</span>
+      </div>
+    </div>
+
+    <!-- Water Counter -->
+    <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
+      <div class="text-xs text-zinc-400">今日喝水</div>
+      <div class="mt-1.5 flex items-center justify-between">
+        <div class="flex items-baseline gap-1">
+          <span class="text-2xl font-semibold tracking-tight" id="stat-water">1</span>
+          <span class="text-xs text-zinc-500">/ 4 杯</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <button onclick="changeWater(-1)" class="w-7 h-7 rounded-md bg-zinc-800 hover:bg-zinc-700 text-sm flex items-center justify-center cursor-pointer">-</button>
+          <button onclick="changeWater(1)" class="w-7 h-7 rounded-md bg-zinc-100 text-zinc-900 hover:bg-white text-sm font-medium flex items-center justify-center cursor-pointer">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supplements Quick Check -->
+    <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
+      <div class="text-xs text-zinc-400">今日补剂</div>
+      <div class="mt-2 flex items-center gap-1.5 flex-wrap" id="supp-container">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimalist Weight Chart -->
+  <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-xs font-medium text-zinc-400">体重趋势 (kg)</span>
+      <div class="flex items-center gap-4 text-xs text-zinc-400">
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>早</span>
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-400"></span>晚</span>
+      </div>
+    </div>
+    <canvas id="chart" height="150" class="w-full"></canvas>
+  </div>
+
+  <!-- Direct Editable Table (PC) -->
+  <div class="hidden md:block bg-[#121215] border border-zinc-800/80 rounded-xl overflow-hidden">
+    <table class="w-full text-left border-collapse text-sm">
+      <thead>
+        <tr class="border-b border-zinc-800 text-xs text-zinc-400 bg-zinc-900/40">
+          <th class="py-3 px-4 font-medium w-28">日期</th>
+          <th class="py-3 px-3 font-medium w-20">早 (kg)</th>
+          <th class="py-3 px-3 font-medium w-20">晚 (kg)</th>
+          <th class="py-3 px-3 font-medium">早饭</th>
+          <th class="py-3 px-3 font-medium">午饭</th>
+          <th class="py-3 px-3 font-medium">晚饭 / 加餐</th>
+          <th class="py-3 px-3 font-medium w-20">饮水</th>
+          <th class="py-3 px-4 font-medium">活动量</th>
+        </tr>
+      </thead>
+      <tbody id="table-body" class="divide-y divide-zinc-800/60">
+        <!-- Populated by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile Clean List (iPhone) -->
+  <div class="md:hidden space-y-3" id="mobile-list">
+    <!-- Populated by JS -->
   </div>
 
   <script>
-    const STORAGE_KEY = 'captain_tracker_v1';
+    const STORAGE_KEY = 'daily_fit_v2';
+    const SUPP_LIST = ['蛋白粉', '茶氨酸', '甘氨酸镁'];
 
-    const DEFAULT_LOGS = [
+    const DEFAULT_DATA = [
       {
         date: '2026-11-03',
-        dayLabel: 'Day 1 · 周一',
         amWeight: null,
         pmWeight: 91.2,
-        hrv: 42,
-        waterCups: 2.0,
-        coffee: '白天常规美式',
-        breakfast: '未吃早餐（旧习惯最后一天）',
+        breakfast: '-',
         lunch: '常规午餐',
-        snack: '无',
-        dinner: '沙县健身套餐：去皮大鸡腿 + 2个卤蛋 + 包菜 + 半份米饭（已验图）',
-        activity: '🏸 晚间高强度羽毛球实战（大汗淋漓）',
-        protein: 85,
-        calories: 1650,
-        habits: {
-          breakfastDone: false,
-          wheyDone: false,
-          theanineDone: false,
-          magnesiumDone: true,
-          hairDried: true
-        },
-        note: '确立夜间基准体重 91.2kg；甘氨酸镁改至打完球/睡前吃2粒；吹干头发。'
+        dinner: '沙县鸡腿饭(去皮·半份饭) + 2个卤蛋',
+        water: 2,
+        activity: '羽毛球',
+        supplements: ['甘氨酸镁']
       },
       {
         date: '2026-11-04',
-        dayLabel: 'Day 2 · 周二 (今日)',
         amWeight: 90.8,
         pmWeight: null,
-        hrv: 42,
-        waterCups: 1.0,
-        coffee: '1.5杯纯美式（午后已停咖，零度可乐留存未喝）',
-        breakfast: '全家：2个茶叶蛋 + 1盒光明优倍鲜牛奶 (270 kcal / 20g蛋白)',
-        lunch: 'Subway：6寸照烧鸡+鸡蛋双拼（全麦面包·完全无酱，380 kcal / 30g蛋白）',
-        snack: '待16:30打卡：蔚来杯摇1勺巧克力熊猫蛋白粉 (+24g蛋白)',
-        dinner: '待晚间打卡（看隔壁组是否聚餐或点沙县）',
-        activity: '🤖 下午具身智能实验采数据（机械臂遥操作）',
-        protein: 50,
-        calories: 650,
-        habits: {
-          breakfastDone: true,
-          wheyDone: false,
-          theanineDone: false,
-          magnesiumDone: false,
-          hairDried: false
-        },
-        note: '早晨空腹首测 90.8kg (较昨晚降0.4kg)；巧克力熊猫蛋白粉已到货！'
+        breakfast: '2个茶叶蛋 + 光明优倍',
+        lunch: 'Subway 照烧鸡鸡蛋双拼(无酱)',
+        dinner: '',
+        water: 1,
+        activity: '具身实验采数据',
+        supplements: []
       }
     ];
 
-    let logs = [];
+    let rows = [];
 
-    async function loadData() {
+    async function init() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try { rows = JSON.parse(saved); } catch (e) {}
+      }
+      if (!rows || !rows.length) {
+        await syncFromCloud(true);
+      } else {
+        render();
+        // Background fetch if remote has more rows
+        try {
+          const res = await fetch('./data.json?t=' + Date.now());
+          if (res.ok) {
+            const remote = await res.json();
+            if (Array.isArray(remote) && remote.length >= rows.length) {
+              rows = remote;
+              saveLocal();
+              render();
+            }
+          }
+        } catch (e) {}
+      }
+    }
+
+    async function syncFromCloud(silent) {
       try {
         const res = await fetch('./data.json?t=' + Date.now());
         if (res.ok) {
-          const remoteLogs = await res.json();
-          if (Array.isArray(remoteLogs) && remoteLogs.length > 0) {
-            logs = remoteLogs;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
-            renderAll();
+          const remote = await res.json();
+          if (Array.isArray(remote) && remote.length > 0) {
+            rows = remote;
+            saveLocal();
+            render();
+            if (!silent) showStatus('已同步最新数据');
             return;
           }
         }
       } catch (e) {}
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          logs = JSON.parse(raw);
-        } else {
-          logs = JSON.parse(JSON.stringify(DEFAULT_LOGS));
-          saveData();
-        }
-      } catch (e) {
-        logs = JSON.parse(JSON.stringify(DEFAULT_LOGS));
+      if (!rows || !rows.length) {
+        rows = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        saveLocal();
+        render();
       }
-      renderAll();
     }
 
-    function saveData() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
-        const toast = document.getElementById('save-toast');
-        if (toast) {
-          toast.textContent = '✓ 已实时保存 (' + new Date().toLocaleTimeString('zh-CN', {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ')';
-        }
-        // Also sync to local backend if running via server.py
-        fetch('/api/save', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(logs)
-        }).catch(() => {});
-      } catch (e) {}
+    function saveLocal() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+      fetch('/api/save', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(rows)
+      }).catch(() => {});
+      showStatus('已自动保存');
     }
 
-    function resetDefaultData() {
-      logs = JSON.parse(JSON.stringify(DEFAULT_LOGS));
-      saveData();
-      renderAll();
+    function showStatus(msg) {
+      const el = document.getElementById('sync-status');
+      if (el) el.textContent = msg;
     }
 
-    function getTodayLog() {
-      if (logs.length === 0) return null;
-      return logs[logs.length - 1];
+    function todayRow() {
+      return rows[rows.length - 1];
     }
 
-    function adjustTodayWater(delta) {
-      const today = getTodayLog();
-      if (!today) return;
-      today.waterCups = Math.max(0, Math.round((today.waterCups + delta) * 2) / 2);
-      saveData();
-      renderAll();
+    function changeWater(delta) {
+      const r = todayRow();
+      if (!r) return;
+      r.water = Math.max(0, (r.water || 0) + delta);
+      saveLocal();
+      render();
     }
 
-    function toggleTodayHabit(key) {
-      const today = getTodayLog();
-      if (!today) return;
-      if (!today.habits) today.habits = {};
-      today.habits[key] = !today.habits[key];
+    function toggleSupp(name) {
+      const r = todayRow();
+      if (!r) return;
+      if (!Array.isArray(r.supplements)) r.supplements = [];
+      const idx = r.supplements.indexOf(name);
+      if (idx >= 0) r.supplements.splice(idx, 1);
+      else r.supplements.push(name);
+      saveLocal();
+      render();
+    }
 
-      // Auto-update protein & snack if wheyDone toggled on Day 2
-      if (key === 'wheyDone') {
-        if (today.habits.wheyDone) {
-          today.protein = (today.protein || 50) + 24;
-          today.calories = (today.calories || 650) + 120;
-          if (today.snack && today.snack.includes('待')) {
-            today.snack = '✅ 已喝：蔚来杯摇1勺巧克力熊猫蛋白粉 (120 kcal / 24g蛋白)';
-          }
-        } else {
-          today.protein = Math.max(0, (today.protein || 74) - 24);
-          today.calories = Math.max(0, (today.calories || 770) - 120);
-        }
+    function updateField(index, field, val) {
+      const r = rows[index];
+      if (!r) return;
+      if (field === 'amWeight' || field === 'pmWeight') {
+        const num = parseFloat(val);
+        r[field] = isNaN(num) ? null : num;
+      } else if (field === 'water') {
+        const num = parseFloat(val);
+        r[field] = isNaN(num) ? 0 : num;
+      } else {
+        r[field] = val;
       }
-      saveData();
-      renderAll();
+      saveLocal();
+      renderStatsAndChart();
     }
 
-    function quickUpdateToday() {
-      const today = getTodayLog();
-      if (!today) return;
-      const amVal = parseFloat(document.getElementById('quick-am-weight').value);
-      const pmVal = parseFloat(document.getElementById('quick-pm-weight').value);
-      const hrvVal = parseInt(document.getElementById('quick-hrv').value, 10);
-
-      today.amWeight = isNaN(amVal) ? null : amVal;
-      today.pmWeight = isNaN(pmVal) ? null : pmVal;
-      today.hrv = isNaN(hrvVal) ? today.hrv : hrvVal;
-      saveData();
-      renderAll();
-    }
-
-    function renderAll() {
-      const today = getTodayLog();
-      if (!today) return;
-
-      // 1. Update Top KPIs
-      const latestAm = today.amWeight ?? 90.8;
-      document.getElementById('kpi-morning-weight').textContent = latestAm.toFixed(1);
-      const diffFromStart = (91.2 - latestAm).toFixed(1);
-      document.getElementById('kpi-weight-diff').textContent = (diffFromStart >= 0 ? '↓ ' : '↑ ') + Math.abs(diffFromStart) + ' kg';
-      const progressPct = Math.min(100, Math.max(5, ((91.2 - latestAm) / (91.2 - 75.0)) * 100));
-      document.getElementById('kpi-weight-bar').style.width = progressPct + '%';
-
-      const toSub90 = Math.max(0, (latestAm - 89.9)).toFixed(1);
-      document.getElementById('kpi-sub-goal').innerHTML = toSub90 > 0
-        ? `距破90大关(89.9kg)仅差 <strong class="text-emerald-500">${toSub90} kg</strong>`
-        : `🎉 <strong class="text-emerald-500">已成功破开 90kg 大关！</strong>`;
-
-      // Water KPI
-      const cups = today.waterCups || 0;
-      document.getElementById('kpi-water-cups').textContent = cups.toFixed(1);
-      document.getElementById('kpi-water-ml').textContent = `${Math.round(cups * 500)} / 2000 ml`;
-      const pillsContainer = document.getElementById('water-pills');
-      pillsContainer.innerHTML = '';
-      for (let i = 1; i <= 4; i++) {
-        const fill = cups >= i ? 'bg-sky-500' : (cups >= i - 0.5 ? 'bg-sky-500/50' : 'bg-[var(--secondary)]');
-        pillsContainer.innerHTML += `<div class="h-2 flex-1 rounded-full ${fill} transition-all"></div>`;
+    function addNewRow() {
+      const last = todayRow();
+      let nextDate = new Date().toISOString().slice(0, 10);
+      if (last && last.date >= nextDate) {
+        const d = new Date(last.date + 'T00:00:00');
+        d.setDate(d.getDate() + 1);
+        nextDate = d.toISOString().slice(0, 10);
       }
+      rows.push({
+        date: nextDate,
+        amWeight: null,
+        pmWeight: null,
+        breakfast: '',
+        lunch: '',
+        dinner: '',
+        water: 0,
+        activity: '',
+        supplements: []
+      });
+      saveLocal();
+      render();
+    }
 
-      // Protein & Calories KPI
-      const prot = today.protein || 0;
-      const cal = today.calories || 0;
-      document.getElementById('kpi-protein').textContent = prot;
-      document.getElementById('kpi-cal-badge').textContent = `${cal} kcal`;
-      document.getElementById('kpi-protein-bar').style.width = Math.min(100, Math.round((prot / 115) * 100)) + '%';
-      document.getElementById('kpi-protein-hint').textContent = today.habits?.wheyDone
-        ? '✅ 今日熊猫蛋白粉已喝！晚饭再补35g即满分'
-        : '⏳ 16:30 蔚来杯摇1勺巧克力蛋白粉 (+24g)';
+    function renderStatsAndChart() {
+      const r = todayRow();
+      if (!r) return;
 
-      // HRV KPI
-      const hrv = today.hrv || 42;
-      document.getElementById('kpi-hrv').textContent = hrv;
-      document.getElementById('kpi-hrv-bar').style.width = Math.min(100, Math.round((hrv / 80) * 100)) + '%';
+      const latestAm = [...rows].reverse().find(x => x.amWeight != null)?.amWeight ?? 90.8;
+      const latestPm = [...rows].reverse().find(x => x.pmWeight != null)?.pmWeight ?? 91.2;
 
-      // 2. Today Console
-      document.getElementById('today-date-label').textContent = `${today.dayLabel} · ${today.date}`;
-      document.getElementById('quick-am-weight').value = today.amWeight ?? '';
-      document.getElementById('quick-pm-weight').value = today.pmWeight ?? '';
-      document.getElementById('quick-hrv').value = today.hrv ?? '';
+      document.getElementById('stat-am').textContent = latestAm.toFixed(1);
+      document.getElementById('stat-pm').textContent = latestPm.toFixed(1);
+      const diff = (91.2 - latestAm).toFixed(1);
+      document.getElementById('stat-diff').textContent = (diff >= 0 ? '-' : '+') + Math.abs(diff) + ' kg';
+      document.getElementById('stat-water').textContent = r.water ?? 0;
 
-      const habitDefs = [
-        { key: 'breakfastDone', label: '🥚 早饭蛋白垫底', sub: '压制早起皮质醇' },
-        { key: 'wheyDone', label: '🍫 熊猫巧克力蛋白粉', sub: '蔚来杯 +24g蛋白' },
-        { key: 'theanineDone', label: '💊 随美式配茶氨酸', sub: '平抑咖啡因焦虑' },
-        { key: 'magnesiumDone', label: '🌙 睡前2粒甘氨酸镁', sub: '防抽筋+拉高HRV' },
-        { key: 'hairDried', label: '💨 洗澡吹干头发', sub: '护毛囊+00:15睡' }
-      ];
-
-      const togglesEl = document.getElementById('today-habit-toggles');
-      togglesEl.innerHTML = habitDefs.map(h => {
-        const checked = !!(today.habits && today.habits[h.key]);
-        return `
-          <button onclick="toggleTodayHabit('${h.key}')" class="p-3 rounded-xl border text-left transition cursor-pointer flex flex-col justify-between ${
-            checked
-              ? 'bg-emerald-500/15 border-emerald-500/40 text-[var(--foreground)]'
-              : 'bg-[var(--secondary)] border-[var(--border)] text-[var(--muted-foreground)] hover:opacity-90'
-          }">
-            <div class="flex items-center justify-between w-full">
-              <span class="text-xs font-bold">${h.label}</span>
-              <span class="text-xs font-extrabold ${checked ? 'text-emerald-500' : 'opacity-40'}">${checked ? '✓ 已打卡' : '待打卡'}</span>
-            </div>
-            <span class="text-xs opacity-75 mt-1">${h.sub}</span>
-          </button>
-        `;
+      const suppEl = document.getElementById('supp-container');
+      suppEl.innerHTML = SUPP_LIST.map(s => {
+        const active = (r.supplements || []).includes(s);
+        return `<button onclick="toggleSupp('${s}')" class="px-2.5 py-1 rounded-md text-xs font-medium transition cursor-pointer ${
+          active ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-zinc-800/80 text-zinc-400 border border-zinc-700/50'
+        }">${active ? '✓ ' : ''}${s}</button>`;
       }).join('');
-
-      // 3. Render Desktop Table & Mobile Cards (Reverse chronological so newest is on top)
-      const reversed = [...logs].reverse();
-      const tbody = document.getElementById('desktop-table-body');
-      const mobileContainer = document.getElementById('mobile-cards-container');
-
-      tbody.innerHTML = reversed.map(item => `
-        <tr class="hover:bg-[var(--secondary)]/40 transition">
-          <td class="py-3.5 px-3 align-top whitespace-nowrap">
-            <div class="font-bold text-[var(--foreground)]">${item.dayLabel}</div>
-            <div class="text-xs text-[var(--muted-foreground)]">${item.date}</div>
-          </td>
-          <td class="py-3.5 px-3 align-top whitespace-nowrap">
-            <div class="text-xs">🌅 早: <strong class="text-emerald-500 text-sm">${item.amWeight ? item.amWeight.toFixed(1) + ' kg' : '--'}</strong></div>
-            <div class="text-xs mt-1">🌙 晚: <strong class="text-sky-400 text-sm">${item.pmWeight ? item.pmWeight.toFixed(1) + ' kg' : '待称'}</strong></div>
-          </td>
-          <td class="py-3.5 px-3 align-top max-w-xs">
-            <div class="text-xs space-y-1">
-              <div><span class="text-[var(--muted-foreground)]">早:</span> ${item.breakfast || '--'}</div>
-              <div><span class="text-[var(--muted-foreground)]">午:</span> ${item.lunch || '--'}</div>
-              <div><span class="text-[var(--muted-foreground)]">加:</span> ${item.snack || '--'}</div>
-              <div><span class="text-[var(--muted-foreground)]">晚:</span> ${item.dinner || '--'}</div>
-              <div class="pt-1 font-semibold text-amber-400">💪 蛋白质 ~${item.protein || 0}g ｜ 🔥 ~${item.calories || 0} kcal</div>
-            </div>
-          </td>
-          <td class="py-3.5 px-3 align-top">
-            <div class="text-xs font-semibold text-sky-400">🚰 极氪杯: ${item.waterCups || 0} 杯 (${Math.round((item.waterCups || 0)*500)}ml)</div>
-            <div class="text-xs text-[var(--muted-foreground)] mt-1">☕ ${item.coffee || '无'}</div>
-          </td>
-          <td class="py-3.5 px-3 align-top">
-            <div class="text-xs font-medium">${item.activity || '日常科研'}</div>
-            ${item.note ? `<div class="text-xs text-[var(--muted-foreground)] mt-1 italic">${item.note}</div>` : ''}
-          </td>
-          <td class="py-3.5 px-3 align-top whitespace-nowrap">
-            <div class="text-xs font-semibold text-purple-400">⌚ HRV: ${item.hrv || '--'} ms</div>
-            <div class="text-xs text-[var(--muted-foreground)] mt-1">
-              ${item.habits?.wheyDone ? '✅蛋白粉 ' : ''}
-              ${item.habits?.magnesiumDone ? '✅甘氨酸镁 ' : ''}
-              ${item.habits?.hairDried ? '✅吹干发' : ''}
-            </div>
-          </td>
-          <td class="py-3.5 px-3 align-top text-right whitespace-nowrap">
-            <button onclick="openModal('${item.date}')" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--secondary)] border border-[var(--border)] hover:opacity-80 cursor-pointer">
-              编辑
-            </button>
-          </td>
-        </tr>
-      `).join('');
-
-      mobileContainer.innerHTML = reversed.map(item => `
-        <div class="p-4 rounded-xl bg-[var(--secondary)]/50 border border-[var(--border)] space-y-2.5">
-          <div class="flex items-center justify-between">
-            <div>
-              <span class="font-bold text-sm text-[var(--foreground)]">${item.dayLabel}</span>
-              <span class="text-xs text-[var(--muted-foreground)] ml-2">${item.date}</span>
-            </div>
-            <button onclick="openModal('${item.date}')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-[var(--card)] border border-[var(--border)]">编辑</button>
-          </div>
-          <div class="grid grid-cols-3 gap-2 py-2 border-y border-[var(--border)] text-xs">
-            <div>🌅 早腹: <strong class="text-emerald-500">${item.amWeight ? item.amWeight + 'kg' : '--'}</strong></div>
-            <div>🌙 夜重: <strong class="text-sky-400">${item.pmWeight ? item.pmWeight + 'kg' : '待称'}</strong></div>
-            <div>⌚ HRV: <strong class="text-purple-400">${item.hrv || '--'}ms</strong></div>
-          </div>
-          <div class="text-xs space-y-1">
-            <div><strong>🌅 早:</strong> ${item.breakfast || '--'}</div>
-            <div><strong>🥪 午:</strong> ${item.lunch || '--'}</div>
-            <div><strong>🍫 加:</strong> ${item.snack || '--'}</div>
-            <div><strong>🍗 晚:</strong> ${item.dinner || '--'}</div>
-          </div>
-          <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-[var(--muted-foreground)]">
-            <span class="text-sky-400 font-semibold">🚰 极氪杯 ${item.waterCups || 0}杯</span>
-            <span class="text-amber-400 font-semibold">💪 ${item.protein || 0}g蛋白 / ${item.calories || 0}kcal</span>
-            <span>${item.activity || ''}</span>
-          </div>
-        </div>
-      `).join('');
 
       drawChart();
     }
 
+    function render() {
+      renderStatsAndChart();
+
+      // Desktop table (newest first)
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
+        <tr class="hover:bg-zinc-900/30 transition">
+          <td class="py-2.5 px-4 text-xs text-zinc-400 font-mono whitespace-nowrap">${r.date.slice(5)}</td>
+          <td class="py-2.5 px-3">
+            <input type="number" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
+              onchange="updateField(${i}, 'amWeight', this.value)"
+              class="w-16 font-semibold text-emerald-400 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1 py-0.5" />
+          </td>
+          <td class="py-2.5 px-3">
+            <input type="number" step="0.1" value="${r.pmWeight ?? ''}" placeholder="-"
+              onchange="updateField(${i}, 'pmWeight', this.value)"
+              class="w-16 font-semibold text-sky-400 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1 py-0.5" />
+          </td>
+          <td class="py-2.5 px-3">
+            <input type="text" value="${r.breakfast || ''}" placeholder="输入早饭..."
+              onchange="updateField(${i}, 'breakfast', this.value)"
+              class="w-full text-zinc-200 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1.5 py-0.5" />
+          </td>
+          <td class="py-2.5 px-3">
+            <input type="text" value="${r.lunch || ''}" placeholder="输入午饭..."
+              onchange="updateField(${i}, 'lunch', this.value)"
+              class="w-full text-zinc-200 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1.5 py-0.5" />
+          </td>
+          <td class="py-2.5 px-3">
+            <input type="text" value="${r.dinner || ''}" placeholder="输入晚饭/加餐..."
+              onchange="updateField(${i}, 'dinner', this.value)"
+              class="w-full text-zinc-200 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1.5 py-0.5" />
+          </td>
+          <td class="py-2.5 px-3">
+            <input type="number" step="0.5" value="${r.water ?? 0}"
+              onchange="updateField(${i}, 'water', this.value)"
+              class="w-14 text-zinc-300 focus:bg-zinc-800 rounded px-1 py-0.5" />
+          </td>
+          <td class="py-2.5 px-4">
+            <input type="text" value="${r.activity || ''}" placeholder="输入活动..."
+              onchange="updateField(${i}, 'activity', this.value)"
+              class="w-full text-zinc-300 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1.5 py-0.5" />
+          </td>
+        </tr>
+      `).join('');
+
+      // Mobile list (newest first)
+      const mlist = document.getElementById('mobile-list');
+      mlist.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
+        <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4 space-y-2.5 text-xs">
+          <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+            <span class="font-semibold text-sm text-zinc-200 font-mono">${r.date}</span>
+            <span class="text-zinc-400">饮水 ${r.water ?? 0} 杯</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3 pt-0.5">
+            <div class="flex items-center justify-between bg-zinc-900/70 px-3 py-2 rounded-lg">
+              <span class="text-zinc-400">早 (kg)</span>
+              <input type="number" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
+                onchange="updateField(${i}, 'amWeight', this.value)"
+                class="w-14 text-right font-semibold text-emerald-400 text-sm" />
+            </div>
+            <div class="flex items-center justify-between bg-zinc-900/70 px-3 py-2 rounded-lg">
+              <span class="text-zinc-400">晚 (kg)</span>
+              <input type="number" step="0.1" value="${r.pmWeight ?? ''}" placeholder="-"
+                onchange="updateField(${i}, 'pmWeight', this.value)"
+                class="w-14 text-right font-semibold text-sky-400 text-sm" />
+            </div>
+          </div>
+          <div class="space-y-1.5 pt-1">
+            <div class="flex items-center gap-2">
+              <span class="text-zinc-500 w-8 shrink-0">早饭</span>
+              <input type="text" value="${r.breakfast || ''}" placeholder="点击输入..."
+                onchange="updateField(${i}, 'breakfast', this.value)"
+                class="w-full text-zinc-200 border-b border-zinc-800/60 py-1" />
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-zinc-500 w-8 shrink-0">午饭</span>
+              <input type="text" value="${r.lunch || ''}" placeholder="点击输入..."
+                onchange="updateField(${i}, 'lunch', this.value)"
+                class="w-full text-zinc-200 border-b border-zinc-800/60 py-1" />
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-zinc-500 w-8 shrink-0">晚饭</span>
+              <input type="text" value="${r.dinner || ''}" placeholder="点击输入..."
+                onchange="updateField(${i}, 'dinner', this.value)"
+                class="w-full text-zinc-200 border-b border-zinc-800/60 py-1" />
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-zinc-500 w-8 shrink-0">活动</span>
+              <input type="text" value="${r.activity || ''}" placeholder="点击输入..."
+                onchange="updateField(${i}, 'activity', this.value)"
+                class="w-full text-zinc-200 py-1" />
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
     function drawChart() {
-      const canvas = document.getElementById('weightChart');
+      const canvas = document.getElementById('chart');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
-      const width = rect.width || 700;
-      const height = 220;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      const w = canvas.getBoundingClientRect().width || 600;
+      const h = 150;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
       ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, w, h);
 
-      const isLight = document.documentElement.classList.contains('light');
-      const gridColor = isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)';
-      const textColor = isLight ? 'rgba(0,0,0,0.65)' : 'rgba(255,255,255,0.65)';
+      const padL = 40, padR = 24, padT = 20, padB = 26;
+      const pw = w - padL - padR;
+      const ph = h - padT - padB;
 
-      ctx.clearRect(0, 0, width, height);
+      const vals = [];
+      rows.forEach(r => {
+        if (r.amWeight != null) vals.push(r.amWeight);
+        if (r.pmWeight != null) vals.push(r.pmWeight);
+      });
+      const minW = Math.floor(Math.min(...vals, 89.5) - 0.5);
+      const maxW = Math.ceil(Math.max(...vals, 91.5) + 0.5);
 
-      const padLeft = 48;
-      const padRight = 48;
-      const padTop = 28;
-      const padBottom = 36;
-      const plotW = width - padLeft - padRight;
-      const plotH = height - padTop - padBottom;
+      const yOf = v => padT + ph - ((v - minW) / (maxW - minW)) * ph;
+      const n = Math.max(rows.length, 4);
+      const xOf = idx => padL + (idx / (n - 1)) * pw;
 
-      // Y range for weight: 88.5 to 92.0
-      const minW = 89.0;
-      const maxW = 92.0;
-      const yForWeight = (w) => padTop + plotH - ((w - minW) / (maxW - minW)) * plotH;
-
-      // Draw horizontal grid lines & 90.0kg threshold line
-      const steps = [89.0, 90.0, 91.0, 92.0];
-      ctx.font = '12px sans-serif';
-      steps.forEach(w => {
-        const y = yForWeight(w);
+      ctx.font = '12px -apple-system, sans-serif';
+      [minW, (minW + maxW) / 2, maxW].forEach(val => {
+        const y = yOf(val);
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
         ctx.beginPath();
-        ctx.moveTo(padLeft, y);
-        ctx.lineTo(width - padRight, y);
-        if (w === 90.0) {
-          ctx.strokeStyle = 'rgba(245, 158, 11, 0.65)';
-          ctx.setLineDash([6, 4]);
-          ctx.lineWidth = 1.5;
-        } else {
-          ctx.strokeStyle = gridColor;
-          ctx.setLineDash([]);
-          ctx.lineWidth = 1;
-        }
+        ctx.moveTo(padL, y);
+        ctx.lineTo(w - padR, y);
         ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.fillStyle = w === 90.0 ? '#f59e0b' : textColor;
+        ctx.fillStyle = '#71717a';
         ctx.textAlign = 'right';
-        ctx.fillText(w.toFixed(1) + 'kg', padLeft - 8, y + 4);
+        ctx.fillText(val.toFixed(1), padL - 8, y + 4);
       });
 
-      const n = Math.max(logs.length, 5); // show at least 5 slots for visual projection
-      const xForIdx = (i) => padLeft + (i / (n - 1)) * plotW;
-
-      // Draw X labels
-      for (let i = 0; i < n; i++) {
-        const x = xForIdx(i);
-        ctx.fillStyle = textColor;
+      rows.forEach((r, i) => {
+        ctx.fillStyle = '#71717a';
         ctx.textAlign = 'center';
-        const label = logs[i] ? logs[i].dayLabel.split(' ')[0] + ' (' + logs[i].date.slice(5) + ')' : `Day ${i + 1} (待解锁)`;
-        ctx.fillText(label, x, height - 10);
-      }
+        ctx.fillText(r.date.slice(5), xOf(i), h - 6);
+      });
 
-      // Draw PM Weight line (Sky Blue)
-      ctx.beginPath();
+      // Draw PM
       ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 2.5;
-      let startedPm = false;
-      logs.forEach((item, i) => {
-        if (item.pmWeight != null) {
-          const x = xForIdx(i);
-          const y = yForWeight(item.pmWeight);
-          if (!startedPm) { ctx.moveTo(x, y); startedPm = true; }
-          else { ctx.lineTo(x, y); }
-        }
-      });
-      ctx.stroke();
-
-      logs.forEach((item, i) => {
-        if (item.pmWeight != null) {
-          const x = xForIdx(i);
-          const y = yForWeight(item.pmWeight);
-          ctx.beginPath();
-          ctx.arc(x, y, 5, 0, Math.PI * 2);
-          ctx.fillStyle = '#38bdf8';
-          ctx.fill();
-          ctx.fillStyle = '#38bdf8';
-          ctx.textAlign = 'center';
-          ctx.fillText(item.pmWeight.toFixed(1) + 'kg(夜)', x, y - 10);
-        }
-      });
-
-      // Draw AM Weight line (Emerald)
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.strokeStyle = '#10b981';
-      ctx.lineWidth = 3;
-      let startedAm = false;
-      logs.forEach((item, i) => {
-        if (item.amWeight != null) {
-          const x = xForIdx(i);
-          const y = yForWeight(item.amWeight);
-          if (!startedAm) { ctx.moveTo(x, y); startedAm = true; }
-          else { ctx.lineTo(x, y); }
+      let sPm = false;
+      rows.forEach((r, i) => {
+        if (r.pmWeight != null) {
+          const x = xOf(i), y = yOf(r.pmWeight);
+          if (!sPm) { ctx.moveTo(x, y); sPm = true; } else ctx.lineTo(x, y);
         }
       });
       ctx.stroke();
-
-      logs.forEach((item, i) => {
-        if (item.amWeight != null) {
-          const x = xForIdx(i);
-          const y = yForWeight(item.amWeight);
-          ctx.beginPath();
-          ctx.arc(x, y, 6, 0, Math.PI * 2);
-          ctx.fillStyle = '#10b981';
-          ctx.fill();
-          ctx.fillStyle = '#10b981';
-          ctx.textAlign = 'center';
-          ctx.fillText(item.amWeight.toFixed(1) + 'kg(早)', x, y + 18);
+      rows.forEach((r, i) => {
+        if (r.pmWeight != null) {
+          const x = xOf(i), y = yOf(r.pmWeight);
+          ctx.fillStyle = '#38bdf8';
+          ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
+          ctx.fillText(r.pmWeight.toFixed(1), x, y - 8);
         }
       });
-    }
 
-    function openModal(dateStr) {
-      const modal = document.getElementById('editModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-
-      const existing = dateStr ? logs.find(l => l.date === dateStr) : null;
-      if (existing) {
-        document.getElementById('modal-title').textContent = `编辑打卡 · ${existing.dayLabel}`;
-        document.getElementById('form-date').value = existing.date;
-        document.getElementById('form-dayLabel').value = existing.dayLabel;
-        document.getElementById('form-amWeight').value = existing.amWeight ?? '';
-        document.getElementById('form-pmWeight').value = existing.pmWeight ?? '';
-        document.getElementById('form-waterCups').value = existing.waterCups ?? 0;
-        document.getElementById('form-hrv').value = existing.hrv ?? 42;
-        document.getElementById('form-breakfast').value = existing.breakfast ?? '';
-        document.getElementById('form-lunch').value = existing.lunch ?? '';
-        document.getElementById('form-snack').value = existing.snack ?? '';
-        document.getElementById('form-dinner').value = existing.dinner ?? '';
-        document.getElementById('form-activity').value = existing.activity ?? '';
-        document.getElementById('form-protein').value = existing.protein ?? 0;
-        document.getElementById('form-calories').value = existing.calories ?? 0;
-      } else {
-        const nextDayNum = logs.length + 1;
-        const todayIso = new Date().toISOString().slice(0, 10);
-        document.getElementById('modal-title').textContent = `新增 Day ${nextDayNum} 打卡`;
-        document.getElementById('form-date').value = todayIso;
-        document.getElementById('form-dayLabel').value = `Day ${nextDayNum}`;
-        document.getElementById('form-amWeight').value = '';
-        document.getElementById('form-pmWeight').value = '';
-        document.getElementById('form-waterCups').value = 0;
-        document.getElementById('form-hrv').value = 42;
-        document.getElementById('form-breakfast').value = '';
-        document.getElementById('form-lunch').value = '';
-        document.getElementById('form-snack').value = '16:30 蔚来杯摇1勺巧克力熊猫蛋白粉';
-        document.getElementById('form-dinner').value = '';
-        document.getElementById('form-activity').value = '';
-        document.getElementById('form-protein').value = 110;
-        document.getElementById('form-calories').value = 1550;
-      }
-    }
-
-    function closeModal() {
-      const modal = document.getElementById('editModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function saveModalData() {
-      const dateVal = document.getElementById('form-date').value;
-      if (!dateVal) return;
-      const amVal = parseFloat(document.getElementById('form-amWeight').value);
-      const pmVal = parseFloat(document.getElementById('form-pmWeight').value);
-      const waterVal = parseFloat(document.getElementById('form-waterCups').value);
-      const hrvVal = parseInt(document.getElementById('form-hrv').value, 10);
-      const protVal = parseInt(document.getElementById('form-protein').value, 10);
-      const calVal = parseInt(document.getElementById('form-calories').value, 10);
-
-      let target = logs.find(l => l.date === dateVal);
-      if (!target) {
-        target = {
-          date: dateVal,
-          habits: { breakfastDone: true, wheyDone: false, theanineDone: false, magnesiumDone: false, hairDried: false }
-        };
-        logs.push(target);
-        logs.sort((a, b) => a.date.localeCompare(b.date));
-      }
-
-      target.dayLabel = document.getElementById('form-dayLabel').value || `Day ${logs.indexOf(target) + 1}`;
-      target.amWeight = isNaN(amVal) ? null : amVal;
-      target.pmWeight = isNaN(pmVal) ? null : pmVal;
-      target.waterCups = isNaN(waterVal) ? 0 : waterVal;
-      target.hrv = isNaN(hrvVal) ? 42 : hrvVal;
-      target.breakfast = document.getElementById('form-breakfast').value;
-      target.lunch = document.getElementById('form-lunch').value;
-      target.snack = document.getElementById('form-snack').value;
-      target.dinner = document.getElementById('form-dinner').value;
-      target.activity = document.getElementById('form-activity').value;
-      target.protein = isNaN(protVal) ? 0 : protVal;
-      target.calories = isNaN(calVal) ? 0 : calVal;
-
-      saveData();
-      closeModal();
-      renderAll();
+      // Draw AM
+      ctx.strokeStyle = '#34d399';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      let sAm = false;
+      rows.forEach((r, i) => {
+        if (r.amWeight != null) {
+          const x = xOf(i), y = yOf(r.amWeight);
+          if (!sAm) { ctx.moveTo(x, y); sAm = true; } else ctx.lineTo(x, y);
+        }
+      });
+      ctx.stroke();
+      rows.forEach((r, i) => {
+        if (r.amWeight != null) {
+          const x = xOf(i), y = yOf(r.amWeight);
+          ctx.fillStyle = '#34d399';
+          ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
+          ctx.fillText(r.amWeight.toFixed(1), x, y + 16);
+        }
+      });
     }
 
     window.addEventListener('resize', drawChart);
-    window.addEventListener('DOMContentLoaded', loadData);
+    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
