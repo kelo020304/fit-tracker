@@ -223,7 +223,7 @@
   <script>
     const STORAGE_KEY = 'daily_fit_v9_cloud';
     const META_KEY = 'daily_fit_v9_meta';
-    const CLOUD_API = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1a57ab09f2c79';
+    const STATE_SYNC_URL = 'https://ntfy.sh/captain_fit_state_db300ca2';
     const SUPP_LIST = [
       { id: '蛋白粉', icon: '🍫' },
       { id: '茶氨酸', icon: '🍵' },
@@ -342,33 +342,37 @@
         await saveLocal();
         return;
       }
-      if (!silent) showStatus('正在检查云端更新...');
+      if (!silent) showStatus('正在同步云端...');
       try {
-        const res = await fetch(CLOUD_API + '?t=' + Date.now(), { cache: 'no-store' });
+        const res = await fetch(STATE_SYNC_URL + '/json?poll=1&t=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
-          const obj = await res.json();
-          if (obj && obj.data) {
-            const cloudTime = Number(obj.data.updatedAt) || 0;
-            // Only accept cloud data if cloud is strictly newer or local has no timestamp yet
-            if (cloudTime >= localUpdatedAt) {
-              if (Array.isArray(obj.data.rows) && obj.data.rows.length > 0) {
-                rows = obj.data.rows;
-                rows.forEach(ensureRowMacros);
+          const text = await res.text();
+          const lines = text.trim().split('\n').filter(Boolean);
+          for (let i = lines.length - 1; i >= 0; i--) {
+            try {
+              const env = JSON.parse(lines[i]);
+              if (env && env.message) {
+                const data = JSON.parse(env.message);
+                const cloudTime = Number(data.updatedAt) || 0;
+                if (cloudTime >= localUpdatedAt) {
+                  if (Array.isArray(data.rows) && data.rows.length > 0) {
+                    rows = data.rows;
+                    rows.forEach(ensureRowMacros);
+                  }
+                  if (data.latestMealPhoto && data.latestMealPhoto.title) {
+                    latestMealPhoto = data.latestMealPhoto;
+                  }
+                  localUpdatedAt = cloudTime;
+                  localDirty = false;
+                  saveLocalCache();
+                  render();
+                  showStatus('✓ 已同步最新云端数据');
+                } else {
+                  await saveLocal();
+                }
+                return;
               }
-              if (obj.data.latestMealPhoto && obj.data.latestMealPhoto.title) {
-                latestMealPhoto = obj.data.latestMealPhoto;
-              }
-              localUpdatedAt = cloudTime;
-              localDirty = false;
-              saveLocalCache();
-              render();
-              showStatus('✓ 已同步最新云端数据');
-              return;
-            } else {
-              // Local is newer than cloud -> push local to cloud!
-              await saveLocal();
-              return;
-            }
+            } catch (e) {}
           }
         }
       } catch (e) {}
@@ -400,12 +404,12 @@
           ...latestMealPhoto,
           photoUrl: (latestMealPhoto.photoUrl && latestMealPhoto.photoUrl.startsWith('data:')) ? '' : (latestMealPhoto.photoUrl || '')
         } : null;
-        const res = await fetch(CLOUD_API, {
-          method: 'PUT',
-          headers: {'Content-Type': 'application/json'},
+        const res = await fetch(STATE_SYNC_URL, {
+          method: 'POST',
           body: JSON.stringify({
-            name: 'captain-fit-tracker',
-            data: { rows: cleanRows, latestMealPhoto: cleanPhoto, updatedAt: localUpdatedAt }
+            updatedAt: localUpdatedAt,
+            rows: cleanRows,
+            latestMealPhoto: cleanPhoto
           })
         });
         if (res.ok) {
