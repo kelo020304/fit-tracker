@@ -1,0 +1,50 @@
+[
+  {
+    "date": "2026-11-03",
+    "dayLabel": "Day 1 · 周一",
+    "amWeight": null,
+    "pmWeight": 91.2,
+    "hrv": 42,
+    "waterCups": 2.0,
+    "coffee": "白天常规美式",
+    "breakfast": "未吃早餐（旧习惯最后一天）",
+    "lunch": "常规午餐",
+    "snack": "无",
+    "dinner": "沙县健身套餐：去皮大鸡腿 + 2个卤蛋 + 包菜 + 半份米饭",
+    "activity": "🏸 晚间高强度羽毛球实战（大汗淋漓）",
+    "protein": 85,
+    "calories": 1650,
+    "habits": {
+      "breakfastDone": false,
+      "wheyDone": false,
+      "theanineDone": false,
+      "magnesiumDone": true,
+      "hairDried": true
+    },
+    "note": "确立夜间基准体重 91.2kg；甘氨酸镁改至打完球/睡前吃2粒；吹干头发。"
+  },
+  {
+    "date": "2026-11-04",
+    "dayLabel": "Day 2 · 周二 (今日)",
+    "amWeight": 90.8,
+    "pmWeight": null,
+    "hrv": 42,
+    "waterCups": 1.0,
+    "coffee": "1.5杯纯美式（午后已停咖，零度可乐留存未喝）",
+    "breakfast": "全家：2个茶叶蛋 + 1盒光明优倍鲜牛奶 (270 kcal / 20g蛋白)",
+    "lunch": "Subway：6寸照烧鸡+鸡蛋双拼（全麦面包·完全无酱，380 kcal / 30g蛋白）",
+    "snack": "待16:30打卡：摇1勺巧克力熊猫蛋白粉 (+24g蛋白)",
+    "dinner": "待晚间打卡（看隔壁组是否聚餐或点沙县）",
+    "activity": "🤖 下午具身智能实验采数据",
+    "protein": 50,
+    "calories": 650,
+    "habits": {
+      "breakfastDone": true,
+      "wheyDone": false,
+      "theanineDone": false,
+      "magnesiumDone": false,
+      "hairDried": false
+    },
+    "note": "早晨空腹首测 90.8kg (较昨晚降0.4kg)；巧克力熊猫蛋白粉已到货！"
+  }
+]
