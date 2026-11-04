@@ -99,6 +99,58 @@
     </div>
   </div>
 
+  <!-- Photo Upload & Nutrition Analysis Card -->
+  <div class="bg-white border border-slate-200/90 rounded-2xl p-4 md:p-5 shadow-xs space-y-3.5">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="text-base">📷</span>
+        <span class="text-sm font-bold text-slate-800">饮食拍照 · 营养与摄入分析</span>
+        <span class="text-xs text-slate-400" id="photo-status">手机传图后在聊天框说一声“传了”即刻出报告</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <select id="meal-slot" class="px-2.5 py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200 outline-none">
+          <option value="dinner">🥗 晚饭 / 加餐</option>
+          <option value="lunch">🍱 午饭</option>
+          <option value="breakfast">🥚 早饭</option>
+        </select>
+        <label class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-xs transition cursor-pointer inline-flex items-center gap-1.5">
+          <span>📤 手机传图 / 拍照</span>
+          <input type="file" accept="image/*" class="hidden" onchange="handlePhotoUpload(this)" />
+        </label>
+      </div>
+    </div>
+
+    <!-- Latest Photo & AI Nutrition Result -->
+    <div id="photo-analysis-box" class="hidden bg-slate-50 border border-slate-200/70 rounded-xl p-3.5 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+      <img id="meal-photo-img" src="" alt="餐食照片" class="w-24 h-24 object-cover rounded-xl border border-slate-200 shrink-0 bg-white" />
+      <div class="flex-1 space-y-2 w-full">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="text-sm font-bold text-slate-800" id="meal-analysis-title">等待 AI 分析餐食照片...</span>
+          <span class="text-xs text-slate-400 font-mono" id="meal-analysis-time"></span>
+        </div>
+        <div class="grid grid-cols-4 gap-2 text-xs" id="meal-macros">
+          <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
+            <div class="text-slate-400">🔥 热量</div>
+            <div class="font-bold text-slate-800 mt-0.5" id="macro-cal">-- kcal</div>
+          </div>
+          <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
+            <div class="text-slate-400">🥩 蛋白质</div>
+            <div class="font-bold text-emerald-600 mt-0.5" id="macro-prot">-- g</div>
+          </div>
+          <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
+            <div class="text-slate-400">🍚 碳水</div>
+            <div class="font-bold text-blue-600 mt-0.5" id="macro-carb">-- g</div>
+          </div>
+          <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
+            <div class="text-slate-400">🥑 脂肪</div>
+            <div class="font-bold text-amber-600 mt-0.5" id="macro-fat">-- g</div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed" id="meal-analysis-note"></p>
+      </div>
+    </div>
+  </div>
+
   <!-- Clean Weight Trend Chart -->
   <div class="bg-white border border-slate-200/90 rounded-2xl p-4 md:p-5 shadow-xs">
     <div class="flex items-center justify-between mb-3">
@@ -168,6 +220,17 @@
     ];
 
     let rows = [];
+    let latestMealPhoto = {
+      photoUrl: 'https://ntfy.sh/file/OzJfAXD737pB.jpg',
+      mealSlot: 'dinner',
+      time: 'Day 1 晚餐已验图',
+      title: '沙县去皮鸡腿饭(半份饭) + 2个卤蛋 + 包菜',
+      calories: 560,
+      protein: 42,
+      carbs: 48,
+      fat: 18,
+      note: '去皮大鸡腿+双卤蛋提供42g优质蛋白，半份米饭精准控碳，减脂标准示范餐。'
+    };
 
     async function init() {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -183,9 +246,14 @@
         const res = await fetch(CLOUD_API + '?t=' + Date.now());
         if (res.ok) {
           const obj = await res.json();
-          if (obj && obj.data && Array.isArray(obj.data.rows) && obj.data.rows.length > 0) {
-            rows = obj.data.rows;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+          if (obj && obj.data) {
+            if (Array.isArray(obj.data.rows) && obj.data.rows.length > 0) {
+              rows = obj.data.rows;
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+            }
+            if (obj.data.latestMealPhoto) {
+              latestMealPhoto = obj.data.latestMealPhoto;
+            }
             render();
             showStatus('✓ 云端已同步');
             return;
@@ -220,18 +288,91 @@
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
             name: 'captain-fit-tracker',
-            data: { rows, updatedAt: Date.now() }
+            data: { rows, latestMealPhoto, updatedAt: Date.now() }
           })
         });
         showStatus('✓ 已实时同步至云端');
       } catch (e) {
         showStatus('✓ 已存本地');
       }
-      fetch('/api/save', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(rows)
-      }).catch(() => {});
+    }
+
+    async function handlePhotoUpload(input) {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      const slot = document.getElementById('meal-slot').value;
+      const statusEl = document.getElementById('photo-status');
+      statusEl.textContent = '⏳ 正在压缩并上传餐食照片...';
+
+      try {
+        // Compress image via Canvas to ~800px max dimension for fast upload
+        const blob = await compressImage(file, 900, 0.82);
+        const upRes = await fetch('https://ntfy.sh/captain_fit_photo_db300ca2', {
+          method: 'PUT',
+          headers: { 'Filename': 'meal.jpg' },
+          body: blob
+        });
+        const upJson = await upRes.json();
+        const photoUrl = upJson?.attachment?.url;
+
+        if (photoUrl) {
+          const nowStr = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+          latestMealPhoto = {
+            photoUrl,
+            mealSlot: slot,
+            time: '今日 ' + nowStr + ' 上传',
+            title: '⏳ 照片已上传，等待 AI 分析营养成分...',
+            calories: null,
+            protein: null,
+            carbs: null,
+            fat: null,
+            note: '请在聊天窗口告诉 AI 一声「传了」，将立即识别图中菜品并自动填入热量、蛋白质与三餐表格！'
+          };
+          await saveLocal();
+          renderPhotoBox();
+          statusEl.textContent = '✓ 上传成功！去聊天框说一声“传了”即可分析';
+        }
+      } catch (err) {
+        statusEl.textContent = '上传失败，请重试';
+      }
+    }
+
+    function compressImage(file, maxDim, quality) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let w = img.width, h = img.height;
+            if (w > maxDim || h > maxDim) {
+              if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+              else { w = Math.round(w * maxDim / h); h = maxDim; }
+            }
+            const c = document.createElement('canvas');
+            c.width = w; c.height = h;
+            c.getContext('2d').drawImage(img, 0, 0, w, h);
+            c.toBlob(b => resolve(b), 'image/jpeg', quality);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderPhotoBox() {
+      const box = document.getElementById('photo-analysis-box');
+      if (!box || !latestMealPhoto || !latestMealPhoto.photoUrl) return;
+      box.classList.remove('hidden');
+      document.getElementById('meal-photo-img').src = latestMealPhoto.photoUrl;
+      document.getElementById('meal-analysis-title').textContent = latestMealPhoto.title || '餐食营养分析';
+      document.getElementById('meal-analysis-time').textContent = latestMealPhoto.time || '';
+      document.getElementById('macro-cal').textContent = latestMealPhoto.calories != null ? `${latestMealPhoto.calories} kcal` : '待计算';
+      document.getElementById('macro-prot').textContent = latestMealPhoto.protein != null ? `${latestMealPhoto.protein} g` : '待计算';
+      document.getElementById('macro-carb').textContent = latestMealPhoto.carbs != null ? `${latestMealPhoto.carbs} g` : '待计算';
+      document.getElementById('macro-fat').textContent = latestMealPhoto.fat != null ? `${latestMealPhoto.fat} g` : '待计算';
+      document.getElementById('meal-analysis-note').textContent = latestMealPhoto.note || '';
     }
 
     function showStatus(msg) {
@@ -328,6 +469,7 @@
       }).join('');
 
       drawChart();
+      renderPhotoBox();
     }
 
     function render() {
