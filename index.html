@@ -371,12 +371,31 @@
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(rows)); } catch (e) {}
       showStatus('正在上传云端...');
       try {
+        const cleanRows = rows.map(r => ({
+          date: r.date,
+          amWeight: r.amWeight,
+          pmWeight: r.pmWeight,
+          breakfast: r.breakfast || '',
+          lunch: r.lunch || '',
+          dinner: r.dinner || '',
+          water: r.water ?? 0,
+          activity: r.activity || '',
+          supplements: r.supplements || [],
+          calories: r.calories ?? 0,
+          protein: r.protein ?? 0,
+          carbs: r.carbs ?? 0,
+          fat: r.fat ?? 0
+        }));
+        const cleanPhoto = latestMealPhoto ? {
+          ...latestMealPhoto,
+          photoUrl: (latestMealPhoto.photoUrl && latestMealPhoto.photoUrl.startsWith('data:')) ? '' : (latestMealPhoto.photoUrl || '')
+        } : null;
         await fetch(CLOUD_API, {
           method: 'PUT',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
             name: 'captain-fit-tracker',
-            data: { rows, latestMealPhoto, updatedAt: Date.now() }
+            data: { rows: cleanRows, latestMealPhoto: cleanPhoto, updatedAt: Date.now() }
           })
         });
         showStatus('✓ 已实时同步至云端');
@@ -389,15 +408,13 @@
       if (!latestMealPhoto) return;
       if (['calories', 'protein', 'carbs', 'fat'].includes(field)) {
         const n = parseInt(val, 10);
-        latestMealPhoto[field] = isNaN(n) ? 0 : n;
+        const newVal = isNaN(n) ? 0 : n;
+        const oldVal = Number(latestMealPhoto[field]) || 0;
+        const diff = newVal - oldVal;
+        latestMealPhoto[field] = newVal;
         const r = todayRow();
-        const slot = latestMealPhoto.mealSlot || 'dinner';
-        if (r && r.mealMacros && r.mealMacros[slot]) {
-          r.mealMacros[slot].cal = latestMealPhoto.calories || 0;
-          r.mealMacros[slot].prot = latestMealPhoto.protein || 0;
-          r.mealMacros[slot].carb = latestMealPhoto.carbs || 0;
-          r.mealMacros[slot].fat = latestMealPhoto.fat || 0;
-          recalcDayTotals(r);
+        if (r && latestMealPhoto.isSingleMeal) {
+          r[field] = Math.max(0, (Number(r[field]) || 0) + diff);
         }
       } else {
         latestMealPhoto[field] = val;
@@ -455,13 +472,16 @@
           latestMealPhoto.protein = prot;
           latestMealPhoto.carbs = carb;
           latestMealPhoto.fat = fat;
+          latestMealPhoto.isSingleMeal = true;
           latestMealPhoto.time = `Day ${rows.length} · ${nowStr} 已自动入账`;
 
           const r = todayRow();
           if (r) {
             ensureRowMacros(r);
-            r.mealMacros[slot] = { cal, prot, carb, fat };
-            recalcDayTotals(r);
+            r.calories = (Number(r.calories) || 0) + cal;
+            r.protein = (Number(r.protein) || 0) + prot;
+            r.carbs = (Number(r.carbs) || 0) + carb;
+            r.fat = (Number(r.fat) || 0) + fat;
 
             const summaryText = `${aiResult.title}(${cal}kcal/${prot}g蛋白)`;
             if (slot === 'dinner' && r.dinner && r.dinner.includes('蛋白粉') && !r.dinner.includes(aiResult.title)) {
@@ -469,7 +489,7 @@
             } else {
               r[slot] = summaryText;
             }
-            latestMealPhoto.note = `${aiResult.note || '识别完成'} · 今日累计已达 ${r.calories} kcal / 蛋白质 ${r.protein}g！`;
+            latestMealPhoto.note = `${aiResult.note || '识别完成'} · 今日总摄入已自动累加至 ${r.calories} kcal / 蛋白质 ${r.protein}g！`;
           }
           statusEl.textContent = '✓ AI 识别完成！已自动累加进今日总摄入';
         } else {
