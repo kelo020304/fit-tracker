@@ -1,33 +1,26 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="每日记录" />
-  <meta name="theme-color" content="#09090b" />
+  <meta name="theme-color" content="#f8fafc" />
   <link rel="manifest" href="./manifest.json" />
   <title>每日记录</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
-      --bg: #09090b;
-      --card: #121215;
-      --border: #27272a;
-      --text: #fafafa;
-      --muted: #a1a1aa;
-    }
     body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
-      padding-top: max(1rem, env(safe-area-inset-top));
-      padding-bottom: max(2rem, env(safe-area-inset-bottom));
+      background-color: #f8fafc;
+      color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", sans-serif;
+      padding-top: max(1.25rem, env(safe-area-inset-top));
+      padding-bottom: max(2.5rem, env(safe-area-inset-bottom));
       -webkit-tap-highlight-color: transparent;
     }
-    input, textarea {
+    input {
       background: transparent;
       color: inherit;
     }
@@ -36,111 +29,117 @@
     }
   </style>
 </head>
-<body class="antialiased px-4 py-6 md:px-8 max-w-5xl mx-auto space-y-6">
+<body class="antialiased px-4 py-6 md:px-8 max-w-5xl mx-auto space-y-5">
 
-  <!-- Minimalist Header -->
+  <!-- Header -->
   <div class="flex items-center justify-between">
-    <div class="flex items-baseline gap-3">
-      <h1 class="text-xl font-semibold tracking-tight">每日记录</h1>
-      <span class="text-xs text-zinc-400" id="sync-status">点击表格可直接修改</span>
+    <div class="flex items-center gap-2.5">
+      <span class="text-xl">📋</span>
+      <h1 class="text-xl font-bold text-slate-900 tracking-tight">每日记录</h1>
+      <span class="text-xs text-slate-400 ml-1" id="sync-status">点表格可直接修改</span>
     </div>
     <div class="flex items-center gap-2">
-      <button onclick="addNewRow()" class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-zinc-100 text-zinc-900 hover:bg-white transition cursor-pointer">
+      <button onclick="addNewRow()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 shadow-xs transition cursor-pointer">
         + 新增一天
       </button>
-      <button onclick="syncFromCloud()" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-900 text-zinc-300 border border-zinc-800 hover:border-zinc-700 transition cursor-pointer">
-        同步
+      <button onclick="syncFromCloud()" class="px-3 py-2 rounded-xl text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 shadow-xs transition cursor-pointer">
+        ↻ 同步
       </button>
     </div>
   </div>
 
-  <!-- Compact Top Strip -->
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+  <!-- 4 Clean Light Summary Cards -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
     <!-- Morning Weight -->
-    <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
-      <div class="text-xs text-zinc-400">当前早起体重</div>
-      <div class="mt-1.5 flex items-baseline gap-1.5">
-        <span class="text-2xl font-semibold tracking-tight" id="stat-am">90.8</span>
-        <span class="text-xs text-zinc-500">kg</span>
-        <span class="text-xs text-emerald-400 ml-auto" id="stat-diff">-0.4 kg</span>
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
+      <div class="flex items-center justify-between text-xs font-medium text-slate-500">
+        <span>🌅 早起体重</span>
+        <span class="px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-600 font-semibold" id="stat-diff">↓ 0.4 kg</span>
+      </div>
+      <div class="mt-2 flex items-baseline gap-1">
+        <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-am">90.8</span>
+        <span class="text-xs text-slate-400">kg</span>
       </div>
     </div>
 
     <!-- Night Weight -->
-    <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
-      <div class="text-xs text-zinc-400">昨晚睡前体重</div>
-      <div class="mt-1.5 flex items-baseline gap-1.5">
-        <span class="text-2xl font-semibold tracking-tight" id="stat-pm">91.2</span>
-        <span class="text-xs text-zinc-500">kg</span>
-        <span class="text-xs text-zinc-500 ml-auto">目标 75.0</span>
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
+      <div class="flex items-center justify-between text-xs font-medium text-slate-500">
+        <span>🌙 睡前体重</span>
+        <span class="text-slate-400">目标 75.0</span>
+      </div>
+      <div class="mt-2 flex items-baseline gap-1">
+        <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-pm">91.2</span>
+        <span class="text-xs text-slate-400">kg</span>
       </div>
     </div>
 
     <!-- Water Counter -->
-    <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
-      <div class="text-xs text-zinc-400">今日喝水</div>
-      <div class="mt-1.5 flex items-center justify-between">
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
+      <div class="flex items-center justify-between text-xs font-medium text-slate-500">
+        <span>💧 今日饮水</span>
+        <span class="text-sky-600 font-semibold" id="stat-water-ml">500 ml</span>
+      </div>
+      <div class="mt-2 flex items-center justify-between">
         <div class="flex items-baseline gap-1">
-          <span class="text-2xl font-semibold tracking-tight" id="stat-water">1</span>
-          <span class="text-xs text-zinc-500">/ 4 杯</span>
+          <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-water">1</span>
+          <span class="text-xs text-slate-400">/ 4 杯</span>
         </div>
         <div class="flex items-center gap-1.5">
-          <button onclick="changeWater(-1)" class="w-7 h-7 rounded-md bg-zinc-800 hover:bg-zinc-700 text-sm flex items-center justify-center cursor-pointer">-</button>
-          <button onclick="changeWater(1)" class="w-7 h-7 rounded-md bg-zinc-100 text-zinc-900 hover:bg-white text-sm font-medium flex items-center justify-center cursor-pointer">+</button>
+          <button onclick="changeWater(-0.5)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold flex items-center justify-center cursor-pointer transition">-</button>
+          <button onclick="changeWater(0.5)" class="w-7 h-7 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-bold flex items-center justify-center cursor-pointer shadow-xs transition">+</button>
         </div>
       </div>
     </div>
 
-    <!-- Supplements Quick Check -->
-    <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
-      <div class="text-xs text-zinc-400">今日补剂</div>
-      <div class="mt-2 flex items-center gap-1.5 flex-wrap" id="supp-container">
-        <!-- Populated by JS -->
-      </div>
+    <!-- Supplements -->
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
+      <div class="text-xs font-medium text-slate-500">💊 今日补剂</div>
+      <div class="mt-2.5 flex items-center gap-1.5 flex-wrap" id="supp-container"></div>
     </div>
   </div>
 
-  <!-- Minimalist Weight Chart -->
-  <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-xs font-medium text-zinc-400">体重趋势 (kg)</span>
-      <div class="flex items-center gap-4 text-xs text-zinc-400">
-        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>早</span>
-        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-400"></span>晚</span>
+  <!-- Clean Weight Trend Chart -->
+  <div class="bg-white border border-slate-200/90 rounded-2xl p-4 md:p-5 shadow-xs">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-xs font-semibold text-slate-600">📈 体重变化趋势 (kg)</span>
+      <div class="flex items-center gap-4 text-xs text-slate-500">
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>早起空腹</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>夜间睡前</span>
       </div>
     </div>
     <canvas id="chart" height="150" class="w-full"></canvas>
   </div>
 
-  <!-- Direct Editable Table (PC) -->
-  <div class="hidden md:block bg-[#121215] border border-zinc-800/80 rounded-xl overflow-hidden">
+  <!-- Desktop Table -->
+  <div class="hidden md:block bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden">
     <table class="w-full text-left border-collapse text-sm">
       <thead>
-        <tr class="border-b border-zinc-800 text-xs text-zinc-400 bg-zinc-900/40">
-          <th class="py-3 px-4 font-medium w-28">日期</th>
-          <th class="py-3 px-3 font-medium w-20">早 (kg)</th>
-          <th class="py-3 px-3 font-medium w-20">晚 (kg)</th>
-          <th class="py-3 px-3 font-medium">早饭</th>
-          <th class="py-3 px-3 font-medium">午饭</th>
-          <th class="py-3 px-3 font-medium">晚饭 / 加餐</th>
-          <th class="py-3 px-3 font-medium w-20">饮水</th>
-          <th class="py-3 px-4 font-medium">活动量</th>
+        <tr class="border-b border-slate-100 text-xs text-slate-500 bg-slate-50/70">
+          <th class="py-3 px-4 font-semibold w-28">📅 日期</th>
+          <th class="py-3 px-3 font-semibold w-24">🌅 早 (kg)</th>
+          <th class="py-3 px-3 font-semibold w-24">🌙 晚 (kg)</th>
+          <th class="py-3 px-3 font-semibold">🥚 早饭</th>
+          <th class="py-3 px-3 font-semibold">🍱 午饭</th>
+          <th class="py-3 px-3 font-semibold">🥗 晚饭 / 加餐</th>
+          <th class="py-3 px-3 font-semibold w-20">💧 饮水</th>
+          <th class="py-3 px-4 font-semibold">🏸 活动量</th>
         </tr>
       </thead>
-      <tbody id="table-body" class="divide-y divide-zinc-800/60">
-        <!-- Populated by JS -->
-      </tbody>
+      <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
     </table>
   </div>
 
-  <!-- Mobile Clean List (iPhone) -->
-  <div class="md:hidden space-y-3" id="mobile-list">
-    <!-- Populated by JS -->
-  </div>
+  <!-- Mobile Cards (iPhone) -->
+  <div class="md:hidden space-y-3" id="mobile-list"></div>
 
   <script>
-    const STORAGE_KEY = 'daily_fit_v2';
-    const SUPP_LIST = ['蛋白粉', '茶氨酸', '甘氨酸镁'];
+    const STORAGE_KEY = 'daily_fit_v3_light';
+    const SUPP_LIST = [
+      { id: '蛋白粉', icon: '🍫' },
+      { id: '茶氨酸', icon: '🍵' },
+      { id: '甘氨酸镁', icon: '✨' }
+    ];
 
     const DEFAULT_DATA = [
       {
@@ -178,7 +177,6 @@
         await syncFromCloud(true);
       } else {
         render();
-        // Background fetch if remote has more rows
         try {
           const res = await fetch('./data.json?t=' + Date.now());
           if (res.ok) {
@@ -202,7 +200,7 @@
             rows = remote;
             saveLocal();
             render();
-            if (!silent) showStatus('已同步最新数据');
+            if (!silent) showStatus('✓ 已同步');
             return;
           }
         }
@@ -215,13 +213,13 @@
     }
 
     function saveLocal() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(rows)); } catch (e) {}
       fetch('/api/save', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(rows)
       }).catch(() => {});
-      showStatus('已自动保存');
+      showStatus('✓ 已自动保存');
     }
 
     function showStatus(msg) {
@@ -236,7 +234,7 @@
     function changeWater(delta) {
       const r = todayRow();
       if (!r) return;
-      r.water = Math.max(0, (r.water || 0) + delta);
+      r.water = Math.max(0, Math.round(((r.water || 0) + delta) * 2) / 2);
       saveLocal();
       render();
     }
@@ -301,15 +299,20 @@
       document.getElementById('stat-am').textContent = latestAm.toFixed(1);
       document.getElementById('stat-pm').textContent = latestPm.toFixed(1);
       const diff = (91.2 - latestAm).toFixed(1);
-      document.getElementById('stat-diff').textContent = (diff >= 0 ? '-' : '+') + Math.abs(diff) + ' kg';
-      document.getElementById('stat-water').textContent = r.water ?? 0;
+      document.getElementById('stat-diff').textContent = (diff >= 0 ? '↓ ' : '↑ ') + Math.abs(diff) + ' kg';
+
+      const wCups = r.water ?? 0;
+      document.getElementById('stat-water').textContent = wCups;
+      document.getElementById('stat-water-ml').textContent = Math.round(wCups * 500) + ' ml';
 
       const suppEl = document.getElementById('supp-container');
       suppEl.innerHTML = SUPP_LIST.map(s => {
-        const active = (r.supplements || []).includes(s);
-        return `<button onclick="toggleSupp('${s}')" class="px-2.5 py-1 rounded-md text-xs font-medium transition cursor-pointer ${
-          active ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-zinc-800/80 text-zinc-400 border border-zinc-700/50'
-        }">${active ? '✓ ' : ''}${s}</button>`;
+        const active = (r.supplements || []).includes(s.id);
+        return `<button onclick="toggleSupp('${s.id}')" class="px-2.5 py-1 rounded-lg text-xs font-medium transition cursor-pointer ${
+          active
+            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold'
+            : 'bg-slate-100 text-slate-500 border border-transparent hover:bg-slate-200/70'
+        }">${s.icon} ${s.id}</button>`;
       }).join('');
 
       drawChart();
@@ -318,95 +321,96 @@
     function render() {
       renderStatsAndChart();
 
-      // Desktop table (newest first)
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
-        <tr class="hover:bg-zinc-900/30 transition">
-          <td class="py-2.5 px-4 text-xs text-zinc-400 font-mono whitespace-nowrap">${r.date.slice(5)}</td>
-          <td class="py-2.5 px-3">
+        <tr class="hover:bg-slate-50/80 transition">
+          <td class="py-3 px-4 text-xs font-semibold text-slate-500 font-mono whitespace-nowrap">${r.date.slice(5)}</td>
+          <td class="py-3 px-3">
             <input type="number" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'amWeight', this.value)"
-              class="w-16 font-semibold text-emerald-400 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1 py-0.5" />
+              class="w-16 font-bold text-emerald-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1.5 py-1" />
           </td>
-          <td class="py-2.5 px-3">
+          <td class="py-3 px-3">
             <input type="number" step="0.1" value="${r.pmWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'pmWeight', this.value)"
-              class="w-16 font-semibold text-sky-400 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1 py-0.5" />
+              class="w-16 font-bold text-blue-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1.5 py-1" />
           </td>
-          <td class="py-2.5 px-3">
-            <input type="text" value="${r.breakfast || ''}" placeholder="输入早饭..."
+          <td class="py-3 px-3">
+            <input type="text" value="${r.breakfast || ''}" placeholder="点击输入..."
               onchange="updateField(${i}, 'breakfast', this.value)"
-              class="w-full text-zinc-200 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1.5 py-0.5" />
+              class="w-full text-slate-700 placeholder-slate-300 focus:bg-slate-100 rounded-md px-2 py-1" />
           </td>
-          <td class="py-2.5 px-3">
-            <input type="text" value="${r.lunch || ''}" placeholder="输入午饭..."
+          <td class="py-3 px-3">
+            <input type="text" value="${r.lunch || ''}" placeholder="点击输入..."
               onchange="updateField(${i}, 'lunch', this.value)"
-              class="w-full text-zinc-200 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1.5 py-0.5" />
+              class="w-full text-slate-700 placeholder-slate-300 focus:bg-slate-100 rounded-md px-2 py-1" />
           </td>
-          <td class="py-2.5 px-3">
-            <input type="text" value="${r.dinner || ''}" placeholder="输入晚饭/加餐..."
+          <td class="py-3 px-3">
+            <input type="text" value="${r.dinner || ''}" placeholder="点击输入..."
               onchange="updateField(${i}, 'dinner', this.value)"
-              class="w-full text-zinc-200 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1.5 py-0.5" />
+              class="w-full text-slate-700 placeholder-slate-300 focus:bg-slate-100 rounded-md px-2 py-1" />
           </td>
-          <td class="py-2.5 px-3">
-            <input type="number" step="0.5" value="${r.water ?? 0}"
-              onchange="updateField(${i}, 'water', this.value)"
-              class="w-14 text-zinc-300 focus:bg-zinc-800 rounded px-1 py-0.5" />
+          <td class="py-3 px-3">
+            <div class="flex items-center gap-1">
+              <input type="number" step="0.5" value="${r.water ?? 0}"
+                onchange="updateField(${i}, 'water', this.value)"
+                class="w-12 font-semibold text-sky-600 focus:bg-slate-100 rounded-md px-1.5 py-1" />
+              <span class="text-xs text-slate-400">杯</span>
+            </div>
           </td>
-          <td class="py-2.5 px-4">
-            <input type="text" value="${r.activity || ''}" placeholder="输入活动..."
+          <td class="py-3 px-4">
+            <input type="text" value="${r.activity || ''}" placeholder="点击输入..."
               onchange="updateField(${i}, 'activity', this.value)"
-              class="w-full text-zinc-300 placeholder-zinc-600 focus:bg-zinc-800 rounded px-1.5 py-0.5" />
+              class="w-full text-slate-700 placeholder-slate-300 focus:bg-slate-100 rounded-md px-2 py-1" />
           </td>
         </tr>
       `).join('');
 
-      // Mobile list (newest first)
       const mlist = document.getElementById('mobile-list');
       mlist.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
-        <div class="bg-[#121215] border border-zinc-800/80 rounded-xl p-4 space-y-2.5 text-xs">
-          <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
-            <span class="font-semibold text-sm text-zinc-200 font-mono">${r.date}</span>
-            <span class="text-zinc-400">饮水 ${r.water ?? 0} 杯</span>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs space-y-3 text-xs">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <span class="font-bold text-sm text-slate-800 font-mono">📅 ${r.date}</span>
+            <span class="px-2 py-0.5 rounded-md bg-sky-50 text-sky-600 font-semibold">💧 饮水 ${r.water ?? 0} 杯</span>
           </div>
-          <div class="grid grid-cols-2 gap-3 pt-0.5">
-            <div class="flex items-center justify-between bg-zinc-900/70 px-3 py-2 rounded-lg">
-              <span class="text-zinc-400">早 (kg)</span>
+          <div class="grid grid-cols-2 gap-2.5">
+            <div class="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-xl border border-slate-100">
+              <span class="text-slate-500">🌅 早 (kg)</span>
               <input type="number" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
                 onchange="updateField(${i}, 'amWeight', this.value)"
-                class="w-14 text-right font-semibold text-emerald-400 text-sm" />
+                class="w-14 text-right font-bold text-emerald-600 text-sm" />
             </div>
-            <div class="flex items-center justify-between bg-zinc-900/70 px-3 py-2 rounded-lg">
-              <span class="text-zinc-400">晚 (kg)</span>
+            <div class="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-xl border border-slate-100">
+              <span class="text-slate-500">🌙 晚 (kg)</span>
               <input type="number" step="0.1" value="${r.pmWeight ?? ''}" placeholder="-"
                 onchange="updateField(${i}, 'pmWeight', this.value)"
-                class="w-14 text-right font-semibold text-sky-400 text-sm" />
+                class="w-14 text-right font-bold text-blue-600 text-sm" />
             </div>
           </div>
           <div class="space-y-1.5 pt-1">
             <div class="flex items-center gap-2">
-              <span class="text-zinc-500 w-8 shrink-0">早饭</span>
+              <span class="text-slate-400 w-12 shrink-0">🥚 早饭</span>
               <input type="text" value="${r.breakfast || ''}" placeholder="点击输入..."
                 onchange="updateField(${i}, 'breakfast', this.value)"
-                class="w-full text-zinc-200 border-b border-zinc-800/60 py-1" />
+                class="w-full text-slate-700 border-b border-slate-100 py-1" />
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-zinc-500 w-8 shrink-0">午饭</span>
+              <span class="text-slate-400 w-12 shrink-0">🍱 午饭</span>
               <input type="text" value="${r.lunch || ''}" placeholder="点击输入..."
                 onchange="updateField(${i}, 'lunch', this.value)"
-                class="w-full text-zinc-200 border-b border-zinc-800/60 py-1" />
+                class="w-full text-slate-700 border-b border-slate-100 py-1" />
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-zinc-500 w-8 shrink-0">晚饭</span>
+              <span class="text-slate-400 w-12 shrink-0">🥗 晚饭</span>
               <input type="text" value="${r.dinner || ''}" placeholder="点击输入..."
                 onchange="updateField(${i}, 'dinner', this.value)"
-                class="w-full text-zinc-200 border-b border-zinc-800/60 py-1" />
+                class="w-full text-slate-700 border-b border-slate-100 py-1" />
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-zinc-500 w-8 shrink-0">活动</span>
+              <span class="text-slate-400 w-12 shrink-0">🏸 活动</span>
               <input type="text" value="${r.activity || ''}" placeholder="点击输入..."
                 onchange="updateField(${i}, 'activity', this.value)"
-                class="w-full text-zinc-200 py-1" />
+                class="w-full text-slate-700 py-1" />
             </div>
           </div>
         </div>
@@ -425,7 +429,7 @@
       ctx.scale(dpr, dpr);
       ctx.clearRect(0, 0, w, h);
 
-      const padL = 40, padR = 24, padT = 20, padB = 26;
+      const padL = 42, padR = 24, padT = 22, padB = 26;
       const pw = w - padL - padR;
       const ph = h - padT - padB;
 
@@ -438,31 +442,29 @@
       const maxW = Math.ceil(Math.max(...vals, 91.5) + 0.5);
 
       const yOf = v => padT + ph - ((v - minW) / (maxW - minW)) * ph;
-      const n = Math.max(rows.length, 4);
+      const n = Math.max(rows.length, 5);
       const xOf = idx => padL + (idx / (n - 1)) * pw;
 
       ctx.font = '12px -apple-system, sans-serif';
       [minW, (minW + maxW) / 2, maxW].forEach(val => {
         const y = yOf(val);
-        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-        ctx.beginPath();
-        ctx.moveTo(padL, y);
-        ctx.lineTo(w - padR, y);
-        ctx.stroke();
-        ctx.fillStyle = '#71717a';
+        ctx.strokeStyle = '#f1f5f9';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke();
+        ctx.fillStyle = '#94a3b8';
         ctx.textAlign = 'right';
         ctx.fillText(val.toFixed(1), padL - 8, y + 4);
       });
 
       rows.forEach((r, i) => {
-        ctx.fillStyle = '#71717a';
+        ctx.fillStyle = '#64748b';
         ctx.textAlign = 'center';
         ctx.fillText(r.date.slice(5), xOf(i), h - 6);
       });
 
-      // Draw PM
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 2;
+      // PM Weight (Blue)
+      ctx.strokeStyle = '#3b82f6';
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
       let sPm = false;
       rows.forEach((r, i) => {
@@ -475,15 +477,15 @@
       rows.forEach((r, i) => {
         if (r.pmWeight != null) {
           const x = xOf(i), y = yOf(r.pmWeight);
-          ctx.fillStyle = '#38bdf8';
-          ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
-          ctx.fillText(r.pmWeight.toFixed(1), x, y - 8);
+          ctx.fillStyle = '#3b82f6';
+          ctx.beginPath(); ctx.arc(x, y, 4.5, 0, Math.PI * 2); ctx.fill();
+          ctx.fillText(r.pmWeight.toFixed(1), x, y - 9);
         }
       });
 
-      // Draw AM
-      ctx.strokeStyle = '#34d399';
-      ctx.lineWidth = 2;
+      // AM Weight (Emerald)
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
       let sAm = false;
       rows.forEach((r, i) => {
@@ -496,9 +498,9 @@
       rows.forEach((r, i) => {
         if (r.amWeight != null) {
           const x = xOf(i), y = yOf(r.amWeight);
-          ctx.fillStyle = '#34d399';
-          ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
-          ctx.fillText(r.amWeight.toFixed(1), x, y + 16);
+          ctx.fillStyle = '#10b981';
+          ctx.beginPath(); ctx.arc(x, y, 4.5, 0, Math.PI * 2); ctx.fill();
+          ctx.fillText(r.amWeight.toFixed(1), x, y + 17);
         }
       });
     }

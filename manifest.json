@@ -1,9 +1,9 @@
 {
-  "name": "队长75kg · 国家一级运动员状态看板",
-  "short_name": "队长75kg",
-  "start_url": "/",
+  "name": "每日记录",
+  "short_name": "每日记录",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#0b0f17",
-  "theme_color": "#0b0f17",
+  "background_color": "#f8fafc",
+  "theme_color": "#f8fafc",
   "orientation": "portrait"
 }
