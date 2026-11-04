@@ -25,10 +25,26 @@
     "dinner": "蛋白粉 + 食堂奥尔良鸡排豆腐双蔬饭",
     "water": 4,
     "activity": "深蹲 + 弓箭步",
-    "supplements": ["蛋白粉"],
+    "supplements": ["蛋白粉", "甘氨酸镁"],
     "calories": 1278,
     "protein": 110,
     "carbs": 96,
     "fat": 41
+  },
+  {
+    "date": "2026-11-05",
+    "amWeight": null,
+    "pmWeight": null,
+    "hrv": null,
+    "breakfast": "",
+    "lunch": "",
+    "dinner": "",
+    "water": 0,
+    "activity": "",
+    "supplements": [],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fat": 0
   }
 ]
