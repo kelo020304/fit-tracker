@@ -52,10 +52,10 @@
     </div>
   </div>
 
-  <!-- 4 Clean Light Summary Cards -->
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+  <!-- Top Summary Cards: Weight, Water, Supplements + Today's Total Intake -->
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
     <!-- Morning Weight -->
-    <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 shadow-xs">
       <div class="flex items-center justify-between text-xs font-medium text-slate-500">
         <span>🌅 早起体重</span>
         <span class="px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-600 font-semibold" id="stat-diff">↓ 0.4 kg</span>
@@ -67,7 +67,7 @@
     </div>
 
     <!-- Night Weight -->
-    <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 shadow-xs">
       <div class="flex items-center justify-between text-xs font-medium text-slate-500">
         <span>🌙 睡前体重</span>
         <span class="text-slate-400">目标 75.0</span>
@@ -78,8 +78,23 @@
       </div>
     </div>
 
+    <!-- Today Total Calorie & Protein Summary Card -->
+    <div class="col-span-2 md:col-span-1 bg-white border border-slate-200/90 rounded-2xl p-3.5 shadow-xs">
+      <div class="flex items-center justify-between text-xs font-medium text-slate-500">
+        <span>🔥 今日总摄入</span>
+        <span class="text-emerald-600 font-semibold" id="stat-prot-top">蛋白 71g</span>
+      </div>
+      <div class="mt-2 flex items-baseline justify-between">
+        <div class="flex items-baseline gap-1">
+          <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-cal-top">753</span>
+          <span class="text-xs text-slate-400">/ 1750 kcal</span>
+        </div>
+        <span class="text-[11px] text-slate-400" id="stat-macro-sub">碳50g · 脂22g</span>
+      </div>
+    </div>
+
     <!-- Water Counter -->
-    <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 shadow-xs">
       <div class="flex items-center justify-between text-xs font-medium text-slate-500">
         <span>💧 今日饮水</span>
         <span class="text-sky-600 font-semibold" id="stat-water-ml">1250 ml</span>
@@ -89,17 +104,17 @@
           <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-water">2.5</span>
           <span class="text-xs text-slate-400">/ 4 杯</span>
         </div>
-        <div class="flex items-center gap-1.5">
-          <button onclick="changeWater(-0.5)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold flex items-center justify-center cursor-pointer transition">-</button>
-          <button onclick="changeWater(0.5)" class="w-7 h-7 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-bold flex items-center justify-center cursor-pointer shadow-xs transition">+</button>
+        <div class="flex items-center gap-1">
+          <button onclick="changeWater(-0.5)" class="w-6 h-6 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold flex items-center justify-center cursor-pointer transition">-</button>
+          <button onclick="changeWater(0.5)" class="w-6 h-6 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-bold flex items-center justify-center cursor-pointer shadow-xs transition">+</button>
         </div>
       </div>
     </div>
 
     <!-- Supplements -->
-    <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 shadow-xs">
       <div class="text-xs font-medium text-slate-500">💊 今日补剂</div>
-      <div class="mt-2.5 flex items-center gap-1.5 flex-wrap" id="supp-container"></div>
+      <div class="mt-2 flex items-center gap-1 flex-wrap" id="supp-container"></div>
     </div>
   </div>
 
@@ -108,14 +123,14 @@
     <div class="flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2">
         <span class="text-base">📷</span>
-        <span class="text-sm font-bold text-slate-800">AI 拍照识餐 · 自动算热量与营养</span>
-        <span class="text-xs text-emerald-600 font-medium" id="photo-status">手机选图后约 5 秒全自动出结果并写入今日表格</span>
+        <span class="text-sm font-bold text-slate-800">AI 拍照识餐 · 自动累加每日总摄入</span>
+        <span class="text-xs text-emerald-600 font-medium" id="photo-status">手机传图约 5 秒自动识别并累加进今日摄入总结</span>
       </div>
       <div class="flex items-center gap-2">
         <select id="meal-slot" class="px-2.5 py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200 outline-none">
-          <option value="dinner">🥗 填入晚饭</option>
-          <option value="lunch">🍱 填入午饭</option>
-          <option value="breakfast">🥚 填入早饭</option>
+          <option value="dinner">🥗 计入晚饭</option>
+          <option value="lunch">🍱 计入午饭</option>
+          <option value="breakfast">🥚 计入早饭</option>
         </select>
         <label class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-xs transition cursor-pointer inline-flex items-center gap-1.5">
           <span>📤 拍照 / 传图自动分析</span>
@@ -130,33 +145,33 @@
       <div class="flex-1 space-y-2 w-full">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div contenteditable="true" onblur="updateMealPhotoField('title', this.innerText.trim())"
-            class="text-sm font-bold text-slate-800 focus:bg-white rounded px-1 outline-none" id="meal-analysis-title">Day 2 (11-04) 已记摄入：早饭 + Subway 午饭 + 1勺乳清蛋白粉</div>
+            class="text-sm font-bold text-slate-800 focus:bg-white rounded px-1 outline-none" id="meal-analysis-title">Day 2 (11-04) 已累计摄入：早饭 + Subway 午饭 + 1勺乳清蛋白粉</div>
           <span class="text-xs text-slate-400 font-mono" id="meal-analysis-time">Day 2 · 待拍晚饭</span>
         </div>
         <div class="grid grid-cols-4 gap-2 text-xs" id="meal-macros">
           <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
-            <div class="text-slate-400">🔥 热量 (kcal)</div>
+            <div class="text-slate-400">🔥 本餐热量</div>
             <div contenteditable="true" onblur="updateMealPhotoField('calories', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-slate-800 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-cal">755 kcal</div>
+              class="font-bold text-slate-800 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-cal">753 kcal</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
-            <div class="text-slate-400">🥩 蛋白质 (g)</div>
+            <div class="text-slate-400">🥩 蛋白质</div>
             <div contenteditable="true" onblur="updateMealPhotoField('protein', this.innerText.replace(/[^0-9]/g,''))"
               class="font-bold text-emerald-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-prot">71 g</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
-            <div class="text-slate-400">🍚 碳水 (g)</div>
+            <div class="text-slate-400">🍚 碳水</div>
             <div contenteditable="true" onblur="updateMealPhotoField('carbs', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-blue-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-carb">51 g</div>
+              class="font-bold text-blue-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-carb">50 g</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
-            <div class="text-slate-400">🥑 脂肪 (g)</div>
+            <div class="text-slate-400">🥑 脂肪</div>
             <div contenteditable="true" onblur="updateMealPhotoField('fat', this.innerText.replace(/[^0-9]/g,''))"
               class="font-bold text-amber-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-fat">22 g</div>
           </div>
         </div>
         <p contenteditable="true" onblur="updateMealPhotoField('note', this.innerText.trim())"
-          class="text-xs text-slate-600 leading-relaxed focus:bg-white rounded px-1 outline-none" id="meal-analysis-note">直接点右上角「📤 拍照 / 传图自动分析」，网页内置视觉大模型会在约 5 秒内自动识别菜品、算出四大营养素并填入今日表格，无需去聊天框通知！</p>
+          class="text-xs text-slate-600 leading-relaxed focus:bg-white rounded px-1 outline-none" id="meal-analysis-note">直接点右上角「📤 拍照 / 传图自动分析」，AI 识别完本餐后会自动加上你今天已吃的 753 kcal / 71g 蛋白，更新到下方每日摄入统计中！</p>
       </div>
     </div>
   </div>
@@ -170,33 +185,34 @@
         <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>夜间睡前</span>
       </div>
     </div>
-    <canvas id="chart" height="150" class="w-full"></canvas>
+    <canvas id="chart" height="145" class="w-full"></canvas>
   </div>
 
-  <!-- Desktop Table -->
+  <!-- Desktop Table (Includes Daily Intake Summary Column) -->
   <div class="hidden md:block bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-x-auto">
     <table class="w-full text-left border-collapse text-sm">
       <thead>
         <tr class="border-b border-slate-100 text-xs text-slate-500 bg-slate-50/70 whitespace-nowrap">
-          <th class="py-3 px-4 font-semibold">📅 日期</th>
-          <th class="py-3 px-3 font-semibold">🌅 早(kg)</th>
-          <th class="py-3 px-3 font-semibold">🌙 晚(kg)</th>
-          <th class="py-3 px-4 font-semibold">🥚 早饭</th>
-          <th class="py-3 px-4 font-semibold">🍱 午饭</th>
-          <th class="py-3 px-4 font-semibold">🥗 晚饭 / 加餐</th>
-          <th class="py-3 px-3 font-semibold">💧 饮水</th>
-          <th class="py-3 px-4 font-semibold">🏸 运动</th>
+          <th class="py-3 px-3.5 font-semibold">📅 日期</th>
+          <th class="py-3 px-2.5 font-semibold">🌅 早</th>
+          <th class="py-3 px-2.5 font-semibold">🌙 晚</th>
+          <th class="py-3 px-3.5 font-semibold">🥚 早饭</th>
+          <th class="py-3 px-3.5 font-semibold">🍱 午饭</th>
+          <th class="py-3 px-3.5 font-semibold">🥗 晚饭 / 加餐</th>
+          <th class="py-3 px-3.5 font-semibold">📊 当日总摄入 (热量 / 蛋白 / 碳 / 脂)</th>
+          <th class="py-3 px-2.5 font-semibold">💧 饮水</th>
+          <th class="py-3 px-3 font-semibold">🏸 运动</th>
         </tr>
       </thead>
       <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
     </table>
   </div>
 
-  <!-- Mobile Cards (iPhone) -->
-  <div class="md:hidden space-y-3" id="mobile-list"></div>
+  <!-- Mobile Cards (iPhone) with Daily Intake Summary Strip -->
+  <div class="md:hidden space-y-3.5" id="mobile-list"></div>
 
   <script>
-    const STORAGE_KEY = 'daily_fit_v6_cloud';
+    const STORAGE_KEY = 'daily_fit_v7_cloud';
     const CLOUD_API = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1a57ab09f2c79';
     const SUPP_LIST = [
       { id: '蛋白粉', icon: '🍫' },
@@ -214,7 +230,16 @@
         dinner: '沙县鸡腿饭 + 2卤蛋',
         water: 2,
         activity: '羽毛球',
-        supplements: ['甘氨酸镁']
+        supplements: ['甘氨酸镁'],
+        calories: 1310,
+        protein: 78,
+        carbs: 125,
+        fat: 42,
+        mealMacros: {
+          breakfast: { cal: 0, prot: 0, carb: 0, fat: 0 },
+          lunch: { cal: 750, prot: 36, carb: 77, fat: 24 },
+          dinner: { cal: 560, prot: 42, carb: 48, fat: 18 }
+        }
       },
       {
         date: '2026-11-04',
@@ -225,7 +250,17 @@
         dinner: '下午: 巧克力蛋白粉',
         water: 2.5,
         activity: '-',
-        supplements: ['蛋白粉']
+        supplements: ['蛋白粉'],
+        calories: 753,
+        protein: 71,
+        carbs: 50,
+        fat: 22,
+        mealMacros: {
+          breakfast: { cal: 270, prot: 20, carb: 11, fat: 15 },
+          lunch: { cal: 380, prot: 30, carb: 38, fat: 5 },
+          snack: { cal: 103, prot: 21, carb: 1, fat: 2 },
+          dinner: { cal: 0, prot: 0, carb: 0, fat: 0 }
+        }
       }
     ];
 
@@ -234,18 +269,64 @@
       photoUrl: '',
       mealSlot: 'dinner',
       time: 'Day 2 · 待拍晚饭',
-      title: 'Day 2 (11-04) 已记摄入：早饭 + Subway 午饭 + 1勺乳清蛋白粉',
-      calories: 755,
+      title: 'Day 2 (11-04) 已累计摄入：早饭 + Subway 午饭 + 1勺乳清蛋白粉',
+      calories: 753,
       protein: 71,
-      carbs: 51,
+      carbs: 50,
       fat: 22,
-      note: '直接点右上角「📤 拍照 / 传图自动分析」，网页内置视觉大模型会在约 5 秒内自动识别菜品、算出四大营养素并填入今日表格，无需去聊天框通知！'
+      note: '直接点右上角「📤 拍照 / 传图自动分析」，AI 识别完本餐后会自动加上你今天已吃的 753 kcal / 71g 蛋白，更新到下方每日摄入统计中！'
     };
+
+    function ensureRowMacros(r) {
+      if (r.date === '2026-11-03' && r.calories == null) {
+        r.calories = 1310; r.protein = 78; r.carbs = 125; r.fat = 42;
+      } else if (r.date === '2026-11-04' && r.calories == null) {
+        r.calories = 753; r.protein = 71; r.carbs = 50; r.fat = 22;
+        r.mealMacros = {
+          breakfast: { cal: 270, prot: 20, carb: 11, fat: 15 },
+          lunch: { cal: 380, prot: 30, carb: 38, fat: 5 },
+          snack: { cal: 103, prot: 21, carb: 1, fat: 2 },
+          dinner: { cal: 0, prot: 0, carb: 0, fat: 0 }
+        };
+      } else {
+        if (r.calories == null) r.calories = 0;
+        if (r.protein == null) r.protein = 0;
+        if (r.carbs == null) r.carbs = 0;
+        if (r.fat == null) r.fat = 0;
+      }
+      if (!r.mealMacros) {
+        r.mealMacros = {
+          breakfast: { cal: 0, prot: 0, carb: 0, fat: 0 },
+          lunch: { cal: 0, prot: 0, carb: 0, fat: 0 },
+          snack: { cal: 0, prot: 0, carb: 0, fat: 0 },
+          dinner: { cal: 0, prot: 0, carb: 0, fat: 0 }
+        };
+      }
+    }
+
+    function recalcDayTotals(r) {
+      if (!r || !r.mealMacros) return;
+      const slots = Object.values(r.mealMacros);
+      const sumCal = slots.reduce((acc, s) => acc + (Number(s?.cal) || 0), 0);
+      const sumProt = slots.reduce((acc, s) => acc + (Number(s?.prot) || 0), 0);
+      const sumCarb = slots.reduce((acc, s) => acc + (Number(s?.carb) || 0), 0);
+      const sumFat = slots.reduce((acc, s) => acc + (Number(s?.fat) || 0), 0);
+      if (sumCal > 0) {
+        r.calories = sumCal;
+        r.protein = sumProt;
+        r.carbs = sumCarb;
+        r.fat = sumFat;
+      }
+    }
 
     async function init() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        try { rows = JSON.parse(saved); render(); } catch (e) {}
+        try {
+          rows = JSON.parse(saved);
+          rows.forEach(ensureRowMacros);
+          render();
+        } catch (e) {}
       }
       await syncFromCloud(true);
     }
@@ -267,6 +348,7 @@
           if (obj && obj.data) {
             if (Array.isArray(obj.data.rows) && obj.data.rows.length > 0) {
               rows = obj.data.rows;
+              rows.forEach(ensureRowMacros);
               localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
             }
             if (obj.data.latestMealPhoto && obj.data.latestMealPhoto.time !== 'Day 1 晚餐已验图') {
@@ -280,6 +362,7 @@
       } catch (e) {}
       if (!rows || !rows.length) {
         rows = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        rows.forEach(ensureRowMacros);
         render();
       }
     }
@@ -307,10 +390,19 @@
       if (['calories', 'protein', 'carbs', 'fat'].includes(field)) {
         const n = parseInt(val, 10);
         latestMealPhoto[field] = isNaN(n) ? 0 : n;
+        const r = todayRow();
+        const slot = latestMealPhoto.mealSlot || 'dinner';
+        if (r && r.mealMacros && r.mealMacros[slot]) {
+          r.mealMacros[slot].cal = latestMealPhoto.calories || 0;
+          r.mealMacros[slot].prot = latestMealPhoto.protein || 0;
+          r.mealMacros[slot].carb = latestMealPhoto.carbs || 0;
+          r.mealMacros[slot].fat = latestMealPhoto.fat || 0;
+          recalcDayTotals(r);
+        }
       } else {
         latestMealPhoto[field] = val;
       }
-      renderPhotoBox();
+      render();
       await saveLocal();
     }
 
@@ -325,7 +417,6 @@
         const { blob, dataUrl } = await compressImage(file, 720, 0.78);
         const nowStr = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
 
-        // Show immediate local preview
         latestMealPhoto = {
           photoUrl: dataUrl,
           mealSlot: slot,
@@ -339,7 +430,6 @@
         };
         renderPhotoBox();
 
-        // Run cloud image upload and AI Vision inference in parallel
         const uploadPromise = fetch('https://ntfy.sh/captain_fit_photo_db300ca2', {
           method: 'PUT',
           headers: { 'Filename': 'meal.jpg' },
@@ -355,28 +445,36 @@
         }
 
         if (aiResult && aiResult.title) {
+          const cal = Number(aiResult.calories) || 500;
+          const prot = Number(aiResult.protein) || 30;
+          const carb = Number(aiResult.carbs) || 45;
+          const fat = Number(aiResult.fat) || 15;
+
           latestMealPhoto.title = aiResult.title;
-          latestMealPhoto.calories = aiResult.calories ?? 500;
-          latestMealPhoto.protein = aiResult.protein ?? 30;
-          latestMealPhoto.carbs = aiResult.carbs ?? 45;
-          latestMealPhoto.fat = aiResult.fat ?? 15;
-          latestMealPhoto.note = aiResult.note || 'AI 已自动识别并填入今日记录（点击上方任意数字或文字可直接微调）。';
+          latestMealPhoto.calories = cal;
+          latestMealPhoto.protein = prot;
+          latestMealPhoto.carbs = carb;
+          latestMealPhoto.fat = fat;
           latestMealPhoto.time = `Day ${rows.length} · ${nowStr} 已自动入账`;
 
-          // Automatically write into today's meal column
           const r = todayRow();
           if (r) {
-            const summaryText = `${aiResult.title}(${latestMealPhoto.calories}kcal/${latestMealPhoto.protein}g蛋白)`;
+            ensureRowMacros(r);
+            r.mealMacros[slot] = { cal, prot, carb, fat };
+            recalcDayTotals(r);
+
+            const summaryText = `${aiResult.title}(${cal}kcal/${prot}g蛋白)`;
             if (slot === 'dinner' && r.dinner && r.dinner.includes('蛋白粉') && !r.dinner.includes(aiResult.title)) {
               r.dinner = `蛋白粉 + ${summaryText}`;
             } else {
               r[slot] = summaryText;
             }
+            latestMealPhoto.note = `${aiResult.note || '识别完成'} · 今日累计已达 ${r.calories} kcal / 蛋白质 ${r.protein}g！`;
           }
-          statusEl.textContent = '✓ AI 识别完成！已自动填入今日表格';
+          statusEl.textContent = '✓ AI 识别完成！已自动累加进今日总摄入';
         } else {
           latestMealPhoto.title = '照片已上传（点此直接输入菜名）';
-          latestMealPhoto.note = '当前网络访问海外 AI 节点超时，可直接点击上方数字/文字手动修改。';
+          latestMealPhoto.note = '当前网络访问海外 AI 节点超时，可直接点击上方或下方数字手动修改。';
           statusEl.textContent = '✓ 照片已同步云端';
         }
 
@@ -388,9 +486,8 @@
     }
 
     async function analyzeMealWithVisionAI(dataUrl) {
-      const prompt = '请识别图中的餐食，估算总热量与营养素，只输出纯JSON（不要markdown代码块）：{"title":"菜名简述(12字内)","calories":整数,"protein":整数,"carbs":整数,"fat":整数,"note":"一句话营养点评(28字内)"}';
+      const prompt = '请识别图中的餐食，估算总热量与营养素，只输出纯JSON（不要markdown代码块）：{"title":"菜名简述(12字内)","calories":整数,"protein":整数,"carbs":整数,"fat":整数,"note":"一句话营养点评(25字内)"}';
 
-      // Engine 1: Qwen3-VL-HF-Demo
       try {
         const res1 = await callGradioVision(
           'https://prithivmlmods-qwen3-vl-hf-demo.hf.space/gradio_api/call/run_understanding',
@@ -399,7 +496,6 @@
         if (res1) return res1;
       } catch (e) {}
 
-      // Engine 2: Qwen3-VL-Outpost (Backup)
       try {
         const res2 = await callGradioVision(
           'https://prithivmlmods-qwen3-vl-outpost.hf.space/gradio_api/call/run_router',
@@ -521,6 +617,9 @@
       } else if (field === 'water') {
         const num = parseFloat(val);
         r[field] = isNaN(num) ? 0 : num;
+      } else if (['calories', 'protein', 'carbs', 'fat'].includes(field)) {
+        const num = parseInt(String(val).replace(/[^0-9]/g, ''), 10);
+        r[field] = isNaN(num) ? 0 : num;
       } else {
         r[field] = val;
       }
@@ -545,7 +644,17 @@
         dinner: '',
         water: 0,
         activity: '',
-        supplements: []
+        supplements: [],
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        mealMacros: {
+          breakfast: { cal: 0, prot: 0, carb: 0, fat: 0 },
+          lunch: { cal: 0, prot: 0, carb: 0, fat: 0 },
+          snack: { cal: 0, prot: 0, carb: 0, fat: 0 },
+          dinner: { cal: 0, prot: 0, carb: 0, fat: 0 }
+        }
       });
       saveLocal();
       render();
@@ -554,6 +663,7 @@
     function renderStatsAndChart() {
       const r = todayRow();
       if (!r) return;
+      ensureRowMacros(r);
 
       const dayBadge = document.getElementById('day-badge');
       if (dayBadge) dayBadge.textContent = `Day ${rows.length} · ${r.date.slice(5)}`;
@@ -566,6 +676,11 @@
       const diff = (91.2 - latestAm).toFixed(1);
       document.getElementById('stat-diff').textContent = (diff >= 0 ? '↓ ' : '↑ ') + Math.abs(diff) + ' kg';
 
+      // Top intake card
+      document.getElementById('stat-cal-top').textContent = r.calories ?? 0;
+      document.getElementById('stat-prot-top').textContent = `蛋白 ${r.protein ?? 0}g`;
+      document.getElementById('stat-macro-sub').textContent = `碳${r.carbs ?? 0}g · 脂${r.fat ?? 0}g`;
+
       const wCups = r.water ?? 0;
       document.getElementById('stat-water').textContent = wCups;
       document.getElementById('stat-water-ml').textContent = Math.round(wCups * 500) + ' ml';
@@ -573,7 +688,7 @@
       const suppEl = document.getElementById('supp-container');
       suppEl.innerHTML = SUPP_LIST.map(s => {
         const active = (r.supplements || []).includes(s.id);
-        return `<button onclick="toggleSupp('${s.id}')" class="px-2.5 py-1 rounded-lg text-xs font-medium transition cursor-pointer ${
+        return `<button onclick="toggleSupp('${s.id}')" class="px-2 py-1 rounded-lg text-xs font-medium transition cursor-pointer ${
           active
             ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold'
             : 'bg-slate-100 text-slate-500 border border-transparent hover:bg-slate-200/70'
@@ -588,51 +703,66 @@
       renderStatsAndChart();
 
       const tbody = document.getElementById('table-body');
-      tbody.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
+      tbody.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => {
+        ensureRowMacros(r);
+        return `
         <tr class="hover:bg-slate-50/80 transition whitespace-nowrap ${i === rows.length - 1 ? 'bg-emerald-50/20' : ''}">
-          <td class="py-3 px-4 text-xs font-semibold text-slate-600 font-mono">
-            <span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 mr-1">Day ${i + 1}</span>${r.date.slice(5)}
+          <td class="py-3 px-3.5 text-xs font-semibold text-slate-600 font-mono">
+            <span class="px-1.5 py-0.5 rounded ${i === rows.length - 1 ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'} mr-1">Day ${i + 1}</span>${r.date.slice(5)}
           </td>
-          <td class="py-3 px-3">
+          <td class="py-3 px-2.5">
             <input type="number" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'amWeight', this.value)"
-              class="w-14 font-bold text-emerald-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
+              class="w-13 font-bold text-emerald-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
           </td>
-          <td class="py-3 px-3">
+          <td class="py-3 px-2.5">
             <input type="number" step="0.1" value="${r.pmWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'pmWeight', this.value)"
-              class="w-14 font-bold text-blue-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
+              class="w-13 font-bold text-blue-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
           </td>
-          <td class="py-3 px-4">
+          <td class="py-3 px-3.5">
             <div contenteditable="true" data-placeholder="点击输入..."
               onblur="updateField(${i}, 'breakfast', this.innerText.trim())"
-              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[120px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.breakfast || ''}</div>
+              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[110px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.breakfast || ''}</div>
           </td>
-          <td class="py-3 px-4">
+          <td class="py-3 px-3.5">
             <div contenteditable="true" data-placeholder="点击输入..."
               onblur="updateField(${i}, 'lunch', this.innerText.trim())"
-              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[140px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.lunch || ''}</div>
+              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[125px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.lunch || ''}</div>
           </td>
-          <td class="py-3 px-4">
+          <td class="py-3 px-3.5">
             <div contenteditable="true" data-placeholder="点击输入..."
               onblur="updateField(${i}, 'dinner', this.innerText.trim())"
-              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[140px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.dinner || ''}</div>
+              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[130px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.dinner || ''}</div>
           </td>
-          <td class="py-3 px-3">
+          <td class="py-3 px-3.5">
+            <div class="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200/80 rounded-lg px-2 py-1 text-xs">
+              <span class="font-bold text-slate-800">🔥<input type="number" value="${r.calories ?? 0}" onchange="updateField(${i}, 'calories', this.value)" class="w-11 font-bold text-slate-800 text-right" />kcal</span>
+              <span class="text-slate-300">|</span>
+              <span class="font-semibold text-emerald-600">🥩<input type="number" value="${r.protein ?? 0}" onchange="updateField(${i}, 'protein', this.value)" class="w-8 font-semibold text-emerald-600 text-right" />g</span>
+              <span class="text-slate-300">|</span>
+              <span class="text-blue-600">碳<input type="number" value="${r.carbs ?? 0}" onchange="updateField(${i}, 'carbs', this.value)" class="w-8 text-blue-600 text-right" />g</span>
+              <span class="text-amber-600">脂<input type="number" value="${r.fat ?? 0}" onchange="updateField(${i}, 'fat', this.value)" class="w-7 text-amber-600 text-right" />g</span>
+            </div>
+          </td>
+          <td class="py-3 px-2.5">
             <input type="number" step="0.5" value="${r.water ?? 0}"
               onchange="updateField(${i}, 'water', this.value)"
-              class="w-10 font-semibold text-sky-600 focus:bg-slate-100 rounded-md px-1 py-0.5 text-center" /><span class="text-xs text-slate-400">杯</span>
+              class="w-9 font-semibold text-sky-600 focus:bg-slate-100 rounded-md px-1 py-0.5 text-center" /><span class="text-xs text-slate-400">杯</span>
           </td>
-          <td class="py-3 px-4">
+          <td class="py-3 px-3">
             <div contenteditable="true" data-placeholder="-"
               onblur="updateField(${i}, 'activity', this.innerText.trim())"
-              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[70px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.activity || ''}</div>
+              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[60px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.activity || ''}</div>
           </td>
         </tr>
-      `).join('');
+      `}).join('');
 
       const mlist = document.getElementById('mobile-list');
-      mlist.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
+      mlist.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => {
+        ensureRowMacros(r);
+        const remainCal = Math.max(0, 1750 - (r.calories || 0));
+        return `
         <div class="bg-white border ${i === rows.length - 1 ? 'border-emerald-300 ring-1 ring-emerald-100' : 'border-slate-200/90'} rounded-2xl p-4 shadow-xs space-y-3 text-xs">
           <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
             <div class="flex items-center gap-1.5">
@@ -641,6 +771,45 @@
             </div>
             <span class="px-2 py-0.5 rounded-md bg-sky-50 text-sky-600 font-semibold">💧 饮水 ${r.water ?? 0} 杯</span>
           </div>
+
+          <!-- Daily Intake Summary Box Inside Each Day's Card -->
+          <div class="bg-slate-50 border border-slate-200/70 rounded-xl p-2.5 space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] text-slate-500">
+              <span class="font-semibold text-slate-700">📊 当日摄入总结 (可点数字微调)</span>
+              <span class="text-emerald-600 font-medium">距目标还可摄入 ${remainCal} kcal</span>
+            </div>
+            <div class="grid grid-cols-4 gap-1.5 text-center">
+              <div class="bg-white border border-slate-200/70 rounded-lg py-1.5 px-1">
+                <div class="text-[10px] text-slate-400">🔥 总热量</div>
+                <div class="font-bold text-slate-800 mt-0.5 flex items-center justify-center">
+                  <input type="number" value="${r.calories ?? 0}" onchange="updateField(${i}, 'calories', this.value)" class="w-11 text-center font-bold text-slate-800" />
+                  <span class="text-[10px] text-slate-400">kcal</span>
+                </div>
+              </div>
+              <div class="bg-white border border-slate-200/70 rounded-lg py-1.5 px-1">
+                <div class="text-[10px] text-slate-400">🥩 蛋白质</div>
+                <div class="font-bold text-emerald-600 mt-0.5 flex items-center justify-center">
+                  <input type="number" value="${r.protein ?? 0}" onchange="updateField(${i}, 'protein', this.value)" class="w-9 text-center font-bold text-emerald-600" />
+                  <span class="text-[10px] text-emerald-500">g</span>
+                </div>
+              </div>
+              <div class="bg-white border border-slate-200/70 rounded-lg py-1.5 px-1">
+                <div class="text-[10px] text-slate-400">🍚 碳水</div>
+                <div class="font-bold text-blue-600 mt-0.5 flex items-center justify-center">
+                  <input type="number" value="${r.carbs ?? 0}" onchange="updateField(${i}, 'carbs', this.value)" class="w-9 text-center font-bold text-blue-600" />
+                  <span class="text-[10px] text-blue-400">g</span>
+                </div>
+              </div>
+              <div class="bg-white border border-slate-200/70 rounded-lg py-1.5 px-1">
+                <div class="text-[10px] text-slate-400">🥑 脂肪</div>
+                <div class="font-bold text-amber-600 mt-0.5 flex items-center justify-center">
+                  <input type="number" value="${r.fat ?? 0}" onchange="updateField(${i}, 'fat', this.value)" class="w-8 text-center font-bold text-amber-600" />
+                  <span class="text-[10px] text-amber-500">g</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="grid grid-cols-2 gap-2.5">
             <div class="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-xl border border-slate-100">
               <span class="text-slate-500">🌅 早 (kg)</span>
@@ -682,7 +851,7 @@
             </div>
           </div>
         </div>
-      `).join('');
+      `}).join('');
     }
 
     function drawChart() {
@@ -691,7 +860,7 @@
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 1;
       const w = canvas.getBoundingClientRect().width || 600;
-      const h = 150;
+      const h = 145;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       ctx.scale(dpr, dpr);
