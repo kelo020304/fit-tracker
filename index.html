@@ -134,7 +134,8 @@
   <div class="md:hidden space-y-3" id="mobile-list"></div>
 
   <script>
-    const STORAGE_KEY = 'daily_fit_v4_light';
+    const STORAGE_KEY = 'daily_fit_v5_cloud';
+    const CLOUD_API = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1a57ab09f2c79';
     const SUPP_LIST = [
       { id: '蛋白粉', icon: '🍫' },
       { id: '茶氨酸', icon: '🍵' },
@@ -160,7 +161,7 @@
         breakfast: '2茶叶蛋 + 光明优倍',
         lunch: 'Subway 照烧鸡加蛋',
         dinner: '',
-        water: 1,
+        water: 2,
         activity: '-',
         supplements: []
       }
@@ -171,55 +172,66 @@
     async function init() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        try { rows = JSON.parse(saved); } catch (e) {}
+        try { rows = JSON.parse(saved); render(); } catch (e) {}
       }
-      if (!rows || !rows.length) {
-        await syncFromCloud(true);
-      } else {
-        render();
-        try {
-          const res = await fetch('./data.json?t=' + Date.now());
-          if (res.ok) {
-            const remote = await res.json();
-            if (Array.isArray(remote) && remote.length >= rows.length) {
-              rows = remote;
-              saveLocal();
-              render();
-            }
-          }
-        } catch (e) {}
-      }
+      await syncFromCloud(true);
     }
 
     async function syncFromCloud(silent) {
+      if (!silent) showStatus('正在云端同步...');
+      try {
+        const res = await fetch(CLOUD_API + '?t=' + Date.now());
+        if (res.ok) {
+          const obj = await res.json();
+          if (obj && obj.data && Array.isArray(obj.data.rows) && obj.data.rows.length > 0) {
+            rows = obj.data.rows;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+            render();
+            showStatus('✓ 云端已同步');
+            return;
+          }
+        }
+      } catch (e) {}
       try {
         const res = await fetch('./data.json?t=' + Date.now());
         if (res.ok) {
           const remote = await res.json();
           if (Array.isArray(remote) && remote.length > 0) {
             rows = remote;
-            saveLocal();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
             render();
-            if (!silent) showStatus('✓ 已同步');
+            showStatus('✓ 已同步');
             return;
           }
         }
       } catch (e) {}
       if (!rows || !rows.length) {
         rows = JSON.parse(JSON.stringify(DEFAULT_DATA));
-        saveLocal();
         render();
       }
     }
 
-    function saveLocal() {
+    async function saveLocal() {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(rows)); } catch (e) {}
+      showStatus('正在上传云端...');
+      try {
+        await fetch(CLOUD_API, {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            name: 'captain-fit-tracker',
+            data: { rows, updatedAt: Date.now() }
+          })
+        });
+        showStatus('✓ 已实时同步至云端');
+      } catch (e) {
+        showStatus('✓ 已存本地');
+      }
       fetch('/api/save', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(rows)
       }).catch(() => {});
-      showStatus('✓ 已自动保存');
     }
 
     function showStatus(msg) {
