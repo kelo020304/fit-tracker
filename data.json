@@ -16,9 +16,9 @@
     "pmWeight": null,
     "breakfast": "2茶叶蛋 + 光明优倍",
     "lunch": "Subway 照烧鸡加蛋",
-    "dinner": "",
-    "water": 2,
+    "dinner": "下午: 巧克力蛋白粉",
+    "water": 2.5,
     "activity": "-",
-    "supplements": []
+    "supplements": ["蛋白粉"]
   }
 ]
