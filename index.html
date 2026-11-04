@@ -67,6 +67,9 @@
       <button onclick="manualSyncButton()" class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-xl text-xs font-medium bg-white text-slate-700 border border-slate-200 active:scale-95 hover:bg-slate-50 shadow-xs transition cursor-pointer whitespace-nowrap" id="mobile-sync-btn">
         ☁️ 同步
       </button>
+      <button onclick="location.replace(location.pathname + '?v=' + Date.now())" title="刷新应用版本" class="px-2 py-1.5 md:px-2.5 md:py-2 rounded-xl text-xs font-medium bg-white text-slate-500 border border-slate-200 active:scale-95 hover:bg-slate-50 shadow-xs transition cursor-pointer whitespace-nowrap">
+        🔄
+      </button>
     </div>
   </div>
 
@@ -258,8 +261,9 @@
   <div class="md:hidden space-y-3" id="mobile-list"></div>
 
   <script>
-    const STORAGE_KEY = 'daily_fit_v11_cloud';
-    const META_KEY = 'daily_fit_v11_meta';
+    const STORAGE_KEY = 'daily_fit_v12_cloud';
+    const META_KEY = 'daily_fit_v12_meta';
+    const CLIENT_ID = Math.random().toString(36).slice(2, 10);
     const STATE_SYNC_URL = 'https://ntfy.sh/captain_fit_state_db300ca2';
     const PERM_DB_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1a57ab09f2c79';
     const SUPP_LIST = [
@@ -361,8 +365,15 @@
       } catch (e) {}
     }
 
+    function isUserEditing() {
+      const el = document.activeElement;
+      return !!(el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable));
+    }
+
     function applyCloudPayload(data, forceApply) {
       if (!data) return false;
+      if (!forceApply && data.clientId && data.clientId === CLIENT_ID) return false;
+      if (!forceApply && isUserEditing()) return false;
       const cloudTime = Number(data.updatedAt) || 0;
       if (forceApply || cloudTime > localUpdatedAt || !localUpdatedAt) {
         if (Array.isArray(data.rows) && data.rows.length > 0) {
@@ -425,9 +436,8 @@
       startRealtimeStream();
 
       document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') smartSync(true);
+        if (document.visibilityState === 'visible' && !isUserEditing()) smartSync(true);
       });
-      window.addEventListener('focus', () => smartSync(true));
     }
 
     async function manualSyncButton() {
@@ -522,12 +532,14 @@
       } : null;
 
       const fullPayload = {
+        clientId: CLIENT_ID,
         updatedAt: localUpdatedAt,
         rows: cleanRows,
         latestMealPhoto: cleanPhoto
       };
       // Keep PERM_DB_URL payload under 850 chars (restful-api.dev has a 1000-char limit)
       let permPayload = {
+        clientId: CLIENT_ID,
         updatedAt: localUpdatedAt,
         rows: cleanRows
       };
