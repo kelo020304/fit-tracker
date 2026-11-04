@@ -63,29 +63,33 @@
 
   <!-- Top Summary Cards: 2x2 + Full-width Intake on Mobile, 5 Columns across Full Width on Desktop -->
   <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
-    <!-- Morning Weight -->
-    <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 md:p-4 shadow-xs">
+    <!-- Morning Weight (Directly Editable on Mobile & PC!) -->
+    <label class="bg-white border border-slate-200/90 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 rounded-2xl p-3.5 md:p-4 shadow-xs cursor-text block transition">
       <div class="flex items-center justify-between text-xs font-medium text-slate-500">
-        <span>🌅 早起体重</span>
+        <span>🌅 早起体重 <span class="text-[10px] text-slate-400">(点此填)</span></span>
         <span class="px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-600 font-semibold text-[11px]" id="stat-diff">↓ 0.4 kg</span>
       </div>
       <div class="mt-2 flex items-baseline gap-1">
-        <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-am">90.8</span>
+        <input type="number" inputmode="decimal" step="0.1" id="stat-am" value="90.8" placeholder="点此输入"
+          onchange="updateTodayWeight('amWeight', this.value)"
+          class="w-24 text-2xl font-bold text-slate-900 tracking-tight placeholder:text-sm placeholder:font-normal placeholder:text-slate-300" />
         <span class="text-xs text-slate-400">kg</span>
       </div>
-    </div>
+    </label>
 
-    <!-- Night Weight -->
-    <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 md:p-4 shadow-xs">
+    <!-- Night Weight (Directly Editable on Mobile & PC!) -->
+    <label class="bg-white border border-slate-200/90 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 rounded-2xl p-3.5 md:p-4 shadow-xs cursor-text block transition">
       <div class="flex items-center justify-between text-xs font-medium text-slate-500">
-        <span>🌙 睡前体重</span>
-        <span class="text-slate-400 text-[11px]">目标 75.0</span>
+        <span>🌙 睡前体重 <span class="text-[10px] text-slate-400">(点此填)</span></span>
+        <span class="text-slate-400 text-[11px]" id="stat-pm-sub">昨夜 91.2</span>
       </div>
       <div class="mt-2 flex items-baseline gap-1">
-        <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-pm">91.2</span>
+        <input type="number" inputmode="decimal" step="0.1" id="stat-pm" value="" placeholder="点此输入"
+          onchange="updateTodayWeight('pmWeight', this.value)"
+          class="w-24 text-2xl font-bold text-slate-900 tracking-tight placeholder:text-base placeholder:font-medium placeholder:text-blue-500/70" />
         <span class="text-xs text-slate-400">kg</span>
       </div>
-    </div>
+    </label>
 
     <!-- Water Counter -->
     <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 md:p-4 shadow-xs">
@@ -673,6 +677,12 @@
       saveLocal();
     }
 
+    function updateTodayWeight(field, val) {
+      if (!rows || !rows.length) return;
+      updateField(rows.length - 1, field, val);
+      render();
+    }
+
     function updateField(index, field, val) {
       const r = rows[index];
       if (!r) return;
@@ -730,8 +740,16 @@
       const latestAm = [...rows].reverse().find(x => x.amWeight != null)?.amWeight ?? 90.8;
       const latestPm = [...rows].reverse().find(x => x.pmWeight != null)?.pmWeight ?? 91.2;
 
-      document.getElementById('stat-am').textContent = latestAm.toFixed(1);
-      document.getElementById('stat-pm').textContent = latestPm.toFixed(1);
+      const amEl = document.getElementById('stat-am');
+      const pmEl = document.getElementById('stat-pm');
+      if (amEl && document.activeElement !== amEl) {
+        amEl.value = r.amWeight != null ? r.amWeight : '';
+        amEl.placeholder = `${latestAm.toFixed(1)} (点此填)`;
+      }
+      if (pmEl && document.activeElement !== pmEl) {
+        pmEl.value = r.pmWeight != null ? r.pmWeight : '';
+        pmEl.placeholder = `点此填 (昨${latestPm.toFixed(1)})`;
+      }
       const diff = (91.2 - latestAm).toFixed(1);
       document.getElementById('stat-diff').textContent = (diff >= 0 ? '↓ ' : '↑ ') + Math.abs(diff) + ' kg';
 
