@@ -300,22 +300,6 @@
         protein: 110,
         carbs: 96,
         fat: 41
-      },
-      {
-        date: '2026-11-05',
-        amWeight: null,
-        pmWeight: null,
-        hrv: null,
-        breakfast: '',
-        lunch: '',
-        dinner: '',
-        water: 0,
-        activity: '',
-        supplements: [],
-        calories: 0,
-        protein: 0,
-        carbs: 0,
-        fat: 0
       }
     ];
 
@@ -380,24 +364,12 @@
     function applyCloudPayload(data, forceApply) {
       if (!data) return false;
       const cloudTime = Number(data.updatedAt) || 0;
-      if (forceApply || cloudTime >= localUpdatedAt || !localUpdatedAt) {
+      if (forceApply || cloudTime > localUpdatedAt || !localUpdatedAt) {
         if (Array.isArray(data.rows) && data.rows.length > 0) {
-          const map = new Map();
-          DEFAULT_DATA.forEach(r => map.set(r.date, JSON.parse(JSON.stringify(r))));
-          rows.forEach(r => {
+          rows = data.rows.map(r => {
             ensureRowMacros(r);
-            map.set(r.date, r);
+            return r;
           });
-          data.rows.forEach(r => {
-            // Ignore accidental blank duplicate of 2026-11-04 created by old UTC bug
-            if (r.date === '2026-11-04' && r.amWeight == null && !r.water) {
-              ensureRowMacros(r);
-            } else {
-              ensureRowMacros(r);
-            }
-            map.set(r.date, r);
-          });
-          rows = Array.from(map.values()).sort((a, b) => a.date.localeCompare(b.date));
         }
         if (data.latestMealPhoto && data.latestMealPhoto.title) {
           latestMealPhoto = Object.assign({}, latestMealPhoto, data.latestMealPhoto);
@@ -557,7 +529,7 @@
       // Keep PERM_DB_URL payload under 850 chars (restful-api.dev has a 1000-char limit)
       let permPayload = {
         updatedAt: localUpdatedAt,
-        rows: cleanRows.slice(-2)
+        rows: cleanRows
       };
 
       try {

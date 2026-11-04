@@ -30,21 +30,5 @@
     "protein": 110,
     "carbs": 96,
     "fat": 41
-  },
-  {
-    "date": "2026-11-05",
-    "amWeight": null,
-    "pmWeight": null,
-    "hrv": null,
-    "breakfast": "",
-    "lunch": "",
-    "dinner": "",
-    "water": 0,
-    "activity": "",
-    "supplements": [],
-    "calories": 0,
-    "protein": 0,
-    "carbs": 0,
-    "fat": 0
   }
 ]
