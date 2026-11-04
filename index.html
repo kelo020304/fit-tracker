@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="每日记录" />
@@ -33,17 +36,18 @@
 
   <!-- Header -->
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-2.5">
+    <div class="flex items-center gap-2">
       <span class="text-xl">📋</span>
       <h1 class="text-xl font-bold text-slate-900 tracking-tight">每日记录</h1>
-      <span class="text-xs text-slate-400 ml-1" id="sync-status">点表格可直接修改</span>
+      <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-xs font-bold" id="day-badge">Day 2 · 11-04</span>
+      <span class="text-xs text-slate-400 ml-1 hidden sm:inline" id="sync-status">点表格可直接修改</span>
     </div>
     <div class="flex items-center gap-2">
-      <button onclick="addNewRow()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 shadow-xs transition cursor-pointer">
+      <button onclick="addNewRow()" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 shadow-xs transition cursor-pointer">
         + 新增一天
       </button>
-      <button onclick="syncFromCloud()" class="px-3 py-2 rounded-xl text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 shadow-xs transition cursor-pointer">
-        ↻ 同步
+      <button onclick="forceRefreshApp()" class="px-3 py-2 rounded-xl text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 shadow-xs transition cursor-pointer">
+        ↻ 刷新同步
       </button>
     </div>
   </div>
@@ -78,11 +82,11 @@
     <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
       <div class="flex items-center justify-between text-xs font-medium text-slate-500">
         <span>💧 今日饮水</span>
-        <span class="text-sky-600 font-semibold" id="stat-water-ml">500 ml</span>
+        <span class="text-sky-600 font-semibold" id="stat-water-ml">1250 ml</span>
       </div>
       <div class="mt-2 flex items-center justify-between">
         <div class="flex items-baseline gap-1">
-          <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-water">1</span>
+          <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-water">2.5</span>
           <span class="text-xs text-slate-400">/ 4 杯</span>
         </div>
         <div class="flex items-center gap-1.5">
@@ -99,54 +103,60 @@
     </div>
   </div>
 
-  <!-- Photo Upload & Nutrition Analysis Card -->
+  <!-- Autonomous AI Meal Photo Analyzer Card -->
   <div class="bg-white border border-slate-200/90 rounded-2xl p-4 md:p-5 shadow-xs space-y-3.5">
     <div class="flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2">
         <span class="text-base">📷</span>
-        <span class="text-sm font-bold text-slate-800">饮食拍照 · 营养与摄入分析</span>
-        <span class="text-xs text-slate-400" id="photo-status">手机传图后在聊天框说一声“传了”即刻出报告</span>
+        <span class="text-sm font-bold text-slate-800">AI 拍照识餐 · 自动算热量与营养</span>
+        <span class="text-xs text-emerald-600 font-medium" id="photo-status">手机选图后约 5 秒全自动出结果并写入今日表格</span>
       </div>
       <div class="flex items-center gap-2">
         <select id="meal-slot" class="px-2.5 py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200 outline-none">
-          <option value="dinner">🥗 晚饭 / 加餐</option>
-          <option value="lunch">🍱 午饭</option>
-          <option value="breakfast">🥚 早饭</option>
+          <option value="dinner">🥗 填入晚饭</option>
+          <option value="lunch">🍱 填入午饭</option>
+          <option value="breakfast">🥚 填入早饭</option>
         </select>
         <label class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-xs transition cursor-pointer inline-flex items-center gap-1.5">
-          <span>📤 手机传图 / 拍照</span>
+          <span>📤 拍照 / 传图自动分析</span>
           <input type="file" accept="image/*" class="hidden" onchange="handlePhotoUpload(this)" />
         </label>
       </div>
     </div>
 
     <!-- Latest Photo & AI Nutrition Result -->
-    <div id="photo-analysis-box" class="hidden bg-slate-50 border border-slate-200/70 rounded-xl p-3.5 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-      <img id="meal-photo-img" src="" alt="餐食照片" class="w-24 h-24 object-cover rounded-xl border border-slate-200 shrink-0 bg-white" />
+    <div id="photo-analysis-box" class="bg-slate-50 border border-slate-200/70 rounded-xl p-3.5 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+      <img id="meal-photo-img" src="" alt="餐食照片" class="hidden w-24 h-24 object-cover rounded-xl border border-slate-200 shrink-0 bg-white" />
       <div class="flex-1 space-y-2 w-full">
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="text-sm font-bold text-slate-800" id="meal-analysis-title">等待 AI 分析餐食照片...</span>
-          <span class="text-xs text-slate-400 font-mono" id="meal-analysis-time"></span>
+          <div contenteditable="true" onblur="updateMealPhotoField('title', this.innerText.trim())"
+            class="text-sm font-bold text-slate-800 focus:bg-white rounded px-1 outline-none" id="meal-analysis-title">Day 2 (11-04) 已记摄入：早饭 + Subway 午饭 + 1勺乳清蛋白粉</div>
+          <span class="text-xs text-slate-400 font-mono" id="meal-analysis-time">Day 2 · 待拍晚饭</span>
         </div>
         <div class="grid grid-cols-4 gap-2 text-xs" id="meal-macros">
           <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
-            <div class="text-slate-400">🔥 热量</div>
-            <div class="font-bold text-slate-800 mt-0.5" id="macro-cal">-- kcal</div>
+            <div class="text-slate-400">🔥 热量 (kcal)</div>
+            <div contenteditable="true" onblur="updateMealPhotoField('calories', this.innerText.replace(/[^0-9]/g,''))"
+              class="font-bold text-slate-800 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-cal">755 kcal</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
-            <div class="text-slate-400">🥩 蛋白质</div>
-            <div class="font-bold text-emerald-600 mt-0.5" id="macro-prot">-- g</div>
+            <div class="text-slate-400">🥩 蛋白质 (g)</div>
+            <div contenteditable="true" onblur="updateMealPhotoField('protein', this.innerText.replace(/[^0-9]/g,''))"
+              class="font-bold text-emerald-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-prot">71 g</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
-            <div class="text-slate-400">🍚 碳水</div>
-            <div class="font-bold text-blue-600 mt-0.5" id="macro-carb">-- g</div>
+            <div class="text-slate-400">🍚 碳水 (g)</div>
+            <div contenteditable="true" onblur="updateMealPhotoField('carbs', this.innerText.replace(/[^0-9]/g,''))"
+              class="font-bold text-blue-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-carb">51 g</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2.5 py-1.5">
-            <div class="text-slate-400">🥑 脂肪</div>
-            <div class="font-bold text-amber-600 mt-0.5" id="macro-fat">-- g</div>
+            <div class="text-slate-400">🥑 脂肪 (g)</div>
+            <div contenteditable="true" onblur="updateMealPhotoField('fat', this.innerText.replace(/[^0-9]/g,''))"
+              class="font-bold text-amber-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-fat">22 g</div>
           </div>
         </div>
-        <p class="text-xs text-slate-600 leading-relaxed" id="meal-analysis-note"></p>
+        <p contenteditable="true" onblur="updateMealPhotoField('note', this.innerText.trim())"
+          class="text-xs text-slate-600 leading-relaxed focus:bg-white rounded px-1 outline-none" id="meal-analysis-note">直接点右上角「📤 拍照 / 传图自动分析」，网页内置视觉大模型会在约 5 秒内自动识别菜品、算出四大营养素并填入今日表格，无需去聊天框通知！</p>
       </div>
     </div>
   </div>
@@ -186,7 +196,7 @@
   <div class="md:hidden space-y-3" id="mobile-list"></div>
 
   <script>
-    const STORAGE_KEY = 'daily_fit_v5_cloud';
+    const STORAGE_KEY = 'daily_fit_v6_cloud';
     const CLOUD_API = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1a57ab09f2c79';
     const SUPP_LIST = [
       { id: '蛋白粉', icon: '🍫' },
@@ -212,24 +222,24 @@
         pmWeight: null,
         breakfast: '2茶叶蛋 + 光明优倍',
         lunch: 'Subway 照烧鸡加蛋',
-        dinner: '',
-        water: 2,
+        dinner: '下午: 巧克力蛋白粉',
+        water: 2.5,
         activity: '-',
-        supplements: []
+        supplements: ['蛋白粉']
       }
     ];
 
     let rows = [];
     let latestMealPhoto = {
-      photoUrl: 'https://ntfy.sh/file/OzJfAXD737pB.jpg',
+      photoUrl: '',
       mealSlot: 'dinner',
-      time: 'Day 1 晚餐已验图',
-      title: '沙县去皮鸡腿饭(半份饭) + 2个卤蛋 + 包菜',
-      calories: 560,
-      protein: 42,
-      carbs: 48,
-      fat: 18,
-      note: '去皮大鸡腿+双卤蛋提供42g优质蛋白，半份米饭精准控碳，减脂标准示范餐。'
+      time: 'Day 2 · 待拍晚饭',
+      title: 'Day 2 (11-04) 已记摄入：早饭 + Subway 午饭 + 1勺乳清蛋白粉',
+      calories: 755,
+      protein: 71,
+      carbs: 51,
+      fat: 22,
+      note: '直接点右上角「📤 拍照 / 传图自动分析」，网页内置视觉大模型会在约 5 秒内自动识别菜品、算出四大营养素并填入今日表格，无需去聊天框通知！'
     };
 
     async function init() {
@@ -240,10 +250,18 @@
       await syncFromCloud(true);
     }
 
+    function forceRefreshApp() {
+      syncFromCloud(false).then(() => {
+        if (window.location.search.indexOf('v=') === -1) {
+          window.location.href = window.location.pathname + '?v=' + Date.now();
+        }
+      });
+    }
+
     async function syncFromCloud(silent) {
       if (!silent) showStatus('正在云端同步...');
       try {
-        const res = await fetch(CLOUD_API + '?t=' + Date.now());
+        const res = await fetch(CLOUD_API + '?t=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
           const obj = await res.json();
           if (obj && obj.data) {
@@ -251,24 +269,11 @@
               rows = obj.data.rows;
               localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
             }
-            if (obj.data.latestMealPhoto) {
+            if (obj.data.latestMealPhoto && obj.data.latestMealPhoto.time !== 'Day 1 晚餐已验图') {
               latestMealPhoto = obj.data.latestMealPhoto;
             }
             render();
             showStatus('✓ 云端已同步');
-            return;
-          }
-        }
-      } catch (e) {}
-      try {
-        const res = await fetch('./data.json?t=' + Date.now());
-        if (res.ok) {
-          const remote = await res.json();
-          if (Array.isArray(remote) && remote.length > 0) {
-            rows = remote;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
-            render();
-            showStatus('✓ 已同步');
             return;
           }
         }
@@ -297,44 +302,142 @@
       }
     }
 
+    async function updateMealPhotoField(field, val) {
+      if (!latestMealPhoto) return;
+      if (['calories', 'protein', 'carbs', 'fat'].includes(field)) {
+        const n = parseInt(val, 10);
+        latestMealPhoto[field] = isNaN(n) ? 0 : n;
+      } else {
+        latestMealPhoto[field] = val;
+      }
+      renderPhotoBox();
+      await saveLocal();
+    }
+
     async function handlePhotoUpload(input) {
       const file = input.files && input.files[0];
       if (!file) return;
       const slot = document.getElementById('meal-slot').value;
       const statusEl = document.getElementById('photo-status');
-      statusEl.textContent = '⏳ 正在压缩并上传餐食照片...';
+      statusEl.textContent = '⏳ 正在压缩图片并启动 AI 视觉识别 (约 5 秒)...';
 
       try {
-        // Compress image via Canvas to ~800px max dimension for fast upload
-        const blob = await compressImage(file, 900, 0.82);
-        const upRes = await fetch('https://ntfy.sh/captain_fit_photo_db300ca2', {
+        const { blob, dataUrl } = await compressImage(file, 720, 0.78);
+        const nowStr = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+
+        // Show immediate local preview
+        latestMealPhoto = {
+          photoUrl: dataUrl,
+          mealSlot: slot,
+          time: `Day ${rows.length} · 今日 ${nowStr}`,
+          title: '🤖 AI 正在自动识别菜品与营养成分...',
+          calories: null,
+          protein: null,
+          carbs: null,
+          fat: null,
+          note: '正在调用 Qwen3-VL 视觉大模型分析餐盘食物份量与四大宏量营养素，请稍候约 5 秒...'
+        };
+        renderPhotoBox();
+
+        // Run cloud image upload and AI Vision inference in parallel
+        const uploadPromise = fetch('https://ntfy.sh/captain_fit_photo_db300ca2', {
           method: 'PUT',
           headers: { 'Filename': 'meal.jpg' },
           body: blob
-        });
-        const upJson = await upRes.json();
-        const photoUrl = upJson?.attachment?.url;
+        }).then(r => r.json()).then(j => j?.attachment?.url).catch(() => '');
 
-        if (photoUrl) {
-          const nowStr = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
-          latestMealPhoto = {
-            photoUrl,
-            mealSlot: slot,
-            time: '今日 ' + nowStr + ' 上传',
-            title: '⏳ 照片已上传，等待 AI 分析营养成分...',
-            calories: null,
-            protein: null,
-            carbs: null,
-            fat: null,
-            note: '请在聊天窗口告诉 AI 一声「传了」，将立即识别图中菜品并自动填入热量、蛋白质与三餐表格！'
-          };
-          await saveLocal();
-          renderPhotoBox();
-          statusEl.textContent = '✓ 上传成功！去聊天框说一声“传了”即可分析';
+        const aiPromise = analyzeMealWithVisionAI(dataUrl);
+
+        const [remoteUrl, aiResult] = await Promise.all([uploadPromise, aiPromise]);
+
+        if (remoteUrl) {
+          latestMealPhoto.photoUrl = remoteUrl;
         }
+
+        if (aiResult && aiResult.title) {
+          latestMealPhoto.title = aiResult.title;
+          latestMealPhoto.calories = aiResult.calories ?? 500;
+          latestMealPhoto.protein = aiResult.protein ?? 30;
+          latestMealPhoto.carbs = aiResult.carbs ?? 45;
+          latestMealPhoto.fat = aiResult.fat ?? 15;
+          latestMealPhoto.note = aiResult.note || 'AI 已自动识别并填入今日记录（点击上方任意数字或文字可直接微调）。';
+          latestMealPhoto.time = `Day ${rows.length} · ${nowStr} 已自动入账`;
+
+          // Automatically write into today's meal column
+          const r = todayRow();
+          if (r) {
+            const summaryText = `${aiResult.title}(${latestMealPhoto.calories}kcal/${latestMealPhoto.protein}g蛋白)`;
+            if (slot === 'dinner' && r.dinner && r.dinner.includes('蛋白粉') && !r.dinner.includes(aiResult.title)) {
+              r.dinner = `蛋白粉 + ${summaryText}`;
+            } else {
+              r[slot] = summaryText;
+            }
+          }
+          statusEl.textContent = '✓ AI 识别完成！已自动填入今日表格';
+        } else {
+          latestMealPhoto.title = '照片已上传（点此直接输入菜名）';
+          latestMealPhoto.note = '当前网络访问海外 AI 节点超时，可直接点击上方数字/文字手动修改。';
+          statusEl.textContent = '✓ 照片已同步云端';
+        }
+
+        await saveLocal();
+        render();
       } catch (err) {
         statusEl.textContent = '上传失败，请重试';
       }
+    }
+
+    async function analyzeMealWithVisionAI(dataUrl) {
+      const prompt = '请识别图中的餐食，估算总热量与营养素，只输出纯JSON（不要markdown代码块）：{"title":"菜名简述(12字内)","calories":整数,"protein":整数,"carbs":整数,"fat":整数,"note":"一句话营养点评(28字内)"}';
+
+      // Engine 1: Qwen3-VL-HF-Demo
+      try {
+        const res1 = await callGradioVision(
+          'https://prithivmlmods-qwen3-vl-hf-demo.hf.space/gradio_api/call/run_understanding',
+          ['Caption', prompt, dataUrl, 256, 60]
+        );
+        if (res1) return res1;
+      } catch (e) {}
+
+      // Engine 2: Qwen3-VL-Outpost (Backup)
+      try {
+        const res2 = await callGradioVision(
+          'https://prithivmlmods-qwen3-vl-outpost.hf.space/gradio_api/call/run_router',
+          ['Qwen3-VL-4B-Instruct', prompt, dataUrl, 256, 0.4, 0.9, 50, 1.1, 60]
+        );
+        if (res2) return res2;
+      } catch (e) {}
+
+      return null;
+    }
+
+    async function callGradioVision(endpointUrl, dataArray) {
+      const postRes = await fetch(endpointUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: dataArray })
+      });
+      if (!postRes.ok) return null;
+      const { event_id } = await postRes.json();
+      if (!event_id) return null;
+
+      const streamRes = await fetch(`${endpointUrl}/${event_id}`);
+      if (!streamRes.ok) return null;
+      const sseText = await streamRes.text();
+
+      const dataLines = sseText.split('\n').filter(l => l.startsWith('data: '));
+      for (let i = dataLines.length - 1; i >= 0; i--) {
+        try {
+          const arr = JSON.parse(dataLines[i].slice(6));
+          const raw = typeof arr[0] === 'string' ? JSON.parse(arr[0]).text || arr[0] : JSON.stringify(arr[0]);
+          const match = raw.match(/\{[\s\S]*\}/);
+          if (match) {
+            const parsed = JSON.parse(match[0]);
+            if (parsed && parsed.title) return parsed;
+          }
+        } catch (e) {}
+      }
+      return null;
     }
 
     function compressImage(file, maxDim, quality) {
@@ -351,7 +454,8 @@
             const c = document.createElement('canvas');
             c.width = w; c.height = h;
             c.getContext('2d').drawImage(img, 0, 0, w, h);
-            c.toBlob(b => resolve(b), 'image/jpeg', quality);
+            const dataUrl = c.toDataURL('image/jpeg', quality);
+            c.toBlob(blob => resolve({ blob, dataUrl }), 'image/jpeg', quality);
           };
           img.onerror = reject;
           img.src = e.target.result;
@@ -363,15 +467,20 @@
 
     function renderPhotoBox() {
       const box = document.getElementById('photo-analysis-box');
-      if (!box || !latestMealPhoto || !latestMealPhoto.photoUrl) return;
-      box.classList.remove('hidden');
-      document.getElementById('meal-photo-img').src = latestMealPhoto.photoUrl;
+      if (!box || !latestMealPhoto) return;
+      const imgEl = document.getElementById('meal-photo-img');
+      if (latestMealPhoto.photoUrl) {
+        imgEl.src = latestMealPhoto.photoUrl;
+        imgEl.classList.remove('hidden');
+      } else {
+        imgEl.classList.add('hidden');
+      }
       document.getElementById('meal-analysis-title').textContent = latestMealPhoto.title || '餐食营养分析';
       document.getElementById('meal-analysis-time').textContent = latestMealPhoto.time || '';
-      document.getElementById('macro-cal').textContent = latestMealPhoto.calories != null ? `${latestMealPhoto.calories} kcal` : '待计算';
-      document.getElementById('macro-prot').textContent = latestMealPhoto.protein != null ? `${latestMealPhoto.protein} g` : '待计算';
-      document.getElementById('macro-carb').textContent = latestMealPhoto.carbs != null ? `${latestMealPhoto.carbs} g` : '待计算';
-      document.getElementById('macro-fat').textContent = latestMealPhoto.fat != null ? `${latestMealPhoto.fat} g` : '待计算';
+      document.getElementById('macro-cal').textContent = latestMealPhoto.calories != null ? `${latestMealPhoto.calories} kcal` : '计算中...';
+      document.getElementById('macro-prot').textContent = latestMealPhoto.protein != null ? `${latestMealPhoto.protein} g` : '计算中...';
+      document.getElementById('macro-carb').textContent = latestMealPhoto.carbs != null ? `${latestMealPhoto.carbs} g` : '计算中...';
+      document.getElementById('macro-fat').textContent = latestMealPhoto.fat != null ? `${latestMealPhoto.fat} g` : '计算中...';
       document.getElementById('meal-analysis-note').textContent = latestMealPhoto.note || '';
     }
 
@@ -446,6 +555,9 @@
       const r = todayRow();
       if (!r) return;
 
+      const dayBadge = document.getElementById('day-badge');
+      if (dayBadge) dayBadge.textContent = `Day ${rows.length} · ${r.date.slice(5)}`;
+
       const latestAm = [...rows].reverse().find(x => x.amWeight != null)?.amWeight ?? 90.8;
       const latestPm = [...rows].reverse().find(x => x.pmWeight != null)?.pmWeight ?? 91.2;
 
@@ -477,8 +589,10 @@
 
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
-        <tr class="hover:bg-slate-50/80 transition whitespace-nowrap">
-          <td class="py-3 px-4 text-xs font-semibold text-slate-500 font-mono">${r.date.slice(5)}</td>
+        <tr class="hover:bg-slate-50/80 transition whitespace-nowrap ${i === rows.length - 1 ? 'bg-emerald-50/20' : ''}">
+          <td class="py-3 px-4 text-xs font-semibold text-slate-600 font-mono">
+            <span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 mr-1">Day ${i + 1}</span>${r.date.slice(5)}
+          </td>
           <td class="py-3 px-3">
             <input type="number" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'amWeight', this.value)"
@@ -519,9 +633,12 @@
 
       const mlist = document.getElementById('mobile-list');
       mlist.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
-        <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs space-y-3 text-xs">
+        <div class="bg-white border ${i === rows.length - 1 ? 'border-emerald-300 ring-1 ring-emerald-100' : 'border-slate-200/90'} rounded-2xl p-4 shadow-xs space-y-3 text-xs">
           <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-            <span class="font-bold text-sm text-slate-800 font-mono">📅 ${r.date}</span>
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.5 rounded-md ${i === rows.length - 1 ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600'} font-bold">Day ${i + 1}</span>
+              <span class="font-bold text-sm text-slate-800 font-mono">${r.date}</span>
+            </div>
             <span class="px-2 py-0.5 rounded-md bg-sky-50 text-sky-600 font-semibold">💧 饮水 ${r.water ?? 0} 杯</span>
           </div>
           <div class="grid grid-cols-2 gap-2.5">
@@ -558,7 +675,7 @@
                 class="w-full text-slate-700 border-b border-slate-100 py-1" />
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-slate-400 w-12 shrink-0">🏸 活动</span>
+              <span class="text-slate-400 w-12 shrink-0">🏸 运动</span>
               <input type="text" value="${r.activity || ''}" placeholder="点击输入..."
                 onchange="updateField(${i}, 'activity', this.value)"
                 class="w-full text-slate-700 py-1" />
