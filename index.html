@@ -118,11 +118,11 @@
     <div class="bg-white border border-slate-200/90 rounded-2xl p-3 md:p-3.5 shadow-xs flex flex-col justify-between">
       <div class="flex items-center justify-between gap-1 text-xs font-medium text-slate-500">
         <span class="whitespace-nowrap">💧 今日饮水</span>
-        <span class="text-sky-600 font-semibold text-[10px] whitespace-nowrap" id="stat-water-ml">1750 ml</span>
+        <span class="text-sky-600 font-semibold text-[10px] whitespace-nowrap" id="stat-water-ml">2000 ml</span>
       </div>
       <div class="mt-1.5 flex items-center justify-between gap-1">
         <div class="flex items-baseline gap-0.5">
-          <span class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight" id="stat-water">3.5</span>
+          <span class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight" id="stat-water">4</span>
           <span class="text-[11px] text-slate-400 whitespace-nowrap">/4杯</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
@@ -258,9 +258,10 @@
   <div class="md:hidden space-y-3" id="mobile-list"></div>
 
   <script>
-    const STORAGE_KEY = 'daily_fit_v10_cloud';
-    const META_KEY = 'daily_fit_v10_meta';
+    const STORAGE_KEY = 'daily_fit_v11_cloud';
+    const META_KEY = 'daily_fit_v11_meta';
     const STATE_SYNC_URL = 'https://ntfy.sh/captain_fit_state_db300ca2';
+    const PERM_DB_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1a57ab09f2c79';
     const SUPP_LIST = [
       { id: '蛋白粉', icon: '🍫' },
       { id: '茶氨酸', icon: '🍵' },
@@ -292,7 +293,7 @@
         breakfast: '2茶叶蛋 + 光明优倍',
         lunch: 'Subway 照烧鸡加蛋',
         dinner: '蛋白粉 + 食堂奥尔良鸡排豆腐双蔬饭',
-        water: 3.5,
+        water: 4,
         activity: '-',
         supplements: ['蛋白粉'],
         calories: 1278,
@@ -326,7 +327,6 @@
           r.calories = 1278; r.protein = 110; r.carbs = 96; r.fat = 41;
         }
         if (r.hrv == null) r.hrv = 42;
-        if (r.water < 3.5) r.water = 3.5;
         if (!r.dinner || r.dinner === '下午: 巧克力蛋白粉') {
           r.dinner = '蛋白粉 + 食堂奥尔良鸡排豆腐双蔬饭';
         }
@@ -346,6 +346,42 @@
           dirty: localDirty,
           latestMealPhoto
         }));
+      } catch (e) {}
+    }
+
+    function applyCloudPayload(data) {
+      if (!data) return false;
+      const cloudTime = Number(data.updatedAt) || 0;
+      if (cloudTime > localUpdatedAt || !localUpdatedAt) {
+        if (Array.isArray(data.rows) && data.rows.length > 0) {
+          rows = data.rows;
+          rows.forEach(ensureRowMacros);
+        }
+        if (data.latestMealPhoto && data.latestMealPhoto.title) {
+          latestMealPhoto = data.latestMealPhoto;
+        }
+        localUpdatedAt = cloudTime;
+        localDirty = false;
+        saveLocalCache();
+        render();
+        showStatus('✓ 云端已实时同步');
+        return true;
+      }
+      return false;
+    }
+
+    function startRealtimeStream() {
+      try {
+        const es = new EventSource(STATE_SYNC_URL + '/sse');
+        es.onmessage = (ev) => {
+          try {
+            const env = JSON.parse(ev.data);
+            if (env && env.message) {
+              const data = JSON.parse(env.message);
+              applyCloudPayload(data);
+            }
+          } catch (e) {}
+        };
       } catch (e) {}
     }
 
@@ -372,6 +408,12 @@
       }
       render();
       await smartSync(true);
+      startRealtimeStream();
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') smartSync(true);
+      });
+      window.addEventListener('focus', () => smartSync(true));
     }
 
     async function manualSyncButton() {
@@ -384,8 +426,12 @@
         return;
       }
       if (!silent) showStatus('正在同步...');
+      let bestData = null;
+      let bestTime = 0;
+
+      // 1. Poll ntfy.sh with since=all (CRITICAL: without since=all, ntfy only returns messages from last 10s!)
       try {
-        const res = await fetch(STATE_SYNC_URL + '/json?poll=1&t=' + Date.now(), { cache: 'no-store' });
+        const res = await fetch(STATE_SYNC_URL + '/json?poll=1&since=all&t=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
           const text = await res.text();
           const lines = text.trim().split('\n').filter(Boolean);
@@ -393,30 +439,38 @@
             try {
               const env = JSON.parse(lines[i]);
               if (env && env.message) {
-                const data = JSON.parse(env.message);
-                const cloudTime = Number(data.updatedAt) || 0;
-                if (cloudTime >= localUpdatedAt) {
-                  if (Array.isArray(data.rows) && data.rows.length > 0) {
-                    rows = data.rows;
-                    rows.forEach(ensureRowMacros);
-                  }
-                  if (data.latestMealPhoto && data.latestMealPhoto.title) {
-                    latestMealPhoto = data.latestMealPhoto;
-                  }
-                  localUpdatedAt = cloudTime;
-                  localDirty = false;
-                  saveLocalCache();
-                  render();
-                  showStatus('✓ 云端已同步');
-                } else {
-                  await saveLocal();
-                }
-                return;
+                const d = JSON.parse(env.message);
+                const t = Number(d.updatedAt) || 0;
+                if (t > bestTime) { bestTime = t; bestData = d; }
+                break;
               }
             } catch (e) {}
           }
         }
       } catch (e) {}
+
+      // 2. Also check permanent DB (restful-api.dev) in case ntfy 12h cache expired
+      try {
+        const res2 = await fetch(PERM_DB_URL + '?t=' + Date.now(), { cache: 'no-store' });
+        if (res2.ok) {
+          const obj = await res2.json();
+          if (obj && obj.data) {
+            const t2 = Number(obj.data.updatedAt) || 0;
+            if (t2 > bestTime) { bestTime = t2; bestData = obj.data; }
+          }
+        }
+      } catch (e) {}
+
+      if (bestData) {
+        if (bestTime >= localUpdatedAt) {
+          applyCloudPayload(bestData);
+          showStatus('✓ 云端已同步');
+          return;
+        } else {
+          await saveLocal();
+          return;
+        }
+      }
       showStatus('✓ 已是最新');
     }
 
@@ -425,39 +479,54 @@
       localDirty = true;
       saveLocalCache();
       showStatus('正在保存...');
+      const cleanRows = rows.map(r => ({
+        date: r.date,
+        amWeight: r.amWeight,
+        pmWeight: r.pmWeight,
+        hrv: r.hrv ?? null,
+        breakfast: r.breakfast || '',
+        lunch: r.lunch || '',
+        dinner: r.dinner || '',
+        water: r.water ?? 0,
+        activity: r.activity || '',
+        supplements: r.supplements || [],
+        calories: r.calories ?? 0,
+        protein: r.protein ?? 0,
+        carbs: r.carbs ?? 0,
+        fat: r.fat ?? 0
+      }));
+      const cleanPhoto = latestMealPhoto ? {
+        photoUrl: (latestMealPhoto.photoUrl && latestMealPhoto.photoUrl.startsWith('data:')) ? '' : (latestMealPhoto.photoUrl || ''),
+        mealSlot: latestMealPhoto.mealSlot || 'dinner',
+        isSingleMeal: !!latestMealPhoto.isSingleMeal,
+        time: latestMealPhoto.time || '',
+        title: (latestMealPhoto.title || '').slice(0, 36),
+        calories: latestMealPhoto.calories ?? 0,
+        protein: latestMealPhoto.protein ?? 0,
+        carbs: latestMealPhoto.carbs ?? 0,
+        fat: latestMealPhoto.fat ?? 0,
+        note: (latestMealPhoto.note || '').slice(0, 48)
+      } : null;
+
+      const payload = {
+        updatedAt: localUpdatedAt,
+        rows: cleanRows,
+        latestMealPhoto: cleanPhoto
+      };
+
       try {
-        const cleanRows = rows.map(r => ({
-          date: r.date,
-          amWeight: r.amWeight,
-          pmWeight: r.pmWeight,
-          hrv: r.hrv ?? null,
-          breakfast: r.breakfast || '',
-          lunch: r.lunch || '',
-          dinner: r.dinner || '',
-          water: r.water ?? 0,
-          activity: r.activity || '',
-          supplements: r.supplements || [],
-          calories: r.calories ?? 0,
-          protein: r.protein ?? 0,
-          carbs: r.carbs ?? 0,
-          fat: r.fat ?? 0
-        }));
-        const cleanPhoto = latestMealPhoto ? {
-          ...latestMealPhoto,
-          photoUrl: (latestMealPhoto.photoUrl && latestMealPhoto.photoUrl.startsWith('data:')) ? '' : (latestMealPhoto.photoUrl || '')
-        } : null;
-        const res = await fetch(STATE_SYNC_URL, {
-          method: 'POST',
-          body: JSON.stringify({
-            updatedAt: localUpdatedAt,
-            rows: cleanRows,
-            latestMealPhoto: cleanPhoto
+        const [r1, r2] = await Promise.allSettled([
+          fetch(STATE_SYNC_URL, { method: 'POST', body: JSON.stringify(payload) }),
+          fetch(PERM_DB_URL, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: 'captain-fit-tracker', data: payload })
           })
-        });
-        if (res.ok) {
+        ]);
+        if ((r1.status === 'fulfilled' && r1.value.ok) || (r2.status === 'fulfilled' && r2.value.ok)) {
           localDirty = false;
           saveLocalCache();
-          showStatus('✓ 已同步云端');
+          showStatus('✓ 已实时同步云端');
         } else {
           showStatus('✓ 已存本机');
         }
