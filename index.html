@@ -29,7 +29,7 @@
     }
   </style>
 </head>
-<body class="antialiased px-4 py-6 md:px-8 max-w-5xl mx-auto space-y-5">
+<body class="antialiased px-4 py-6 md:px-8 max-w-6xl mx-auto space-y-5">
 
   <!-- Header -->
   <div class="flex items-center justify-between">
@@ -112,18 +112,18 @@
   </div>
 
   <!-- Desktop Table -->
-  <div class="hidden md:block bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden">
-    <table class="w-full text-left border-collapse text-sm table-fixed">
+  <div class="hidden md:block bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-x-auto">
+    <table class="w-full text-left border-collapse text-sm">
       <thead>
-        <tr class="border-b border-slate-100 text-xs text-slate-500 bg-slate-50/70">
-          <th class="py-3 px-3 font-semibold w-[76px]">📅 日期</th>
-          <th class="py-3 px-2 font-semibold w-[76px]">🌅 早(kg)</th>
-          <th class="py-3 px-2 font-semibold w-[76px]">🌙 晚(kg)</th>
-          <th class="py-3 px-3 font-semibold">🥚 早饭</th>
-          <th class="py-3 px-3 font-semibold">🍱 午饭</th>
-          <th class="py-3 px-3 font-semibold">🥗 晚饭 / 加餐</th>
-          <th class="py-3 px-2 font-semibold w-[72px]">💧 饮水</th>
-          <th class="py-3 px-3 font-semibold w-[130px]">🏸 活动量</th>
+        <tr class="border-b border-slate-100 text-xs text-slate-500 bg-slate-50/70 whitespace-nowrap">
+          <th class="py-3 px-4 font-semibold">📅 日期</th>
+          <th class="py-3 px-3 font-semibold">🌅 早(kg)</th>
+          <th class="py-3 px-3 font-semibold">🌙 晚(kg)</th>
+          <th class="py-3 px-4 font-semibold">🥚 早饭</th>
+          <th class="py-3 px-4 font-semibold">🍱 午饭</th>
+          <th class="py-3 px-4 font-semibold">🥗 晚饭 / 加餐</th>
+          <th class="py-3 px-3 font-semibold">💧 饮水</th>
+          <th class="py-3 px-4 font-semibold">🏸 运动</th>
         </tr>
       </thead>
       <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
@@ -134,7 +134,7 @@
   <div class="md:hidden space-y-3" id="mobile-list"></div>
 
   <script>
-    const STORAGE_KEY = 'daily_fit_v3_light';
+    const STORAGE_KEY = 'daily_fit_v4_light';
     const SUPP_LIST = [
       { id: '蛋白粉', icon: '🍫' },
       { id: '茶氨酸', icon: '🍵' },
@@ -148,7 +148,7 @@
         pmWeight: 91.2,
         breakfast: '-',
         lunch: '常规午餐',
-        dinner: '沙县鸡腿饭(去皮·半份饭) + 2个卤蛋',
+        dinner: '沙县鸡腿饭 + 2卤蛋',
         water: 2,
         activity: '羽毛球',
         supplements: ['甘氨酸镁']
@@ -157,11 +157,11 @@
         date: '2026-11-04',
         amWeight: 90.8,
         pmWeight: null,
-        breakfast: '2个茶叶蛋 + 光明优倍',
-        lunch: 'Subway 照烧鸡鸡蛋双拼(无酱)',
+        breakfast: '2茶叶蛋 + 光明优倍',
+        lunch: 'Subway 照烧鸡加蛋',
         dinner: '',
         water: 1,
-        activity: '具身实验采数据',
+        activity: '-',
         supplements: []
       }
     ];
@@ -323,42 +323,42 @@
 
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = rows.map((r, i) => ({ r, i })).reverse().map(({ r, i }) => `
-        <tr class="hover:bg-slate-50/80 transition align-top">
-          <td class="py-3 px-3 text-xs font-semibold text-slate-500 font-mono whitespace-nowrap">${r.date.slice(5)}</td>
-          <td class="py-2.5 px-2">
+        <tr class="hover:bg-slate-50/80 transition whitespace-nowrap">
+          <td class="py-3 px-4 text-xs font-semibold text-slate-500 font-mono">${r.date.slice(5)}</td>
+          <td class="py-3 px-3">
             <input type="number" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'amWeight', this.value)"
               class="w-14 font-bold text-emerald-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
           </td>
-          <td class="py-2.5 px-2">
+          <td class="py-3 px-3">
             <input type="number" step="0.1" value="${r.pmWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'pmWeight', this.value)"
               class="w-14 font-bold text-blue-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
           </td>
-          <td class="py-2.5 px-3">
+          <td class="py-3 px-4">
             <div contenteditable="true" data-placeholder="点击输入..."
               onblur="updateField(${i}, 'breakfast', this.innerText.trim())"
-              class="w-full text-slate-700 leading-relaxed break-words whitespace-pre-wrap focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-h-[24px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.breakfast || ''}</div>
+              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[120px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.breakfast || ''}</div>
           </td>
-          <td class="py-2.5 px-3">
+          <td class="py-3 px-4">
             <div contenteditable="true" data-placeholder="点击输入..."
               onblur="updateField(${i}, 'lunch', this.innerText.trim())"
-              class="w-full text-slate-700 leading-relaxed break-words whitespace-pre-wrap focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-h-[24px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.lunch || ''}</div>
+              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[140px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.lunch || ''}</div>
           </td>
-          <td class="py-2.5 px-3">
+          <td class="py-3 px-4">
             <div contenteditable="true" data-placeholder="点击输入..."
               onblur="updateField(${i}, 'dinner', this.innerText.trim())"
-              class="w-full text-slate-700 leading-relaxed break-words whitespace-pre-wrap focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-h-[24px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.dinner || ''}</div>
+              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[140px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.dinner || ''}</div>
           </td>
-          <td class="py-2.5 px-2 whitespace-nowrap">
+          <td class="py-3 px-3">
             <input type="number" step="0.5" value="${r.water ?? 0}"
               onchange="updateField(${i}, 'water', this.value)"
               class="w-10 font-semibold text-sky-600 focus:bg-slate-100 rounded-md px-1 py-0.5 text-center" /><span class="text-xs text-slate-400">杯</span>
           </td>
-          <td class="py-2.5 px-3">
-            <div contenteditable="true" data-placeholder="点击输入..."
+          <td class="py-3 px-4">
+            <div contenteditable="true" data-placeholder="-"
               onblur="updateField(${i}, 'activity', this.innerText.trim())"
-              class="w-full text-slate-700 leading-relaxed break-words whitespace-pre-wrap focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-h-[24px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.activity || ''}</div>
+              class="text-slate-700 focus:bg-slate-100 focus:outline-none rounded-md px-1.5 py-0.5 min-w-[70px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300">${r.activity || ''}</div>
           </td>
         </tr>
       `).join('');

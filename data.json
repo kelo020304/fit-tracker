@@ -5,7 +5,7 @@
     "pmWeight": 91.2,
     "breakfast": "-",
     "lunch": "常规午餐",
-    "dinner": "沙县鸡腿饭(去皮·半份饭) + 2个卤蛋",
+    "dinner": "沙县鸡腿饭 + 2卤蛋",
     "water": 2,
     "activity": "羽毛球",
     "supplements": ["甘氨酸镁"]
@@ -14,11 +14,11 @@
     "date": "2026-11-04",
     "amWeight": 90.8,
     "pmWeight": null,
-    "breakfast": "2个茶叶蛋 + 光明优倍",
-    "lunch": "Subway 照烧鸡鸡蛋双拼(无酱)",
+    "breakfast": "2茶叶蛋 + 光明优倍",
+    "lunch": "Subway 照烧鸡加蛋",
     "dinner": "",
     "water": 1,
-    "activity": "具身实验采数据",
+    "activity": "-",
     "supplements": []
   }
 ]
