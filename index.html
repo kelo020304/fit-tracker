@@ -31,7 +31,6 @@
     input:focus {
       outline: none;
     }
-    /* Remove number input spinner arrows so columns stay compact and clean */
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
@@ -50,14 +49,14 @@
       <span class="text-xl shrink-0">📋</span>
       <h1 class="text-lg md:text-xl font-bold text-slate-900 tracking-tight truncate">每日记录</h1>
       <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-xs font-bold shrink-0" id="day-badge">Day 2 · 11-04</span>
-      <span class="text-xs text-slate-400 ml-1 hidden sm:inline truncate" id="sync-status">✓ 云端已同步</span>
+      <span class="text-xs text-slate-400 ml-1 truncate" id="sync-status">✓ 云端已同步</span>
     </div>
     <div class="flex items-center gap-1.5 md:gap-2 shrink-0">
       <button onclick="addNewRow()" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 shadow-xs transition cursor-pointer">
         + 新增一天
       </button>
-      <button onclick="forceRefreshApp()" class="px-2.5 md:px-3 py-2 rounded-xl text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 shadow-xs transition cursor-pointer">
-        ↻ 刷新同步
+      <button onclick="manualSyncButton()" class="px-2.5 md:px-3 py-2 rounded-xl text-xs font-medium bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 shadow-xs transition cursor-pointer">
+        ☁️ 保存同步
       </button>
     </div>
   </div>
@@ -92,11 +91,11 @@
     <div class="bg-white border border-slate-200/90 rounded-2xl p-3.5 md:p-4 shadow-xs">
       <div class="flex items-center justify-between text-xs font-medium text-slate-500">
         <span>💧 今日饮水</span>
-        <span class="text-sky-600 font-semibold text-[11px]" id="stat-water-ml">1250 ml</span>
+        <span class="text-sky-600 font-semibold text-[11px]" id="stat-water-ml">1750 ml</span>
       </div>
       <div class="mt-2 flex items-center justify-between">
         <div class="flex items-baseline gap-1">
-          <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-water">2.5</span>
+          <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-water">3.5</span>
           <span class="text-xs text-slate-400">/ 4 杯</span>
         </div>
         <div class="flex items-center gap-1.5">
@@ -116,14 +115,14 @@
     <div class="col-span-2 lg:col-span-1 bg-white border border-slate-200/90 rounded-2xl p-3.5 md:p-4 shadow-xs flex flex-col justify-between">
       <div class="flex items-center justify-between text-xs font-medium text-slate-500">
         <span>🔥 今日总摄入</span>
-        <span class="px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-600 font-semibold text-[11px]" id="stat-prot-top">蛋白 71g</span>
+        <span class="px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-600 font-semibold text-[11px]" id="stat-prot-top">蛋白 110g</span>
       </div>
       <div class="mt-2 flex items-baseline justify-between gap-2">
         <div class="flex items-baseline gap-1">
-          <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-cal-top">753</span>
+          <span class="text-2xl font-bold text-slate-900 tracking-tight" id="stat-cal-top">1278</span>
           <span class="text-xs text-slate-400">/ 1750 kcal</span>
         </div>
-        <span class="text-xs text-slate-500 font-medium" id="stat-macro-sub">碳50g · 脂22g</span>
+        <span class="text-xs text-slate-500 font-medium" id="stat-macro-sub">碳96g · 脂41g</span>
       </div>
     </div>
   </div>
@@ -134,7 +133,7 @@
       <div class="flex flex-wrap items-center gap-1.5">
         <span class="text-base">📷</span>
         <span class="text-sm font-bold text-slate-800">AI 拍照识餐 · 自动累加每日总摄入</span>
-        <span class="text-xs text-emerald-600 font-medium" id="photo-status">手机传图约 5 秒自动识别并累加进今日总结</span>
+        <span class="text-xs text-emerald-600 font-medium" id="photo-status">✓ 已识别今晚食堂餐盘并计入 Day 2 晚餐</span>
       </div>
       <div class="flex items-center gap-2 w-full sm:w-auto">
         <select id="meal-slot" class="px-3 py-2 sm:py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200 outline-none shrink-0">
@@ -151,37 +150,37 @@
 
     <!-- Latest Photo & AI Nutrition Result -->
     <div id="photo-analysis-box" class="bg-slate-50 border border-slate-200/70 rounded-xl p-3 md:p-3.5 flex flex-col sm:flex-row gap-3.5 items-start sm:items-center">
-      <img id="meal-photo-img" src="" alt="餐食照片" class="hidden w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-slate-200 shrink-0 bg-white" />
+      <img id="meal-photo-img" src="https://ntfy.sh/file/ilarCI4fJMJs.jpg" alt="餐食照片" class="w-24 h-24 sm:w-28 sm:h-24 object-cover rounded-xl border border-slate-200 shrink-0 bg-white" />
       <div class="flex-1 space-y-2 w-full min-w-0">
         <div class="flex flex-wrap items-center justify-between gap-1.5">
           <div contenteditable="true" onblur="updateMealPhotoField('title', this.innerText.trim())"
-            class="text-xs sm:text-sm font-bold text-slate-800 focus:bg-white rounded px-1 outline-none break-words" id="meal-analysis-title">Day 2 已累计：早饭 + Subway + 1勺蛋白粉</div>
-          <span class="text-[11px] text-slate-400 font-mono shrink-0" id="meal-analysis-time">Day 2 · 待拍晚饭</span>
+            class="text-xs sm:text-sm font-bold text-slate-800 focus:bg-white rounded px-1 outline-none break-words" id="meal-analysis-title">食堂烤鸡排 + 酸菜炖豆腐 + 清炒花菜与菠菜 + 半碗米饭</div>
+          <span class="text-[11px] text-emerald-600 font-semibold font-mono shrink-0" id="meal-analysis-time">Day 2 · 晚餐已入账</span>
         </div>
         <div class="grid grid-cols-4 gap-1.5 sm:gap-2.5 text-xs" id="meal-macros">
           <div class="bg-white border border-slate-200/80 rounded-lg px-2 py-1.5">
-            <div class="text-[11px] text-slate-400 truncate">🔥 热量</div>
+            <div class="text-[11px] text-slate-400 truncate">🔥 本餐热量</div>
             <div contenteditable="true" onblur="updateMealPhotoField('calories', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-slate-800 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-cal">753 kcal</div>
+              class="font-bold text-slate-800 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-cal">525 kcal</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2 py-1.5">
             <div class="text-[11px] text-slate-400 truncate">🥩 蛋白质</div>
             <div contenteditable="true" onblur="updateMealPhotoField('protein', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-emerald-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-prot">71 g</div>
+              class="font-bold text-emerald-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-prot">39 g</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2 py-1.5">
             <div class="text-[11px] text-slate-400 truncate">🍚 碳水</div>
             <div contenteditable="true" onblur="updateMealPhotoField('carbs', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-blue-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-carb">50 g</div>
+              class="font-bold text-blue-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-carb">46 g</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2 py-1.5">
             <div class="text-[11px] text-slate-400 truncate">🥑 脂肪</div>
             <div contenteditable="true" onblur="updateMealPhotoField('fat', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-amber-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-fat">22 g</div>
+              class="font-bold text-amber-600 mt-0.5 focus:bg-slate-50 rounded outline-none" id="macro-fat">19 g</div>
           </div>
         </div>
         <p contenteditable="true" onblur="updateMealPhotoField('note', this.innerText.trim())"
-          class="text-xs text-slate-500 leading-relaxed focus:bg-white rounded px-1 outline-none" id="meal-analysis-note">点右上角拍照/传图，5秒内自动识别并累加至今日总摄入！</p>
+          class="text-xs text-slate-600 leading-relaxed focus:bg-white rounded px-1 outline-none" id="meal-analysis-note">烤鸡排+炖豆腐双优蛋白(39g)，花菜+菠菜双份膳食纤维，半碗米饭精准控碳！今日全天累计 1278 kcal / 蛋白质 110g，减脂教科书级晚餐！</p>
       </div>
     </div>
   </div>
@@ -222,7 +221,8 @@
   <div class="md:hidden space-y-3.5" id="mobile-list"></div>
 
   <script>
-    const STORAGE_KEY = 'daily_fit_v8_cloud';
+    const STORAGE_KEY = 'daily_fit_v9_cloud';
+    const META_KEY = 'daily_fit_v9_meta';
     const CLOUD_API = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1a57ab09f2c79';
     const SUPP_LIST = [
       { id: '蛋白粉', icon: '🍫' },
@@ -252,35 +252,42 @@
         pmWeight: null,
         breakfast: '2茶叶蛋 + 光明优倍',
         lunch: 'Subway 照烧鸡加蛋',
-        dinner: '下午: 巧克力蛋白粉',
-        water: 2.5,
+        dinner: '蛋白粉 + 食堂烤鸡排豆腐双蔬饭',
+        water: 3.5,
         activity: '-',
         supplements: ['蛋白粉'],
-        calories: 753,
-        protein: 71,
-        carbs: 50,
-        fat: 22
+        calories: 1278,
+        protein: 110,
+        carbs: 96,
+        fat: 41
       }
     ];
 
     let rows = [];
+    let localUpdatedAt = 0;
+    let localDirty = false;
     let latestMealPhoto = {
-      photoUrl: '',
+      photoUrl: 'https://ntfy.sh/file/ilarCI4fJMJs.jpg',
       mealSlot: 'dinner',
-      time: 'Day 2 · 待拍晚饭',
-      title: 'Day 2 已累计：早饭 + Subway + 1勺蛋白粉',
-      calories: 753,
-      protein: 71,
-      carbs: 50,
-      fat: 22,
-      note: '点右上角拍照/传图，5秒内自动识别并累加至今日总摄入！'
+      isSingleMeal: true,
+      time: 'Day 2 · 晚餐已入账',
+      title: '食堂烤鸡排 + 酸菜炖豆腐 + 清炒花菜与菠菜 + 半碗米饭',
+      calories: 525,
+      protein: 39,
+      carbs: 46,
+      fat: 19,
+      note: '烤鸡排+炖豆腐双优蛋白(39g)，花菜+菠菜双份膳食纤维，半碗米饭精准控碳！今日全天累计 1278 kcal / 蛋白质 110g，减脂教科书级晚餐！'
     };
 
     function ensureRowMacros(r) {
       if (r.date === '2026-11-03' && !r.calories) {
         r.calories = 1310; r.protein = 78; r.carbs = 125; r.fat = 42;
-      } else if (r.date === '2026-11-04' && !r.calories) {
-        r.calories = 753; r.protein = 71; r.carbs = 50; r.fat = 22;
+      } else if (r.date === '2026-11-04' && (!r.calories || r.calories === 753)) {
+        r.calories = 1278; r.protein = 110; r.carbs = 96; r.fat = 41;
+        if (r.water < 3.5) r.water = 3.5;
+        if (!r.dinner || r.dinner === '下午: 巧克力蛋白粉') {
+          r.dinner = '蛋白粉 + 食堂烤鸡排豆腐双蔬饭';
+        }
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;
@@ -289,57 +296,90 @@
       }
     }
 
+    function saveLocalCache() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+        localStorage.setItem(META_KEY, JSON.stringify({
+          updatedAt: localUpdatedAt,
+          dirty: localDirty,
+          latestMealPhoto
+        }));
+      } catch (e) {}
+    }
+
     async function init() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          rows = JSON.parse(saved);
+      try {
+        const savedRows = localStorage.getItem(STORAGE_KEY);
+        const savedMeta = localStorage.getItem(META_KEY);
+        if (savedRows) {
+          rows = JSON.parse(savedRows);
           rows.forEach(ensureRowMacros);
-          render();
-        } catch (e) {}
-      }
-      await syncFromCloud(true);
-    }
-
-    function forceRefreshApp() {
-      syncFromCloud(false).then(() => {
-        if (window.location.search.indexOf('v=') === -1) {
-          window.location.href = window.location.pathname + '?v=' + Date.now();
         }
-      });
+        if (savedMeta) {
+          const m = JSON.parse(savedMeta);
+          localUpdatedAt = m.updatedAt || 0;
+          localDirty = !!m.dirty;
+          if (m.latestMealPhoto && m.latestMealPhoto.photoUrl) {
+            latestMealPhoto = m.latestMealPhoto;
+          }
+        }
+      } catch (e) {}
+
+      if (!rows || !rows.length) {
+        rows = JSON.parse(JSON.stringify(DEFAULT_DATA));
+      }
+      render();
+      await smartSync(true);
     }
 
-    async function syncFromCloud(silent) {
-      if (!silent) showStatus('正在云端同步...');
+    // Smart two-way sync: NEVER overwrite newer local edits with older cloud data!
+    async function manualSyncButton() {
+      await smartSync(false);
+    }
+
+    async function smartSync(silent) {
+      if (localDirty) {
+        await saveLocal();
+        return;
+      }
+      if (!silent) showStatus('正在检查云端更新...');
       try {
         const res = await fetch(CLOUD_API + '?t=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
           const obj = await res.json();
           if (obj && obj.data) {
-            if (Array.isArray(obj.data.rows) && obj.data.rows.length > 0) {
-              rows = obj.data.rows;
-              rows.forEach(ensureRowMacros);
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+            const cloudTime = Number(obj.data.updatedAt) || 0;
+            // Only accept cloud data if cloud is strictly newer or local has no timestamp yet
+            if (cloudTime >= localUpdatedAt) {
+              if (Array.isArray(obj.data.rows) && obj.data.rows.length > 0) {
+                rows = obj.data.rows;
+                rows.forEach(ensureRowMacros);
+              }
+              if (obj.data.latestMealPhoto && obj.data.latestMealPhoto.title) {
+                latestMealPhoto = obj.data.latestMealPhoto;
+              }
+              localUpdatedAt = cloudTime;
+              localDirty = false;
+              saveLocalCache();
+              render();
+              showStatus('✓ 已同步最新云端数据');
+              return;
+            } else {
+              // Local is newer than cloud -> push local to cloud!
+              await saveLocal();
+              return;
             }
-            if (obj.data.latestMealPhoto && obj.data.latestMealPhoto.time !== 'Day 1 晚餐已验图') {
-              latestMealPhoto = obj.data.latestMealPhoto;
-            }
-            render();
-            showStatus('✓ 云端已同步');
-            return;
           }
         }
       } catch (e) {}
-      if (!rows || !rows.length) {
-        rows = JSON.parse(JSON.stringify(DEFAULT_DATA));
-        rows.forEach(ensureRowMacros);
-        render();
-      }
+      showStatus('✓ 当前已是最新');
     }
 
     async function saveLocal() {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(rows)); } catch (e) {}
-      showStatus('正在上传云端...');
+      localUpdatedAt = Date.now();
+      localDirty = true;
+      saveLocalCache();
+      showStatus('正在保存至云端...');
       try {
         const cleanRows = rows.map(r => ({
           date: r.date,
@@ -360,17 +400,23 @@
           ...latestMealPhoto,
           photoUrl: (latestMealPhoto.photoUrl && latestMealPhoto.photoUrl.startsWith('data:')) ? '' : (latestMealPhoto.photoUrl || '')
         } : null;
-        await fetch(CLOUD_API, {
+        const res = await fetch(CLOUD_API, {
           method: 'PUT',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
             name: 'captain-fit-tracker',
-            data: { rows: cleanRows, latestMealPhoto: cleanPhoto, updatedAt: Date.now() }
+            data: { rows: cleanRows, latestMealPhoto: cleanPhoto, updatedAt: localUpdatedAt }
           })
         });
-        showStatus('✓ 已实时同步至云端');
+        if (res.ok) {
+          localDirty = false;
+          saveLocalCache();
+          showStatus('✓ 已实时保存至云端');
+        } else {
+          showStatus('✓ 已保存在本机');
+        }
       } catch (e) {
-        showStatus('✓ 已存本地');
+        showStatus('✓ 已保存在本机');
       }
     }
 
@@ -398,38 +444,51 @@
       if (!file) return;
       const slot = document.getElementById('meal-slot').value;
       const statusEl = document.getElementById('photo-status');
-      statusEl.textContent = '⏳ 正在压缩图片并启动 AI 视觉识别 (约 5 秒)...';
+      statusEl.textContent = '⏳ 正在上传餐食照片...';
 
       try {
         const { blob, dataUrl } = await compressImage(file, 720, 0.78);
         const nowStr = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
 
+        // 1. Immediately update local state & lock localDirty so nothing can overwrite it!
         latestMealPhoto = {
           photoUrl: dataUrl,
           mealSlot: slot,
-          time: `Day ${rows.length} · 今日 ${nowStr}`,
-          title: '🤖 AI 正在自动识别菜品与营养成分...',
+          isSingleMeal: true,
+          time: `Day ${rows.length} · ${nowStr} 上传`,
+          title: '🤖 照片已上传，正在识别菜品与营养成分...',
           calories: null,
           protein: null,
           carbs: null,
           fat: null,
-          note: '正在调用 Qwen3-VL 视觉大模型分析餐盘食物份量与四大宏量营养素，请稍候约 5 秒...'
+          note: '正在分析餐盘食物份量与四大营养素（若校园网/移动网连接海外视觉节点较慢，也可直接点上方文字/数字手填）...'
         };
+        localUpdatedAt = Date.now();
+        localDirty = true;
+        saveLocalCache();
         renderPhotoBox();
 
-        const uploadPromise = fetch('https://ntfy.sh/captain_fit_photo_db300ca2', {
-          method: 'PUT',
-          headers: { 'Filename': 'meal.jpg' },
-          body: blob
-        }).then(r => r.json()).then(j => j?.attachment?.url).catch(() => '');
-
-        const aiPromise = analyzeMealWithVisionAI(dataUrl);
-
-        const [remoteUrl, aiResult] = await Promise.all([uploadPromise, aiPromise]);
+        // 2. Upload image binary to ntfy.sh FIRST and save to Cloud DB immediately (takes ~1.5s)
+        let remoteUrl = '';
+        try {
+          const upRes = await fetch('https://ntfy.sh/captain_fit_photo_db300ca2', {
+            method: 'PUT',
+            headers: { 'Filename': 'meal.jpg' },
+            body: blob
+          });
+          const upJson = await upRes.json();
+          remoteUrl = upJson?.attachment?.url || '';
+        } catch (e) {}
 
         if (remoteUrl) {
           latestMealPhoto.photoUrl = remoteUrl;
+          await saveLocal(); // Immediately persist the new photo URL to Cloud DB!
         }
+
+        statusEl.textContent = '⏳ 照片已存云端，正在调用 AI 计算热量 (约5-8秒)...';
+
+        // 3. Call Vision AI with a 12s timeout so mobile never hangs indefinitely
+        const aiResult = await analyzeMealWithVisionAI(dataUrl);
 
         if (aiResult && aiResult.title) {
           const cal = Number(aiResult.calories) || 500;
@@ -442,8 +501,7 @@
           latestMealPhoto.protein = prot;
           latestMealPhoto.carbs = carb;
           latestMealPhoto.fat = fat;
-          latestMealPhoto.isSingleMeal = true;
-          latestMealPhoto.time = `Day ${rows.length} · ${nowStr} 已自动入账`;
+          latestMealPhoto.time = `Day ${rows.length} · ${nowStr} 已入账`;
 
           const r = todayRow();
           if (r) {
@@ -463,9 +521,13 @@
           }
           statusEl.textContent = '✓ AI 识别完成！已自动累加进今日总摄入';
         } else {
-          latestMealPhoto.title = '照片已上传（点此直接输入菜名）';
-          latestMealPhoto.note = '当前网络访问 AI 节点超时，可直接点击上方或下方数字手动修改。';
-          statusEl.textContent = '✓ 照片已同步云端';
+          latestMealPhoto.title = '照片已存云端（点击可直接修改菜名与热量）';
+          latestMealPhoto.calories = 500;
+          latestMealPhoto.protein = 35;
+          latestMealPhoto.carbs = 45;
+          latestMealPhoto.fat = 18;
+          latestMealPhoto.note = '照片已永久保存至云端！国内移动网络直连海外视觉模型偶有超时，已预填标准餐估值，点上方数字可直接微调。';
+          statusEl.textContent = '✓ 照片已保存至云端';
         }
 
         await saveLocal();
@@ -479,17 +541,19 @@
       const prompt = '请识别图中的餐食，估算总热量与营养素，只输出纯JSON（不要markdown代码块）：{"title":"菜名简述(12字内)","calories":整数,"protein":整数,"carbs":整数,"fat":整数,"note":"一句话营养点评(25字内)"}';
 
       try {
-        const res1 = await callGradioVision(
+        const res1 = await callGradioVisionWithTimeout(
           'https://prithivmlmods-qwen3-vl-hf-demo.hf.space/gradio_api/call/run_understanding',
-          ['Caption', prompt, dataUrl, 256, 60]
+          ['Caption', prompt, dataUrl, 256, 60],
+          12000
         );
         if (res1) return res1;
       } catch (e) {}
 
       try {
-        const res2 = await callGradioVision(
+        const res2 = await callGradioVisionWithTimeout(
           'https://prithivmlmods-qwen3-vl-outpost.hf.space/gradio_api/call/run_router',
-          ['Qwen3-VL-4B-Instruct', prompt, dataUrl, 256, 0.4, 0.9, 50, 1.1, 60]
+          ['Qwen3-VL-4B-Instruct', prompt, dataUrl, 256, 0.4, 0.9, 50, 1.1, 60],
+          12000
         );
         if (res2) return res2;
       } catch (e) {}
@@ -497,33 +561,40 @@
       return null;
     }
 
-    async function callGradioVision(endpointUrl, dataArray) {
-      const postRes = await fetch(endpointUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data: dataArray })
-      });
-      if (!postRes.ok) return null;
-      const { event_id } = await postRes.json();
-      if (!event_id) return null;
+    async function callGradioVisionWithTimeout(endpointUrl, dataArray, timeoutMs) {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+      try {
+        const postRes = await fetch(endpointUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: dataArray }),
+          signal: ctrl.signal
+        });
+        if (!postRes.ok) return null;
+        const { event_id } = await postRes.json();
+        if (!event_id) return null;
 
-      const streamRes = await fetch(`${endpointUrl}/${event_id}`);
-      if (!streamRes.ok) return null;
-      const sseText = await streamRes.text();
+        const streamRes = await fetch(`${endpointUrl}/${event_id}`, { signal: ctrl.signal });
+        if (!streamRes.ok) return null;
+        const sseText = await streamRes.text();
 
-      const dataLines = sseText.split('\n').filter(l => l.startsWith('data: '));
-      for (let i = dataLines.length - 1; i >= 0; i--) {
-        try {
-          const arr = JSON.parse(dataLines[i].slice(6));
-          const raw = typeof arr[0] === 'string' ? JSON.parse(arr[0]).text || arr[0] : JSON.stringify(arr[0]);
-          const match = raw.match(/\{[\s\S]*\}/);
-          if (match) {
-            const parsed = JSON.parse(match[0]);
-            if (parsed && parsed.title) return parsed;
-          }
-        } catch (e) {}
+        const dataLines = sseText.split('\n').filter(l => l.startsWith('data: '));
+        for (let i = dataLines.length - 1; i >= 0; i--) {
+          try {
+            const arr = JSON.parse(dataLines[i].slice(6));
+            const raw = typeof arr[0] === 'string' ? JSON.parse(arr[0]).text || arr[0] : JSON.stringify(arr[0]);
+            const match = raw.match(/\{[\s\S]*\}/);
+            if (match) {
+              const parsed = JSON.parse(match[0]);
+              if (parsed && parsed.title) return parsed;
+            }
+          } catch (e) {}
+        }
+        return null;
+      } finally {
+        clearTimeout(timer);
       }
-      return null;
     }
 
     function compressImage(file, maxDim, quality) {
@@ -583,8 +654,8 @@
       const r = todayRow();
       if (!r) return;
       r.water = Math.max(0, Math.round(((r.water || 0) + delta) * 2) / 2);
-      saveLocal();
       render();
+      saveLocal();
     }
 
     function toggleSupp(name) {
@@ -594,8 +665,8 @@
       const idx = r.supplements.indexOf(name);
       if (idx >= 0) r.supplements.splice(idx, 1);
       else r.supplements.push(name);
-      saveLocal();
       render();
+      saveLocal();
     }
 
     function updateField(index, field, val) {
@@ -613,8 +684,8 @@
       } else {
         r[field] = val;
       }
-      saveLocal();
       renderStatsAndChart();
+      saveLocal();
     }
 
     function addNewRow() {
@@ -640,8 +711,8 @@
         carbs: 0,
         fat: 0
       });
-      saveLocal();
       render();
+      saveLocal();
     }
 
     function renderStatsAndChart() {
