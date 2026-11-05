@@ -343,8 +343,12 @@
     function ensureRowMacros(r) {
       if (r.date === '2026-11-03') {
         if (r.pmWeight == null) r.pmWeight = 91.2;
+        if (!r.breakfast) r.breakfast = '-';
+        if (!r.lunch) r.lunch = '常规午餐';
+        if (!r.dinner) r.dinner = '沙县鸡腿饭 + 2卤蛋';
         if (!r.water) r.water = 2;
         if (!r.activity) r.activity = '羽毛球';
+        if (!Array.isArray(r.supplements) || r.supplements.length === 0) r.supplements = ['甘氨酸镁'];
         if (!r.calories) { r.calories = 1310; r.protein = 78; r.carbs = 125; r.fat = 42; }
       } else if (r.date === '2026-11-04') {
         if (r.amWeight == null) r.amWeight = 90.8;
@@ -363,6 +367,13 @@
         if (!r.calories || r.calories === 753) {
           r.calories = 1278; r.protein = 110; r.carbs = 96; r.fat = 41;
         }
+      } else if (r.date === '2026-11-05') {
+        if (r.amWeight == null) r.amWeight = 91.25;
+        if (r.hrv == null) r.hrv = 68;
+        if (!r.breakfast) r.breakfast = '2茶叶蛋 + 光明优倍';
+        if (!r.calories) { r.calories = 270; r.protein = 20; r.carbs = 12; r.fat = 15; }
+        if (r.water == null) r.water = 0;
+        if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;
@@ -466,9 +477,9 @@
       let bestData = null;
       let bestTime = 0;
 
-      // 1. Poll ntfy.sh with since=all (CRITICAL: without since=all, ntfy only returns messages from last 10s!)
+      // 1. Poll ntfy.sh with since=all and _cb= (CRITICAL: in ntfy.sh, &t= filters by title and returns 0 messages!)
       try {
-        const res = await fetch(STATE_SYNC_URL + '/json?poll=1&since=all&t=' + Date.now(), { cache: 'no-store' });
+        const res = await fetch(STATE_SYNC_URL + '/json?poll=1&since=all&_cb=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
           const text = await res.text();
           const lines = text.trim().split('\n').filter(Boolean);
@@ -488,7 +499,7 @@
 
       // 2. Also check permanent DB (restful-api.dev) in case ntfy 12h cache expired
       try {
-        const res2 = await fetch(PERM_DB_URL + '?t=' + Date.now(), { cache: 'no-store' });
+        const res2 = await fetch(PERM_DB_URL + '?_cb=' + Date.now(), { cache: 'no-store' });
         if (res2.ok) {
           const obj = await res2.json();
           if (obj && obj.data) {
@@ -499,19 +510,46 @@
       } catch (e) {}
 
       if (bestData) {
-        if (bestTime >= localUpdatedAt || !silent) {
-          applyCloudPayload(bestData, !silent);
+        if (bestTime > localUpdatedAt || (bestTime === localUpdatedAt && !silent)) {
+          applyCloudPayload(bestData, true);
           showStatus('✓ 云端已同步');
           return;
-        } else if (localDirty) {
+        } else if (localUpdatedAt > bestTime) {
+          // Local data is newer than cloud! Push local to cloud instead of overwriting local with stale cloud data.
           await saveLocal();
           return;
         }
-      } else if (localDirty) {
+      } else if (localDirty || !silent) {
         await saveLocal();
         return;
       }
       showStatus('✓ 已是最新');
+    }
+
+    function compactRowsForPermDb(rowList) {
+      return rowList.map(r => {
+        if (r.date === '2026-11-03' && r.pmWeight === 91.2 && r.calories === 1310) {
+          return { date: r.date };
+        }
+        if (r.date === '2026-11-04' && r.amWeight === 90.8 && r.pmWeight === 91.7 && r.calories === 1278) {
+          return { date: r.date };
+        }
+        const o = { date: r.date };
+        if (r.amWeight != null) o.amWeight = r.amWeight;
+        if (r.pmWeight != null) o.pmWeight = r.pmWeight;
+        if (r.hrv != null) o.hrv = r.hrv;
+        if (r.breakfast) o.breakfast = r.breakfast;
+        if (r.lunch) o.lunch = r.lunch;
+        if (r.dinner) o.dinner = r.dinner;
+        if (r.water) o.water = r.water;
+        if (r.activity) o.activity = r.activity;
+        if (Array.isArray(r.supplements) && r.supplements.length) o.supplements = r.supplements;
+        if (r.calories) o.calories = r.calories;
+        if (r.protein) o.protein = r.protein;
+        if (r.carbs) o.carbs = r.carbs;
+        if (r.fat) o.fat = r.fat;
+        return o;
+      });
     }
 
     async function saveLocal() {
@@ -554,11 +592,10 @@
         rows: cleanRows,
         latestMealPhoto: cleanPhoto
       };
-      // Keep PERM_DB_URL payload under 850 chars (restful-api.dev has a 1000-char limit)
-      let permPayload = {
-        clientId: CLIENT_ID,
+      // Keep PERM_DB_URL payload ultra-compact (<450 chars) so restful-api.dev never returns HTTP 500
+      const permPayload = {
         updatedAt: localUpdatedAt,
-        rows: cleanRows
+        rows: compactRowsForPermDb(cleanRows)
       };
 
       try {
