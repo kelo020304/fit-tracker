@@ -314,7 +314,7 @@
         breakfast: '2茶叶蛋 + 光明优倍',
         lunch: 'Subway 照烧鸡加蛋',
         dinner: '',
-        water: 0,
+        water: 1,
         activity: '',
         supplements: [],
         calories: 635,
@@ -373,7 +373,7 @@
         if (!r.breakfast) r.breakfast = '2茶叶蛋 + 光明优倍';
         if (!r.lunch) r.lunch = 'Subway 照烧鸡加蛋';
         if (!r.calories || r.calories === 270) { r.calories = 635; r.protein = 51; r.carbs = 56; r.fat = 22; }
-        if (r.water == null) r.water = 0;
+        if (!r.water) r.water = 1;
         if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;

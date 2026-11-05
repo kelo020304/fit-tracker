@@ -9,7 +9,9 @@
     "dinner": "沙县鸡腿饭 + 2卤蛋",
     "water": 2,
     "activity": "羽毛球",
-    "supplements": ["甘氨酸镁"],
+    "supplements": [
+      "甘氨酸镁"
+    ],
     "calories": 1310,
     "protein": 78,
     "carbs": 125,
@@ -25,7 +27,10 @@
     "dinner": "蛋白粉 + 食堂奥尔良鸡排豆腐双蔬饭",
     "water": 4,
     "activity": "深蹲 + 弓箭步",
-    "supplements": ["蛋白粉", "甘氨酸镁"],
+    "supplements": [
+      "蛋白粉",
+      "甘氨酸镁"
+    ],
     "calories": 1278,
     "protein": 110,
     "carbs": 96,
@@ -37,14 +42,14 @@
     "pmWeight": null,
     "hrv": 68,
     "breakfast": "2茶叶蛋 + 光明优倍",
-    "lunch": "",
+    "lunch": "Subway 照烧鸡加蛋",
     "dinner": "",
-    "water": 0,
+    "water": 1,
     "activity": "",
     "supplements": [],
-    "calories": 270,
-    "protein": 20,
-    "carbs": 12,
-    "fat": 15
+    "calories": 635,
+    "protein": 51,
+    "carbs": 56,
+    "fat": 22
   }
 ]
