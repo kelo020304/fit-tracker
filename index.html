@@ -315,8 +315,8 @@
         breakfast: '2茶叶蛋 + 光明优倍',
         lunch: 'Subway 照烧鸡加蛋',
         dinner: '铁板烧 (未吃炒饭)',
-        water: 3.5,
-        activity: '骑车回家',
+        water: 4.5,
+        activity: '骑车 9.9km (40min)',
         supplements: [],
         calories: 1115,
         protein: 93,
@@ -375,8 +375,8 @@
         if (!r.lunch) r.lunch = 'Subway 照烧鸡加蛋';
         if (!r.dinner) r.dinner = '铁板烧 (未吃炒饭)';
         if (!r.calories || r.calories <= 635) { r.calories = 1115; r.protein = 93; r.carbs = 66; r.fat = 52; }
-        if (!r.water || r.water < 3.5) r.water = 3.5;
-        if (!r.activity) r.activity = '骑车回家';
+        if (!r.water || r.water < 4.5) r.water = 4.5;
+        if (!r.activity || r.activity === '骑车回家') r.activity = '骑车 9.9km (40min)';
         if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;
