@@ -59,16 +59,17 @@
     "hrv": 51,
     "breakfast": "2茶叶蛋 优倍220ml",
     "lunch": "Subway (不要芝士)",
-    "dinner": "蛋白粉 + Subway 香烤鸡排",
+    "dinner": "蛋白粉 + Subway鸡排 + 睡前1蛋1奶",
     "water": 3.5,
     "activity": "早晚骑车 22.6km (110min)",
     "supplements": [
       "鱼油",
-      "蛋白粉"
+      "蛋白粉",
+      "甘氨酸镁"
     ],
-    "calories": 1048,
-    "protein": 96,
-    "carbs": 101,
-    "fat": 27
+    "calories": 1248,
+    "protein": 109,
+    "carbs": 112,
+    "fat": 39
   }
 ]
