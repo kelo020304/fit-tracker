@@ -51,5 +51,21 @@
     "protein": 93,
     "carbs": 66,
     "fat": 52
+  },
+  {
+    "date": "2026-11-06",
+    "amWeight": 90.95,
+    "pmWeight": null,
+    "hrv": null,
+    "breakfast": "2茶叶蛋 优倍220ml",
+    "lunch": "",
+    "dinner": "",
+    "water": 0,
+    "activity": "早骑车 11.3km (57min)",
+    "supplements": [],
+    "calories": 270,
+    "protein": 20,
+    "carbs": 12,
+    "fat": 15
   }
 ]

@@ -322,6 +322,22 @@
         protein: 93,
         carbs: 66,
         fat: 52
+      },
+      {
+        date: '2026-11-06',
+        amWeight: 90.95,
+        pmWeight: null,
+        hrv: null,
+        breakfast: '2茶叶蛋 优倍220ml',
+        lunch: '',
+        dinner: '',
+        water: 0,
+        activity: '早骑车 11.3km (57min)',
+        supplements: [],
+        calories: 270,
+        protein: 20,
+        carbs: 12,
+        fat: 15
       }
     ];
 
@@ -378,6 +394,12 @@
         if (!r.calories || r.calories <= 635) { r.calories = 1115; r.protein = 93; r.carbs = 66; r.fat = 52; }
         if (!r.water || r.water < 4.5) r.water = 4.5;
         if (!r.activity || r.activity === '骑车回家') r.activity = '骑车 9.9km (40min)';
+        if (!Array.isArray(r.supplements)) r.supplements = [];
+      } else if (r.date === '2026-11-06') {
+        if (r.amWeight == null) r.amWeight = 90.95;
+        if (!r.breakfast) r.breakfast = '2茶叶蛋 优倍220ml';
+        if (!r.activity || r.activity === '早上骑车') r.activity = '早骑车 11.3km (57min)';
+        if (!r.calories) { r.calories = 270; r.protein = 20; r.carbs = 12; r.fat = 15; }
         if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;
@@ -537,6 +559,9 @@
           return { date: r.date };
         }
         if (r.date === '2026-11-04' && r.amWeight === 90.8 && r.pmWeight === 91.7 && r.calories === 1278) {
+          return { date: r.date };
+        }
+        if (r.date === '2026-11-05' && r.amWeight === 91.25 && r.pmWeight === 91.65 && r.calories === 1115) {
           return { date: r.date };
         }
         const o = { date: r.date };
