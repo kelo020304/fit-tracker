@@ -331,9 +331,9 @@
         breakfast: '2茶叶蛋 优倍220ml',
         lunch: 'Subway (不要芝士)',
         dinner: '',
-        water: 1,
+        water: 2,
         activity: '早骑车 11.3km (57min)',
-        supplements: [],
+        supplements: ['鱼油'],
         calories: 620,
         protein: 50,
         carbs: 55,
@@ -400,10 +400,10 @@
         if (r.hrv == null) r.hrv = 51;
         if (!r.breakfast) r.breakfast = '2茶叶蛋 优倍220ml';
         if (!r.lunch) r.lunch = 'Subway (不要芝士)';
-        if (!r.water || r.water < 1) r.water = 1;
+        if (!r.water || r.water < 2) r.water = 2;
         if (!r.activity || r.activity === '早上骑车') r.activity = '早骑车 11.3km (57min)';
         if (!r.calories || r.calories <= 270) { r.calories = 620; r.protein = 50; r.carbs = 55; r.fat = 21; }
-        if (!Array.isArray(r.supplements)) r.supplements = [];
+        if (!Array.isArray(r.supplements) || r.supplements.length === 0) r.supplements = ['鱼油'];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;

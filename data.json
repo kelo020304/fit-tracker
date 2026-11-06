@@ -60,9 +60,11 @@
     "breakfast": "2茶叶蛋 优倍220ml",
     "lunch": "Subway (不要芝士)",
     "dinner": "",
-    "water": 1,
+    "water": 2,
     "activity": "早骑车 11.3km (57min)",
-    "supplements": [],
+    "supplements": [
+      "鱼油"
+    ],
     "calories": 620,
     "protein": 50,
     "carbs": 55,
