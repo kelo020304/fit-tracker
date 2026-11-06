@@ -55,11 +55,11 @@
   {
     "date": "2026-11-06",
     "amWeight": 90.95,
-    "pmWeight": null,
+    "pmWeight": 91.05,
     "hrv": 51,
     "breakfast": "2茶叶蛋 优倍220ml",
     "lunch": "Subway (不要芝士)",
-    "dinner": "蛋白粉 + Subway鸡排 + 睡前1蛋1奶",
+    "dinner": "蛋白粉 + Subway鸡排 + 睡前1蛋1奶1把蓝莓",
     "water": 3.5,
     "activity": "早晚骑车 22.6km (110min)",
     "supplements": [
@@ -67,9 +67,9 @@
       "蛋白粉",
       "甘氨酸镁"
     ],
-    "calories": 1248,
+    "calories": 1273,
     "protein": 109,
-    "carbs": 112,
+    "carbs": 118,
     "fat": 39
   }
 ]
