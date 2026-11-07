@@ -347,9 +347,9 @@
         breakfast: '2茶叶蛋 优倍220ml',
         lunch: 'Subway 照烧鸡 (无酱)',
         dinner: '',
-        water: 0,
+        water: 0.5,
         activity: '羽毛球 3h',
-        supplements: [],
+        supplements: ['鱼油'],
         calories: 580,
         protein: 46,
         carbs: 54,
@@ -426,9 +426,10 @@
         if (r.amWeight == null) r.amWeight = 90.75;
         if (!r.breakfast) r.breakfast = '2茶叶蛋 优倍220ml';
         if (!r.lunch) r.lunch = 'Subway 照烧鸡 (无酱)';
+        if (!r.water || r.water < 0.5) r.water = 0.5;
         if (!r.activity) r.activity = '羽毛球 3h';
         if (!r.calories || r.calories <= 270) { r.calories = 580; r.protein = 46; r.carbs = 54; r.fat = 20; }
-        if (!Array.isArray(r.supplements)) r.supplements = [];
+        if (!Array.isArray(r.supplements) || r.supplements.length === 0) r.supplements = ['鱼油'];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;
