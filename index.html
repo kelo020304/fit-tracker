@@ -346,14 +346,14 @@
         hrv: 71,
         breakfast: '2茶叶蛋 优倍220ml',
         lunch: 'Subway 照烧鸡 (无酱)',
-        dinner: '下午蛋白粉 (晚饭待定)',
+        dinner: '下午蛋白粉 + 2个Subway百味卷(无酱)',
         water: 3.5,
         activity: '羽毛球 3h',
         supplements: ['鱼油', '蛋白粉'],
-        calories: 698,
-        protein: 71,
-        carbs: 56,
-        fat: 21
+        calories: 1298,
+        protein: 121,
+        carbs: 136,
+        fat: 31
       }
     ];
 
@@ -427,10 +427,10 @@
         if (r.hrv == null) r.hrv = 71;
         if (!r.breakfast) r.breakfast = '2茶叶蛋 优倍220ml';
         if (!r.lunch) r.lunch = 'Subway 照烧鸡 (无酱)';
-        if (!r.dinner) r.dinner = '下午蛋白粉 (晚饭待定)';
+        if (!r.dinner || r.dinner === '下午蛋白粉 (晚饭待定)') r.dinner = '下午蛋白粉 + 2个Subway百味卷(无酱)';
         if (!r.water || r.water < 3.5) r.water = 3.5;
         if (!r.activity) r.activity = '羽毛球 3h';
-        if (!r.calories || r.calories <= 580) { r.calories = 698; r.protein = 71; r.carbs = 56; r.fat = 21; }
+        if (!r.calories || r.calories <= 698) { r.calories = 1298; r.protein = 121; r.carbs = 136; r.fat = 31; }
         if (!Array.isArray(r.supplements) || r.supplements.length < 2) r.supplements = ['鱼油', '蛋白粉'];
       } else {
         if (r.calories == null) r.calories = 0;
