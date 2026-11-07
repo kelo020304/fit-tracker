@@ -347,7 +347,7 @@
         breakfast: '2茶叶蛋 优倍220ml',
         lunch: 'Subway 照烧鸡 (无酱)',
         dinner: '下午蛋白粉 + 金枪鱼&黑胡椒牛排百味卷(无酱)',
-        water: 3.5,
+        water: 6.5,
         activity: '羽毛球 3h',
         supplements: ['鱼油', '蛋白粉'],
         calories: 1448,
@@ -428,7 +428,7 @@
         if (!r.breakfast) r.breakfast = '2茶叶蛋 优倍220ml';
         if (!r.lunch) r.lunch = 'Subway 照烧鸡 (无酱)';
         if (!r.dinner || r.dinner === '下午蛋白粉 (晚饭待定)' || r.dinner === '下午蛋白粉 + 2个Subway百味卷(无酱)') r.dinner = '下午蛋白粉 + 金枪鱼&黑胡椒牛排百味卷(无酱)';
-        if (!r.water || r.water < 3.5) r.water = 3.5;
+        if (!r.water || r.water < 6.5) r.water = 6.5;
         if (!r.activity) r.activity = '羽毛球 3h';
         if (!r.calories || r.calories <= 1298) { r.calories = 1448; r.protein = 116; r.carbs = 134; r.fat = 49; }
         if (!Array.isArray(r.supplements) || r.supplements.length < 2) r.supplements = ['鱼油', '蛋白粉'];
