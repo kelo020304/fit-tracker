@@ -343,7 +343,7 @@
         date: '2026-11-07',
         amWeight: 90.75,
         pmWeight: null,
-        hrv: null,
+        hrv: 71,
         breakfast: '2茶叶蛋 优倍220ml',
         lunch: 'Subway 照烧鸡 (无酱)',
         dinner: '',
@@ -424,6 +424,7 @@
         if (!Array.isArray(r.supplements) || r.supplements.length < 3) r.supplements = ['鱼油', '蛋白粉', '甘氨酸镁'];
       } else if (r.date === '2026-11-07') {
         if (r.amWeight == null) r.amWeight = 90.75;
+        if (r.hrv == null) r.hrv = 71;
         if (!r.breakfast) r.breakfast = '2茶叶蛋 优倍220ml';
         if (!r.lunch) r.lunch = 'Subway 照烧鸡 (无酱)';
         if (!r.water || r.water < 0.5) r.water = 0.5;
