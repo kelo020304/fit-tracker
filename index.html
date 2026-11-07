@@ -348,7 +348,7 @@
         lunch: '',
         dinner: '',
         water: 0,
-        activity: '',
+        activity: '羽毛球 3h',
         supplements: [],
         calories: 270,
         protein: 20,
@@ -425,6 +425,7 @@
       } else if (r.date === '2026-11-07') {
         if (r.amWeight == null) r.amWeight = 90.75;
         if (!r.breakfast) r.breakfast = '2茶叶蛋 优倍220ml';
+        if (!r.activity) r.activity = '羽毛球 3h';
         if (!r.calories) { r.calories = 270; r.protein = 20; r.carbs = 12; r.fat = 15; }
         if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
