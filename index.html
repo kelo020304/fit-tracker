@@ -331,13 +331,29 @@
         breakfast: '2茶叶蛋 优倍220ml',
         lunch: 'Subway (不要芝士)',
         dinner: '蛋白粉 + Subway鸡排 + 睡前1蛋1奶1把蓝莓',
-        water: 3.5,
+        water: 4.5,
         activity: '早晚骑车 22.6km (110min)',
         supplements: ['鱼油', '蛋白粉', '甘氨酸镁'],
         calories: 1273,
         protein: 109,
         carbs: 118,
         fat: 39
+      },
+      {
+        date: '2026-11-07',
+        amWeight: 90.75,
+        pmWeight: null,
+        hrv: null,
+        breakfast: '2茶叶蛋 优倍220ml',
+        lunch: '',
+        dinner: '',
+        water: 0,
+        activity: '',
+        supplements: [],
+        calories: 270,
+        protein: 20,
+        carbs: 12,
+        fat: 15
       }
     ];
 
@@ -402,10 +418,15 @@
         if (!r.breakfast) r.breakfast = '2茶叶蛋 优倍220ml';
         if (!r.lunch) r.lunch = 'Subway (不要芝士)';
         if (!r.dinner || r.dinner === '下午: 蛋白粉' || r.dinner === '蛋白粉 + Subway 香烤鸡排' || r.dinner === '蛋白粉 + Subway鸡排 + 睡前1蛋1奶') r.dinner = '蛋白粉 + Subway鸡排 + 睡前1蛋1奶1把蓝莓';
-        if (!r.water || r.water < 3.5) r.water = 3.5;
+        if (!r.water || r.water < 4.5) r.water = 4.5;
         if (!r.activity || r.activity === '早上骑车' || r.activity === '早骑车 11.3km (57min)') r.activity = '早晚骑车 22.6km (110min)';
         if (!r.calories || r.calories <= 1248) { r.calories = 1273; r.protein = 109; r.carbs = 118; r.fat = 39; }
         if (!Array.isArray(r.supplements) || r.supplements.length < 3) r.supplements = ['鱼油', '蛋白粉', '甘氨酸镁'];
+      } else if (r.date === '2026-11-07') {
+        if (r.amWeight == null) r.amWeight = 90.75;
+        if (!r.breakfast) r.breakfast = '2茶叶蛋 优倍220ml';
+        if (!r.calories) { r.calories = 270; r.protein = 20; r.carbs = 12; r.fat = 15; }
+        if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;
@@ -567,6 +588,9 @@
           return { date: r.date };
         }
         if (r.date === '2026-11-05' && r.amWeight === 91.25 && r.pmWeight === 91.65 && r.calories === 1115) {
+          return { date: r.date };
+        }
+        if (r.date === '2026-11-06' && r.amWeight === 90.95 && r.pmWeight === 91.05 && r.calories === 1273) {
           return { date: r.date };
         }
         const o = { date: r.date };

@@ -60,7 +60,7 @@
     "breakfast": "2茶叶蛋 优倍220ml",
     "lunch": "Subway (不要芝士)",
     "dinner": "蛋白粉 + Subway鸡排 + 睡前1蛋1奶1把蓝莓",
-    "water": 3.5,
+    "water": 4.5,
     "activity": "早晚骑车 22.6km (110min)",
     "supplements": [
       "鱼油",
@@ -71,5 +71,21 @@
     "protein": 109,
     "carbs": 118,
     "fat": 39
+  },
+  {
+    "date": "2026-11-07",
+    "amWeight": 90.75,
+    "pmWeight": null,
+    "hrv": null,
+    "breakfast": "2茶叶蛋 优倍220ml",
+    "lunch": "",
+    "dinner": "",
+    "water": 0,
+    "activity": "",
+    "supplements": [],
+    "calories": 270,
+    "protein": 20,
+    "carbs": 12,
+    "fat": 15
   }
 ]
