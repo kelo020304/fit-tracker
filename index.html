@@ -362,14 +362,14 @@
         pmWeight: null,
         hrv: null,
         breakfast: '2个肉包 + 1个鸡蛋',
-        lunch: 'Subway (无酱)',
+        lunch: 'Subway 原切鸡排 (无酱)',
         dinner: '',
         water: 0,
         activity: '',
         supplements: [],
-        calories: 785,
-        protein: 48,
-        carbs: 95,
+        calories: 780,
+        protein: 50,
+        carbs: 93,
         fat: 24
       }
     ];
@@ -453,8 +453,8 @@
       } else if (r.date === '2026-11-08') {
         if (r.amWeight == null) r.amWeight = 89.7;
         if (!r.breakfast) r.breakfast = '2个肉包 + 1个鸡蛋';
-        if (!r.lunch) r.lunch = 'Subway (无酱)';
-        if (!r.calories || r.calories <= 0) { r.calories = 785; r.protein = 48; r.carbs = 95; r.fat = 24; }
+        if (!r.lunch || r.lunch === 'Subway (无酱)') r.lunch = 'Subway 原切鸡排 (无酱)';
+        if (!r.calories || r.calories <= 0 || r.calories === 785) { r.calories = 780; r.protein = 50; r.carbs = 93; r.fat = 24; }
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;
