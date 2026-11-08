@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794145640761,
+  "updatedAt": 1794146676842,
   "rows": [
     {
       "day": 1,
@@ -115,7 +115,7 @@
       "date": "2026-11-08",
       "label": "Day 6 (周日)",
       "amWeight": 89.7,
-      "pmWeight": null,
+      "pmWeight": 90.7,
       "hrv": null,
       "breakfast": "2个肉包 + 1个鸡蛋",
       "lunch": "Subway 原切鸡排 (无酱)",
@@ -124,7 +124,7 @@
       "protein": 101,
       "carbs": 136,
       "fat": 51,
-      "water": 2,
+      "water": 3.5,
       "activity": "",
       "supplements": [
         "茶氨酸",
@@ -248,7 +248,7 @@
       "date": "2026-11-08",
       "label": "Day 6 (周日)",
       "amWeight": 89.7,
-      "pmWeight": null,
+      "pmWeight": 90.7,
       "hrv": null,
       "breakfast": "2个肉包 + 1个鸡蛋",
       "lunch": "Subway 原切鸡排 (无酱)",
@@ -257,7 +257,7 @@
       "protein": 101,
       "carbs": 136,
       "fat": 51,
-      "water": 2,
+      "water": 3.5,
       "activity": "",
       "supplements": [
         "茶氨酸",
