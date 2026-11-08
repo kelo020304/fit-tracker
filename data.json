@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794146676842,
+  "updatedAt": 1794146749915,
   "rows": [
     {
       "day": 1,
@@ -115,7 +115,7 @@
       "date": "2026-11-08",
       "label": "Day 6 (周日)",
       "amWeight": 89.7,
-      "pmWeight": 90.7,
+      "pmWeight": 90.55,
       "hrv": null,
       "breakfast": "2个肉包 + 1个鸡蛋",
       "lunch": "Subway 原切鸡排 (无酱)",
@@ -248,7 +248,7 @@
       "date": "2026-11-08",
       "label": "Day 6 (周日)",
       "amWeight": 89.7,
-      "pmWeight": 90.7,
+      "pmWeight": 90.55,
       "hrv": null,
       "breakfast": "2个肉包 + 1个鸡蛋",
       "lunch": "Subway 原切鸡排 (无酱)",
