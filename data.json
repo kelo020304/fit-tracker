@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794138249073,
+  "updatedAt": 1794145640761,
   "rows": [
     {
       "day": 1,
@@ -119,11 +119,11 @@
       "hrv": null,
       "breakfast": "2个肉包 + 1个鸡蛋",
       "lunch": "Subway 原切鸡排 (无酱)",
-      "dinner": "蛋白粉 + Subway 金枪鱼",
-      "calories": 1328,
-      "protein": 95,
-      "carbs": 135,
-      "fat": 46,
+      "dinner": "蛋白粉 + Subway金枪鱼 + 睡前1蛋",
+      "calories": 1403,
+      "protein": 101,
+      "carbs": 136,
+      "fat": 51,
       "water": 2,
       "activity": "",
       "supplements": [
@@ -131,7 +131,7 @@
         "鱼油",
         "蛋白粉"
       ],
-      "notes": "早起89.7kg破90大关！实验室晚餐：蛋白粉+Subway金枪鱼，全天1328kcal/蛋白质95g！"
+      "notes": "早起89.7kg破90大关！3h大球次日EPOC高代谢修复，晚饭蛋白粉+Subway金枪鱼+睡前1蛋(1403kcal/101g蛋白)！"
     }
   ],
   "records": [
@@ -252,11 +252,11 @@
       "hrv": null,
       "breakfast": "2个肉包 + 1个鸡蛋",
       "lunch": "Subway 原切鸡排 (无酱)",
-      "dinner": "蛋白粉 + Subway 金枪鱼",
-      "calories": 1328,
-      "protein": 95,
-      "carbs": 135,
-      "fat": 46,
+      "dinner": "蛋白粉 + Subway金枪鱼 + 睡前1蛋",
+      "calories": 1403,
+      "protein": 101,
+      "carbs": 136,
+      "fat": 51,
       "water": 2,
       "activity": "",
       "supplements": [
@@ -264,7 +264,7 @@
         "鱼油",
         "蛋白粉"
       ],
-      "notes": "早起89.7kg破90大关！实验室晚餐：蛋白粉+Subway金枪鱼，全天1328kcal/蛋白质95g！"
+      "notes": "早起89.7kg破90大关！3h大球次日EPOC高代谢修复，晚饭蛋白粉+Subway金枪鱼+睡前1蛋(1403kcal/101g蛋白)！"
     }
   ]
 }
