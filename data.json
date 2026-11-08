@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794119351328,
+  "updatedAt": 1794129439612,
   "rows": [
     {
       "day": 1,
@@ -119,15 +119,19 @@
       "hrv": null,
       "breakfast": "2个肉包 + 1个鸡蛋",
       "lunch": "Subway 原切鸡排 (无酱)",
-      "dinner": "",
-      "calories": 780,
-      "protein": 50,
-      "carbs": 93,
-      "fat": 24,
-      "water": 0,
+      "dinner": "蛋白粉 + Subway (无酱)",
+      "calories": 1208,
+      "protein": 101,
+      "carbs": 137,
+      "fat": 30,
+      "water": 1,
       "activity": "",
-      "supplements": [],
-      "notes": "历史性破90kg大关！早起空腹89.7kg(单日暴降1.05kg)！早饭2肉包1鸡蛋+午饭Subway已入账！"
+      "supplements": [
+        "茶氨酸",
+        "鱼油",
+        "蛋白粉"
+      ],
+      "notes": "早起89.7kg破90大关！实验室晚餐：蛋白粉+Subway(无酱)，全天1208kcal/蛋白质101g精准达标！"
     }
   ],
   "records": [
@@ -248,15 +252,19 @@
       "hrv": null,
       "breakfast": "2个肉包 + 1个鸡蛋",
       "lunch": "Subway 原切鸡排 (无酱)",
-      "dinner": "",
-      "calories": 780,
-      "protein": 50,
-      "carbs": 93,
-      "fat": 24,
-      "water": 0,
+      "dinner": "蛋白粉 + Subway (无酱)",
+      "calories": 1208,
+      "protein": 101,
+      "carbs": 137,
+      "fat": 30,
+      "water": 1,
       "activity": "",
-      "supplements": [],
-      "notes": "历史性破90kg大关！早起空腹89.7kg(单日暴降1.05kg)！早饭2肉包1鸡蛋+午饭Subway已入账！"
+      "supplements": [
+        "茶氨酸",
+        "鱼油",
+        "蛋白粉"
+      ],
+      "notes": "早起89.7kg破90大关！实验室晚餐：蛋白粉+Subway(无酱)，全天1208kcal/蛋白质101g精准达标！"
     }
   ]
 }
