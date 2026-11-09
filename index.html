@@ -382,7 +382,7 @@
         dinner: '',
         water: 0,
         activity: '',
-        supplements: ['茶氨酸'],
+        supplements: ['茶氨酸', '鱼油'],
         calories: 580,
         protein: 46,
         carbs: 54,
@@ -480,7 +480,7 @@
         if (!r.breakfast || r.breakfast === '2茶叶蛋 优倍220ml') r.breakfast = '2茶叶蛋 优倍220ml + 咖啡';
         if (!r.lunch) r.lunch = 'Subway (无酱)';
         if (!r.calories || r.calories <= 270) { r.calories = 580; r.protein = 46; r.carbs = 54; r.fat = 20; }
-        if (!Array.isArray(r.supplements) || r.supplements.length === 0) r.supplements = ['茶氨酸'];
+        if (!Array.isArray(r.supplements) || r.supplements.length < 2) r.supplements = ['茶氨酸', '鱼油'];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;
