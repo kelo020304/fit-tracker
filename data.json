@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794218384872,
+  "updatedAt": 1794221817000,
   "rows": [
     {
       "day": 1,
@@ -147,14 +147,14 @@
       "protein": 99,
       "carbs": 99,
       "fat": 44,
-      "water": 0,
+      "water": 3,
       "activity": "",
       "supplements": [
         "茶氨酸",
         "鱼油",
         "蛋白粉"
       ],
-      "notes": "早起90.20kg；12-13点HRV 69ms！三餐+下午蛋白粉累计1175kcal/99g蛋白。"
+      "notes": "早起90.20kg；12-13点HRV 69ms！三餐+下午蛋白粉累计1175kcal/99g蛋白，饮水3杯(1500ml)。"
     }
   ],
   "records": [
@@ -303,14 +303,14 @@
       "protein": 99,
       "carbs": 99,
       "fat": 44,
-      "water": 0,
+      "water": 3,
       "activity": "",
       "supplements": [
         "茶氨酸",
         "鱼油",
         "蛋白粉"
       ],
-      "notes": "早起90.20kg；12-13点HRV 69ms！三餐+下午蛋白粉累计1175kcal/99g蛋白。"
+      "notes": "早起90.20kg；12-13点HRV 69ms！三餐+下午蛋白粉累计1175kcal/99g蛋白，饮水3杯(1500ml)。"
     }
   ]
 }
