@@ -371,6 +371,22 @@
         protein: 109,
         carbs: 146,
         fat: 58
+      },
+      {
+        date: '2026-11-09',
+        amWeight: 90.2,
+        pmWeight: null,
+        hrv: null,
+        breakfast: '',
+        lunch: '',
+        dinner: '',
+        water: 0,
+        activity: '',
+        supplements: [],
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0
       }
     ];
 
@@ -459,6 +475,8 @@
         if (!r.water || r.water < 3.5) r.water = 3.5;
         if (!r.calories || r.calories <= 1403) { r.calories = 1533; r.protein = 109; r.carbs = 146; r.fat = 58; }
         if (!Array.isArray(r.supplements) || r.supplements.length < 3) r.supplements = ['茶氨酸', '鱼油', '蛋白粉'];
+      } else if (r.date === '2026-11-09') {
+        if (r.amWeight == null) r.amWeight = 90.2;
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;

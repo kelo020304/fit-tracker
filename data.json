@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794146911820,
+  "updatedAt": 1794188422009,
   "rows": [
     {
       "day": 1,
@@ -132,6 +132,25 @@
         "蛋白粉"
       ],
       "notes": "早起89.7kg破90大关！晚间站直90.55kg！晚饭蛋白粉+Subway金枪鱼+睡前1蛋1奶(1533kcal/109g蛋白)！"
+    },
+    {
+      "day": 7,
+      "date": "2026-11-09",
+      "label": "Day 7 (周一)",
+      "amWeight": 90.2,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "",
+      "lunch": "",
+      "dinner": "",
+      "calories": 0,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 0,
+      "water": 0,
+      "activity": "",
+      "supplements": [],
+      "notes": "满水态早起空腹90.20kg，比周六满水态(90.75kg)净降0.55kg(1.1斤真脂肪)！"
     }
   ],
   "records": [
@@ -265,6 +284,25 @@
         "蛋白粉"
       ],
       "notes": "早起89.7kg破90大关！晚间站直90.55kg！晚饭蛋白粉+Subway金枪鱼+睡前1蛋1奶(1533kcal/109g蛋白)！"
+    },
+    {
+      "day": 7,
+      "date": "2026-11-09",
+      "label": "Day 7 (周一)",
+      "amWeight": 90.2,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "",
+      "lunch": "",
+      "dinner": "",
+      "calories": 0,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 0,
+      "water": 0,
+      "activity": "",
+      "supplements": [],
+      "notes": "满水态早起空腹90.20kg，比周六满水态(90.75kg)净降0.55kg(1.1斤真脂肪)！"
     }
   ]
 }
