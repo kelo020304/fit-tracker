@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794193446501,
+  "updatedAt": 1794199228815,
   "rows": [
     {
       "day": 1,
@@ -141,12 +141,12 @@
       "pmWeight": null,
       "hrv": null,
       "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
-      "lunch": "",
+      "lunch": "Subway (无酱)",
       "dinner": "",
-      "calories": 270,
-      "protein": 20,
-      "carbs": 12,
-      "fat": 15,
+      "calories": 580,
+      "protein": 46,
+      "carbs": 54,
+      "fat": 20,
       "water": 0,
       "activity": "",
       "supplements": [
@@ -295,12 +295,12 @@
       "pmWeight": null,
       "hrv": null,
       "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
-      "lunch": "",
+      "lunch": "Subway (无酱)",
       "dinner": "",
-      "calories": 270,
-      "protein": 20,
-      "carbs": 12,
-      "fat": 15,
+      "calories": 580,
+      "protein": 46,
+      "carbs": 54,
+      "fat": 20,
       "water": 0,
       "activity": "",
       "supplements": [

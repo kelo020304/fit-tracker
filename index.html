@@ -378,15 +378,15 @@
         pmWeight: null,
         hrv: null,
         breakfast: '2茶叶蛋 优倍220ml + 咖啡',
-        lunch: '',
+        lunch: 'Subway (无酱)',
         dinner: '',
         water: 0,
         activity: '',
         supplements: ['茶氨酸'],
-        calories: 270,
-        protein: 20,
-        carbs: 12,
-        fat: 15
+        calories: 580,
+        protein: 46,
+        carbs: 54,
+        fat: 20
       }
     ];
 
@@ -478,7 +478,8 @@
       } else if (r.date === '2026-11-09') {
         if (r.amWeight == null) r.amWeight = 90.2;
         if (!r.breakfast || r.breakfast === '2茶叶蛋 优倍220ml') r.breakfast = '2茶叶蛋 优倍220ml + 咖啡';
-        if (!r.calories || r.calories <= 0) { r.calories = 270; r.protein = 20; r.carbs = 12; r.fat = 15; }
+        if (!r.lunch) r.lunch = 'Subway (无酱)';
+        if (!r.calories || r.calories <= 270) { r.calories = 580; r.protein = 46; r.carbs = 54; r.fat = 20; }
         if (!Array.isArray(r.supplements) || r.supplements.length === 0) r.supplements = ['茶氨酸'];
       } else {
         if (r.calories == null) r.calories = 0;
