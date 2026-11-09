@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794200303597,
+  "updatedAt": 1794203348242,
   "rows": [
     {
       "day": 1,
@@ -139,7 +139,7 @@
       "label": "Day 7 (周一)",
       "amWeight": 90.2,
       "pmWeight": null,
-      "hrv": null,
+      "hrv": 69,
       "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
       "lunch": "Subway (无酱)",
       "dinner": "",
@@ -153,7 +153,7 @@
         "茶氨酸",
         "鱼油"
       ],
-      "notes": "满水态早起空腹90.20kg，比周六满水态(90.75kg)净降0.55kg(1.1斤真脂肪)！"
+      "notes": "早起90.20kg；早咖啡+茶氨酸后12-13点HRV高达69ms！午餐Subway+鱼油。"
     }
   ],
   "records": [
@@ -294,7 +294,7 @@
       "label": "Day 7 (周一)",
       "amWeight": 90.2,
       "pmWeight": null,
-      "hrv": null,
+      "hrv": 69,
       "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
       "lunch": "Subway (无酱)",
       "dinner": "",
@@ -308,7 +308,7 @@
         "茶氨酸",
         "鱼油"
       ],
-      "notes": "满水态早起空腹90.20kg，比周六满水态(90.75kg)净降0.55kg(1.1斤真脂肪)！"
+      "notes": "早起90.20kg；早咖啡+茶氨酸后12-13点HRV高达69ms！午餐Subway+鱼油。"
     }
   ]
 }
