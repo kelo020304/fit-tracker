@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794212353304,
+  "updatedAt": 1794218384872,
   "rows": [
     {
       "day": 1,
@@ -142,11 +142,11 @@
       "hrv": 69,
       "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
       "lunch": "Subway (无酱)",
-      "dinner": "下午蛋白粉",
-      "calories": 700,
-      "protein": 70,
-      "carbs": 57,
-      "fat": 22,
+      "dinner": "下午蛋白粉 + Subway鸡蛋金枪鱼双拼",
+      "calories": 1175,
+      "protein": 99,
+      "carbs": 99,
+      "fat": 44,
       "water": 0,
       "activity": "",
       "supplements": [
@@ -154,7 +154,7 @@
         "鱼油",
         "蛋白粉"
       ],
-      "notes": "早起90.20kg；早咖啡+茶氨酸后12-13点HRV高达69ms！午餐Subway+鱼油，下午加餐蛋白粉。"
+      "notes": "早起90.20kg；12-13点HRV 69ms！三餐+下午蛋白粉累计1175kcal/99g蛋白。"
     }
   ],
   "records": [
@@ -298,11 +298,11 @@
       "hrv": 69,
       "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
       "lunch": "Subway (无酱)",
-      "dinner": "下午蛋白粉",
-      "calories": 700,
-      "protein": 70,
-      "carbs": 57,
-      "fat": 22,
+      "dinner": "下午蛋白粉 + Subway鸡蛋金枪鱼双拼",
+      "calories": 1175,
+      "protein": 99,
+      "carbs": 99,
+      "fat": 44,
       "water": 0,
       "activity": "",
       "supplements": [
@@ -310,7 +310,7 @@
         "鱼油",
         "蛋白粉"
       ],
-      "notes": "早起90.20kg；早咖啡+茶氨酸后12-13点HRV高达69ms！午餐Subway+鱼油，下午加餐蛋白粉。"
+      "notes": "早起90.20kg；12-13点HRV 69ms！三餐+下午蛋白粉累计1175kcal/99g蛋白。"
     }
   ]
 }
