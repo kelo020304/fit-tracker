@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794191555713,
+  "updatedAt": 1794193446501,
   "rows": [
     {
       "day": 1,
@@ -140,7 +140,7 @@
       "amWeight": 90.2,
       "pmWeight": null,
       "hrv": null,
-      "breakfast": "2茶叶蛋 优倍220ml",
+      "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
       "lunch": "",
       "dinner": "",
       "calories": 270,
@@ -149,7 +149,9 @@
       "fat": 15,
       "water": 0,
       "activity": "",
-      "supplements": [],
+      "supplements": [
+        "茶氨酸"
+      ],
       "notes": "满水态早起空腹90.20kg，比周六满水态(90.75kg)净降0.55kg(1.1斤真脂肪)！"
     }
   ],
@@ -292,7 +294,7 @@
       "amWeight": 90.2,
       "pmWeight": null,
       "hrv": null,
-      "breakfast": "2茶叶蛋 优倍220ml",
+      "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
       "lunch": "",
       "dinner": "",
       "calories": 270,
@@ -301,7 +303,9 @@
       "fat": 15,
       "water": 0,
       "activity": "",
-      "supplements": [],
+      "supplements": [
+        "茶氨酸"
+      ],
       "notes": "满水态早起空腹90.20kg，比周六满水态(90.75kg)净降0.55kg(1.1斤真脂肪)！"
     }
   ]
