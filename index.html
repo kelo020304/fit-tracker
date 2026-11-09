@@ -379,14 +379,14 @@
         hrv: 69,
         breakfast: '2茶叶蛋 优倍220ml + 咖啡',
         lunch: 'Subway (无酱)',
-        dinner: '下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2豆腐',
+        dinner: '下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2煎豆腐',
         water: 3,
         activity: '',
         supplements: ['茶氨酸', '鱼油', '蛋白粉'],
-        calories: 1330,
+        calories: 1360,
         protein: 113,
         carbs: 102,
-        fat: 53
+        fat: 56
       }
     ];
 
@@ -481,9 +481,9 @@
         if (r.hrv == null) r.hrv = 69;
         if (!r.breakfast || r.breakfast === '2茶叶蛋 优倍220ml') r.breakfast = '2茶叶蛋 优倍220ml + 咖啡';
         if (!r.lunch) r.lunch = 'Subway (无酱)';
-        if (!r.dinner || r.dinner === '下午蛋白粉' || r.dinner === '下午蛋白粉 + Subway鸡蛋金枪鱼双拼') r.dinner = '下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2豆腐';
+        if (!r.dinner || r.dinner === '下午蛋白粉' || r.dinner === '下午蛋白粉 + Subway鸡蛋金枪鱼双拼' || r.dinner === '下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2豆腐') r.dinner = '下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2煎豆腐';
         if (!r.water || r.water < 3) r.water = 3;
-        if (!r.calories || r.calories <= 1175) { r.calories = 1330; r.protein = 113; r.carbs = 102; r.fat = 53; }
+        if (!r.calories || r.calories <= 1330) { r.calories = 1360; r.protein = 113; r.carbs = 102; r.fat = 56; }
         if (!Array.isArray(r.supplements) || r.supplements.length < 3) r.supplements = ['茶氨酸', '鱼油', '蛋白粉'];
       } else {
         if (r.calories == null) r.calories = 0;

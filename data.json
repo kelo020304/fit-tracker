@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794240792365,
+  "updatedAt": 1794240928538,
   "rows": [
     {
       "day": 1,
@@ -142,11 +142,11 @@
       "hrv": 69,
       "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
       "lunch": "Subway (无酱)",
-      "dinner": "下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2豆腐",
-      "calories": 1330,
+      "dinner": "下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2煎豆腐",
+      "calories": 1360,
       "protein": 113,
       "carbs": 102,
-      "fat": 53,
+      "fat": 56,
       "water": 3,
       "activity": "",
       "supplements": [
@@ -154,7 +154,7 @@
         "鱼油",
         "蛋白粉"
       ],
-      "notes": "早起90.20kg，晚间仅90.40kg(早晚差仅+0.2kg)！12-13点HRV 69ms！全天累计1330kcal/113g蛋白。"
+      "notes": "早起90.20kg，晚间仅90.40kg(早晚差仅+0.2kg)！12-13点HRV 69ms！全天累计1360kcal/113g蛋白。"
     }
   ],
   "records": [
@@ -298,11 +298,11 @@
       "hrv": 69,
       "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
       "lunch": "Subway (无酱)",
-      "dinner": "下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2豆腐",
-      "calories": 1330,
+      "dinner": "下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2煎豆腐",
+      "calories": 1360,
       "protein": 113,
       "carbs": 102,
-      "fat": 53,
+      "fat": 56,
       "water": 3,
       "activity": "",
       "supplements": [
@@ -310,7 +310,7 @@
         "鱼油",
         "蛋白粉"
       ],
-      "notes": "早起90.20kg，晚间仅90.40kg(早晚差仅+0.2kg)！12-13点HRV 69ms！全天累计1330kcal/113g蛋白。"
+      "notes": "早起90.20kg，晚间仅90.40kg(早晚差仅+0.2kg)！12-13点HRV 69ms！全天累计1360kcal/113g蛋白。"
     }
   ]
 }
