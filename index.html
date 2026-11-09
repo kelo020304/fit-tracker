@@ -375,18 +375,18 @@
       {
         date: '2026-11-09',
         amWeight: 90.2,
-        pmWeight: null,
+        pmWeight: 90.4,
         hrv: 69,
         breakfast: '2茶叶蛋 优倍220ml + 咖啡',
         lunch: 'Subway (无酱)',
-        dinner: '下午蛋白粉 + Subway鸡蛋金枪鱼双拼',
+        dinner: '下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2豆腐',
         water: 3,
         activity: '',
         supplements: ['茶氨酸', '鱼油', '蛋白粉'],
-        calories: 1175,
-        protein: 99,
-        carbs: 99,
-        fat: 44
+        calories: 1330,
+        protein: 113,
+        carbs: 102,
+        fat: 53
       }
     ];
 
@@ -477,10 +477,14 @@
         if (!Array.isArray(r.supplements) || r.supplements.length < 3) r.supplements = ['茶氨酸', '鱼油', '蛋白粉'];
       } else if (r.date === '2026-11-09') {
         if (r.amWeight == null) r.amWeight = 90.2;
+        if (r.pmWeight == null) r.pmWeight = 90.4;
+        if (r.hrv == null) r.hrv = 69;
         if (!r.breakfast || r.breakfast === '2茶叶蛋 优倍220ml') r.breakfast = '2茶叶蛋 优倍220ml + 咖啡';
         if (!r.lunch) r.lunch = 'Subway (无酱)';
-        if (!r.calories || r.calories <= 270) { r.calories = 580; r.protein = 46; r.carbs = 54; r.fat = 20; }
-        if (!Array.isArray(r.supplements) || r.supplements.length < 2) r.supplements = ['茶氨酸', '鱼油'];
+        if (!r.dinner || r.dinner === '下午蛋白粉' || r.dinner === '下午蛋白粉 + Subway鸡蛋金枪鱼双拼') r.dinner = '下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2豆腐';
+        if (!r.water || r.water < 3) r.water = 3;
+        if (!r.calories || r.calories <= 1175) { r.calories = 1330; r.protein = 113; r.carbs = 102; r.fat = 53; }
+        if (!Array.isArray(r.supplements) || r.supplements.length < 3) r.supplements = ['茶氨酸', '鱼油', '蛋白粉'];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;
