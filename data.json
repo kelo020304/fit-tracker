@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794308591584,
+  "updatedAt": 1794314334533,
   "rows": [
     {
       "day": 1,
@@ -166,18 +166,18 @@
       "hrv": null,
       "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡",
       "lunch": "红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭",
-      "dinner": "下午蛋白粉 + KFC秘汁全鸡",
-      "calories": 1790,
-      "protein": 153,
-      "carbs": 121,
+      "dinner": "下午蛋白粉 + KFC秘汁全鸡 + 晚间淡蛋白粉水",
+      "calories": 1840,
+      "protein": 163,
+      "carbs": 122,
       "fat": 77,
-      "water": 1,
+      "water": 2,
       "activity": "开车去杭州",
       "supplements": [
         "茶氨酸",
         "蛋白粉"
       ],
-      "notes": "满水态早起空腹90.05kg！杭州出差：午餐盖饭+下午蛋白粉+晚餐KFC秘汁全鸡，全天1790kcal/153g超高蛋白！"
+      "notes": "早起90.05kg！杭州出差：午餐盖饭+下午蛋白粉+KFC秘汁全鸡+8点半550ml淡蛋白粉水排钠，全天1840kcal/163g蛋白。"
     }
   ],
   "records": [
@@ -345,18 +345,18 @@
       "hrv": null,
       "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡",
       "lunch": "红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭",
-      "dinner": "下午蛋白粉 + KFC秘汁全鸡",
-      "calories": 1790,
-      "protein": 153,
-      "carbs": 121,
+      "dinner": "下午蛋白粉 + KFC秘汁全鸡 + 晚间淡蛋白粉水",
+      "calories": 1840,
+      "protein": 163,
+      "carbs": 122,
       "fat": 77,
-      "water": 1,
+      "water": 2,
       "activity": "开车去杭州",
       "supplements": [
         "茶氨酸",
         "蛋白粉"
       ],
-      "notes": "满水态早起空腹90.05kg！杭州出差：午餐盖饭+下午蛋白粉+晚餐KFC秘汁全鸡，全天1790kcal/153g超高蛋白！"
+      "notes": "早起90.05kg！杭州出差：午餐盖饭+下午蛋白粉+KFC秘汁全鸡+8点半550ml淡蛋白粉水排钠，全天1840kcal/163g蛋白。"
     }
   ],
   "latestMealPhoto": {
