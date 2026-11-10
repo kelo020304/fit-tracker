@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794272237163,
+  "updatedAt": 1794298329776,
   "rows": [
     {
       "day": 1,
@@ -165,18 +165,18 @@
       "pmWeight": null,
       "hrv": null,
       "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡",
-      "lunch": "",
+      "lunch": "红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭",
       "dinner": "",
-      "calories": 490,
-      "protein": 26,
-      "carbs": 45,
-      "fat": 23,
+      "calories": 1120,
+      "protein": 67,
+      "carbs": 106,
+      "fat": 47,
       "water": 0,
       "activity": "开车去杭州",
       "supplements": [
         "茶氨酸"
       ],
-      "notes": "满水态早起空腹90.05kg！早咖啡+茶氨酸开启沪杭高速自驾！"
+      "notes": "满水态早起空腹90.05kg！杭州出差午餐：红烧鸡腿块+烧嫩豆腐+榄菜四季豆盖饭(630kcal/41g蛋白)，早午累计1120kcal/67g蛋白。"
     }
   ],
   "records": [
@@ -343,18 +343,30 @@
       "pmWeight": null,
       "hrv": null,
       "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡",
-      "lunch": "",
+      "lunch": "红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭",
       "dinner": "",
-      "calories": 490,
-      "protein": 26,
-      "carbs": 45,
-      "fat": 23,
+      "calories": 1120,
+      "protein": 67,
+      "carbs": 106,
+      "fat": 47,
       "water": 0,
       "activity": "开车去杭州",
       "supplements": [
         "茶氨酸"
       ],
-      "notes": "满水态早起空腹90.05kg！早咖啡+茶氨酸开启沪杭高速自驾！"
+      "notes": "满水态早起空腹90.05kg！杭州出差午餐：红烧鸡腿块+烧嫩豆腐+榄菜四季豆盖饭(630kcal/41g蛋白)，早午累计1120kcal/67g蛋白。"
     }
-  ]
+  ],
+  "latestMealPhoto": {
+    "photoUrl": "https://ntfy.sh/file/h4cHehmT6DG2.jpg",
+    "mealSlot": "lunch",
+    "isSingleMeal": true,
+    "time": "Day 8 · 午餐已入账",
+    "title": "红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭",
+    "calories": 630,
+    "protein": 41,
+    "carbs": 61,
+    "fat": 24,
+    "note": "鸡腿肉+嫩豆腐双蛋白达41g，加上底层米饭共约630 kcal！Day 8 早午两餐累计 1,120 kcal / 蛋白质 67g！"
+  }
 }

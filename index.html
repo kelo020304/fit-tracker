@@ -184,43 +184,43 @@
     <!-- Latest Photo & AI Nutrition Result -->
     <div id="photo-analysis-box" class="bg-slate-50 border border-slate-200/70 rounded-xl p-3 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
       <div class="flex items-center gap-3 w-full sm:w-auto">
-        <img id="meal-photo-img" src="https://ntfy.sh/file/ilarCI4fJMJs.jpg" alt="餐食照片" class="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-xl border border-slate-200 shrink-0 bg-white" />
+        <img id="meal-photo-img" src="https://ntfy.sh/file/h4cHehmT6DG2.jpg" alt="餐食照片" class="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-xl border border-slate-200 shrink-0 bg-white" />
         <div class="sm:hidden flex-1 min-w-0">
-          <div class="text-[11px] text-emerald-600 font-semibold font-mono" id="meal-analysis-time-mob">Day 2 · 晚餐已入账</div>
+          <div class="text-[11px] text-emerald-600 font-semibold font-mono" id="meal-analysis-time-mob">Day 8 · 午餐已入账</div>
           <div contenteditable="true" onblur="updateMealPhotoField('title', this.innerText.trim())"
-            class="text-xs font-bold text-slate-800 mt-0.5 leading-snug break-words" id="meal-analysis-title-mob">奥尔良烤鸡排 + 酸菜炖豆腐 + 花菜菠菜 + 半碗饭</div>
+            class="text-xs font-bold text-slate-800 mt-0.5 leading-snug break-words" id="meal-analysis-title-mob">红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭</div>
         </div>
       </div>
       <div class="flex-1 space-y-2 w-full min-w-0">
         <div class="hidden sm:flex items-center justify-between gap-2">
           <div contenteditable="true" onblur="updateMealPhotoField('title', this.innerText.trim())"
-            class="text-sm font-bold text-slate-800 focus:bg-white rounded px-1 outline-none" id="meal-analysis-title">奥尔良烤鸡排 + 酸菜炖豆腐 + 清炒花菜与菠菜 + 半碗米饭</div>
-          <span class="text-xs text-emerald-600 font-semibold font-mono shrink-0" id="meal-analysis-time">Day 2 · 晚餐已入账</span>
+            class="text-sm font-bold text-slate-800 focus:bg-white rounded px-1 outline-none" id="meal-analysis-title">红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭</div>
+          <span class="text-xs text-emerald-600 font-semibold font-mono shrink-0" id="meal-analysis-time">Day 8 · 午餐已入账</span>
         </div>
         <div class="grid grid-cols-4 gap-1.5 sm:gap-2.5 text-xs" id="meal-macros">
           <div class="bg-white border border-slate-200/80 rounded-lg px-2 py-1.5 text-center sm:text-left">
             <div class="text-[10px] text-slate-400 whitespace-nowrap">🔥 本餐热量</div>
             <div contenteditable="true" onblur="updateMealPhotoField('calories', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-slate-800 mt-0.5 whitespace-nowrap" id="macro-cal">525 kcal</div>
+              class="font-bold text-slate-800 mt-0.5 whitespace-nowrap" id="macro-cal">630 kcal</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2 py-1.5 text-center sm:text-left">
             <div class="text-[10px] text-slate-400 whitespace-nowrap">🥩 蛋白质</div>
             <div contenteditable="true" onblur="updateMealPhotoField('protein', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-emerald-600 mt-0.5 whitespace-nowrap" id="macro-prot">39 g</div>
+              class="font-bold text-emerald-600 mt-0.5 whitespace-nowrap" id="macro-prot">41 g</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2 py-1.5 text-center sm:text-left">
             <div class="text-[10px] text-slate-400 whitespace-nowrap">🍚 碳水</div>
             <div contenteditable="true" onblur="updateMealPhotoField('carbs', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-blue-600 mt-0.5 whitespace-nowrap" id="macro-carb">46 g</div>
+              class="font-bold text-blue-600 mt-0.5 whitespace-nowrap" id="macro-carb">61 g</div>
           </div>
           <div class="bg-white border border-slate-200/80 rounded-lg px-2 py-1.5 text-center sm:text-left">
             <div class="text-[10px] text-slate-400 whitespace-nowrap">🥑 脂肪</div>
             <div contenteditable="true" onblur="updateMealPhotoField('fat', this.innerText.replace(/[^0-9]/g,''))"
-              class="font-bold text-amber-600 mt-0.5 whitespace-nowrap" id="macro-fat">19 g</div>
+              class="font-bold text-amber-600 mt-0.5 whitespace-nowrap" id="macro-fat">24 g</div>
           </div>
         </div>
         <p contenteditable="true" onblur="updateMealPhotoField('note', this.innerText.trim())"
-          class="text-[11px] sm:text-xs text-slate-600 leading-relaxed focus:bg-white rounded px-1 outline-none break-words" id="meal-analysis-note">奥尔良鸡排+炖豆腐提供39g优质蛋白，双份蔬菜+半碗饭精准控碳！今日全天累计 1278 kcal / 蛋白质 110g！</p>
+          class="text-[11px] sm:text-xs text-slate-600 leading-relaxed focus:bg-white rounded px-1 outline-none break-words" id="meal-analysis-note">鸡腿肉+嫩豆腐双蛋白达41g，加上底层米饭共约630 kcal！Day 8 早午两餐累计 1,120 kcal / 蛋白质 67g！</p>
       </div>
     </div>
   </div>
@@ -394,15 +394,15 @@
         pmWeight: null,
         hrv: null,
         breakfast: 'Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡',
-        lunch: '',
+        lunch: '红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭',
         dinner: '',
         water: 0,
         activity: '开车去杭州',
         supplements: ['茶氨酸'],
-        calories: 490,
-        protein: 26,
-        carbs: 45,
-        fat: 23
+        calories: 1120,
+        protein: 67,
+        carbs: 106,
+        fat: 47
       }
     ];
 
@@ -410,16 +410,16 @@
     let localUpdatedAt = 0;
     let localDirty = false;
     let latestMealPhoto = {
-      photoUrl: 'https://ntfy.sh/file/ilarCI4fJMJs.jpg',
-      mealSlot: 'dinner',
+      photoUrl: 'https://ntfy.sh/file/h4cHehmT6DG2.jpg',
+      mealSlot: 'lunch',
       isSingleMeal: true,
-      time: 'Day 2 · 晚餐已入账',
-      title: '奥尔良烤鸡排 + 酸菜炖豆腐 + 花菜菠菜 + 半碗饭',
-      calories: 525,
-      protein: 39,
-      carbs: 46,
-      fat: 19,
-      note: '奥尔良鸡排+炖豆腐提供39g优质蛋白，双份蔬菜+半碗饭精准控碳！Day 2 全天累计 1278 kcal / 蛋白质 110g！'
+      time: 'Day 8 · 午餐已入账',
+      title: '红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭',
+      calories: 630,
+      protein: 41,
+      carbs: 61,
+      fat: 24,
+      note: '鸡腿肉+嫩豆腐双蛋白达41g，加上底层米饭共约630 kcal！Day 8 早午两餐累计 1,120 kcal / 蛋白质 67g！'
     };
 
     function ensureRowMacros(r) {
@@ -504,8 +504,9 @@
       } else if (r.date === '2026-11-10') {
         if (r.amWeight == null) r.amWeight = 90.05;
         if (!r.breakfast || r.breakfast === 'Subway热狗肠蛋方(去芝士) + 热牛奶') r.breakfast = 'Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡';
+        if (!r.lunch || r.lunch === '鸡丁豆腐炒豆角(450kcal/35g蛋白)') r.lunch = '红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭';
         if (!r.activity) r.activity = '开车去杭州';
-        if (!r.calories || r.calories <= 485) { r.calories = 490; r.protein = 26; r.carbs = 45; r.fat = 23; }
+        if (!r.calories || r.calories <= 940) { r.calories = 1120; r.protein = 67; r.carbs = 106; r.fat = 47; }
         if (!Array.isArray(r.supplements) || r.supplements.length === 0) r.supplements = ['茶氨酸'];
       } else {
         if (r.calories == null) r.calories = 0;
