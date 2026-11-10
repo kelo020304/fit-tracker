@@ -387,6 +387,22 @@
         protein: 113,
         carbs: 102,
         fat: 56
+      },
+      {
+        date: '2026-11-10',
+        amWeight: 90.05,
+        pmWeight: null,
+        hrv: null,
+        breakfast: 'Subway热狗肠蛋方(去芝士) + 热牛奶',
+        lunch: '',
+        dinner: '',
+        water: 0,
+        activity: '开车去杭州',
+        supplements: [],
+        calories: 485,
+        protein: 26,
+        carbs: 44,
+        fat: 23
       }
     ];
 
@@ -485,6 +501,12 @@
         if (!r.water || r.water < 3) r.water = 3;
         if (!r.calories || r.calories <= 1330) { r.calories = 1360; r.protein = 113; r.carbs = 102; r.fat = 56; }
         if (!Array.isArray(r.supplements) || r.supplements.length < 4) r.supplements = ['茶氨酸', '鱼油', '蛋白粉', '甘氨酸镁'];
+      } else if (r.date === '2026-11-10') {
+        if (r.amWeight == null) r.amWeight = 90.05;
+        if (!r.breakfast) r.breakfast = 'Subway热狗肠蛋方(去芝士) + 热牛奶';
+        if (!r.activity) r.activity = '开车去杭州';
+        if (!r.calories) { r.calories = 485; r.protein = 26; r.carbs = 44; r.fat = 23; }
+        if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;

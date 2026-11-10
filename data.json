@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794241036660,
+  "updatedAt": 1794271699222,
   "rows": [
     {
       "day": 1,
@@ -156,6 +156,25 @@
         "甘氨酸镁"
       ],
       "notes": "早起90.20kg，晚间仅90.40kg(早晚差仅+0.2kg)！12-13点HRV 69ms！四大补剂全满贯，累计1360kcal/113g蛋白。"
+    },
+    {
+      "day": 8,
+      "date": "2026-11-10",
+      "label": "Day 8 (周二)",
+      "amWeight": 90.05,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶",
+      "lunch": "",
+      "dinner": "",
+      "calories": 485,
+      "protein": 26,
+      "carbs": 44,
+      "fat": 23,
+      "water": 0,
+      "activity": "开车去杭州",
+      "supplements": [],
+      "notes": "满水态早起空腹90.05kg（精准命中预测区间！比昨日再降0.15kg），9点开车去杭州！"
     }
   ],
   "records": [
@@ -313,6 +332,25 @@
         "甘氨酸镁"
       ],
       "notes": "早起90.20kg，晚间仅90.40kg(早晚差仅+0.2kg)！12-13点HRV 69ms！四大补剂全满贯，累计1360kcal/113g蛋白。"
+    },
+    {
+      "day": 8,
+      "date": "2026-11-10",
+      "label": "Day 8 (周二)",
+      "amWeight": 90.05,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶",
+      "lunch": "",
+      "dinner": "",
+      "calories": 485,
+      "protein": 26,
+      "carbs": 44,
+      "fat": 23,
+      "water": 0,
+      "activity": "开车去杭州",
+      "supplements": [],
+      "notes": "满水态早起空腹90.05kg（精准命中预测区间！比昨日再降0.15kg），9点开车去杭州！"
     }
   ]
 }
