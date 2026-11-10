@@ -395,14 +395,14 @@
         hrv: null,
         breakfast: 'Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡',
         lunch: '红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭',
-        dinner: '下午蛋白粉',
+        dinner: '下午蛋白粉 + KFC秘汁全鸡',
         water: 1,
         activity: '开车去杭州',
         supplements: ['茶氨酸', '蛋白粉'],
-        calories: 1240,
-        protein: 91,
-        carbs: 109,
-        fat: 49
+        calories: 1790,
+        protein: 153,
+        carbs: 121,
+        fat: 77
       }
     ];
 
@@ -505,10 +505,10 @@
         if (r.amWeight == null) r.amWeight = 90.05;
         if (!r.breakfast || r.breakfast === 'Subway热狗肠蛋方(去芝士) + 热牛奶') r.breakfast = 'Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡';
         if (!r.lunch || r.lunch === '鸡丁豆腐炒豆角(450kcal/35g蛋白)') r.lunch = '红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭';
-        if (!r.dinner) r.dinner = '下午蛋白粉';
+        if (!r.dinner || r.dinner === '下午蛋白粉') r.dinner = '下午蛋白粉 + KFC秘汁全鸡';
         if (!r.water || r.water < 1) r.water = 1;
         if (!r.activity) r.activity = '开车去杭州';
-        if (!r.calories || r.calories <= 1120) { r.calories = 1240; r.protein = 91; r.carbs = 109; r.fat = 49; }
+        if (!r.calories || r.calories <= 1240) { r.calories = 1790; r.protein = 153; r.carbs = 121; r.fat = 77; }
         if (!Array.isArray(r.supplements) || r.supplements.length < 2) r.supplements = ['茶氨酸', '蛋白粉'];
       } else {
         if (r.calories == null) r.calories = 0;
