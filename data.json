@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794314334533,
+  "updatedAt": 1794322653574,
   "rows": [
     {
       "day": 1,
@@ -166,18 +166,18 @@
       "hrv": null,
       "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡",
       "lunch": "红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭",
-      "dinner": "下午蛋白粉 + KFC秘汁全鸡 + 晚间淡蛋白粉水",
-      "calories": 1840,
-      "protein": 163,
-      "carbs": 122,
-      "fat": 77,
+      "dinner": "下午蛋白粉 + KFC秘汁全鸡×2 (🎉首周放纵餐)",
+      "calories": 2390,
+      "protein": 225,
+      "carbs": 134,
+      "fat": 105,
       "water": 2,
-      "activity": "开车去杭州",
+      "activity": "开车去杭州 (出差充能日)",
       "supplements": [
         "茶氨酸",
         "蛋白粉"
       ],
-      "notes": "早起90.05kg！杭州出差：午餐盖饭+下午蛋白粉+KFC秘汁全鸡+8点半550ml淡蛋白粉水排钠，全天1840kcal/163g蛋白。"
+      "notes": "🎉第一周官方放纵充能日(Refeed Day)！连续7天严格控卡+杭州长途自驾出差，全天2390kcal仍低于出差总消耗(2600+kcal)，蛋白质拉满225g！"
     }
   ],
   "records": [
@@ -345,18 +345,18 @@
       "hrv": null,
       "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡",
       "lunch": "红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭",
-      "dinner": "下午蛋白粉 + KFC秘汁全鸡 + 晚间淡蛋白粉水",
-      "calories": 1840,
-      "protein": 163,
-      "carbs": 122,
-      "fat": 77,
+      "dinner": "下午蛋白粉 + KFC秘汁全鸡×2 (🎉首周放纵餐)",
+      "calories": 2390,
+      "protein": 225,
+      "carbs": 134,
+      "fat": 105,
       "water": 2,
-      "activity": "开车去杭州",
+      "activity": "开车去杭州 (出差充能日)",
       "supplements": [
         "茶氨酸",
         "蛋白粉"
       ],
-      "notes": "早起90.05kg！杭州出差：午餐盖饭+下午蛋白粉+KFC秘汁全鸡+8点半550ml淡蛋白粉水排钠，全天1840kcal/163g蛋白。"
+      "notes": "🎉第一周官方放纵充能日(Refeed Day)！连续7天严格控卡+杭州长途自驾出差，全天2390kcal仍低于出差总消耗(2600+kcal)，蛋白质拉满225g！"
     }
   ],
   "latestMealPhoto": {
