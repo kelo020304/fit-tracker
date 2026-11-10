@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794271699222,
+  "updatedAt": 1794272237163,
   "rows": [
     {
       "day": 1,
@@ -164,17 +164,19 @@
       "amWeight": 90.05,
       "pmWeight": null,
       "hrv": null,
-      "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶",
+      "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡",
       "lunch": "",
       "dinner": "",
-      "calories": 485,
+      "calories": 490,
       "protein": 26,
-      "carbs": 44,
+      "carbs": 45,
       "fat": 23,
       "water": 0,
       "activity": "开车去杭州",
-      "supplements": [],
-      "notes": "满水态早起空腹90.05kg（精准命中预测区间！比昨日再降0.15kg），9点开车去杭州！"
+      "supplements": [
+        "茶氨酸"
+      ],
+      "notes": "满水态早起空腹90.05kg！早咖啡+茶氨酸开启沪杭高速自驾！"
     }
   ],
   "records": [
@@ -340,17 +342,19 @@
       "amWeight": 90.05,
       "pmWeight": null,
       "hrv": null,
-      "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶",
+      "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡",
       "lunch": "",
       "dinner": "",
-      "calories": 485,
+      "calories": 490,
       "protein": 26,
-      "carbs": 44,
+      "carbs": 45,
       "fat": 23,
       "water": 0,
       "activity": "开车去杭州",
-      "supplements": [],
-      "notes": "满水态早起空腹90.05kg（精准命中预测区间！比昨日再降0.15kg），9点开车去杭州！"
+      "supplements": [
+        "茶氨酸"
+      ],
+      "notes": "满水态早起空腹90.05kg！早咖啡+茶氨酸开启沪杭高速自驾！"
     }
   ]
 }
