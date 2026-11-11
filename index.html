@@ -407,18 +407,18 @@
       {
         date: '2026-11-11',
         amWeight: null,
-        pmWeight: null,
+        pmWeight: 90.2,
         hrv: null,
         breakfast: '-',
         lunch: 'Kiro 金枪鱼三明治',
-        dinner: 'KFC 吮指原味鸡 × 4块',
+        dinner: 'KFC 吮指原味鸡 × 4块 + 睡前1奶',
         water: 3,
         activity: '杭州出差干活 + 开车回上海',
         supplements: [],
-        calories: 1420,
-        protein: 106,
-        carbs: 78,
-        fat: 77
+        calories: 1545,
+        protein: 114,
+        carbs: 88,
+        fat: 84
       }
     ];
 
@@ -527,12 +527,13 @@
         if (!r.calories || r.calories <= 1840) { r.calories = 2390; r.protein = 225; r.carbs = 134; r.fat = 105; }
         if (!Array.isArray(r.supplements) || r.supplements.length < 2) r.supplements = ['茶氨酸', '蛋白粉'];
       } else if (r.date === '2026-11-11') {
+        if (r.pmWeight == null) r.pmWeight = 90.2;
         if (!r.breakfast) r.breakfast = '-';
         if (!r.lunch) r.lunch = 'Kiro 金枪鱼三明治';
-        if (!r.dinner) r.dinner = 'KFC 吮指原味鸡 × 4块';
+        if (!r.dinner || r.dinner === 'KFC 吮指原味鸡 × 4块') r.dinner = 'KFC 吮指原味鸡 × 4块 + 睡前1奶';
         if (!r.water || r.water < 3) r.water = 3;
         if (!r.activity) r.activity = '杭州出差干活 + 开车回上海';
-        if (!r.calories) { r.calories = 1420; r.protein = 106; r.carbs = 78; r.fat = 77; }
+        if (!r.calories || r.calories <= 1420) { r.calories = 1545; r.protein = 114; r.carbs = 88; r.fat = 84; }
         if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;

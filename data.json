@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794410942808,
+  "updatedAt": 1794412484972,
   "rows": [
     {
       "day": 1,
@@ -184,19 +184,19 @@
       "date": "2026-11-11",
       "label": "Day 9 (周三)",
       "amWeight": null,
-      "pmWeight": null,
+      "pmWeight": 90.2,
       "hrv": null,
       "breakfast": "-",
       "lunch": "Kiro 金枪鱼三明治",
-      "dinner": "KFC 吮指原味鸡 × 4块",
-      "calories": 1420,
-      "protein": 106,
-      "carbs": 78,
-      "fat": 77,
+      "dinner": "KFC 吮指原味鸡 × 4块 + 睡前1奶",
+      "calories": 1545,
+      "protein": 114,
+      "carbs": 88,
+      "fat": 84,
       "water": 3,
       "activity": "杭州出差干活 + 开车回上海",
       "supplements": [],
-      "notes": "早饭轻断食；中午Kiro金枪鱼三明治+晚上4块原味鸡，饮水3瓶(1500ml)，全天仅1420kcal/106g蛋白，开车顺利返沪！"
+      "notes": "晚间体重直接创非运动脱水日新低90.20kg！全天1545kcal/114g蛋白，饮水3瓶(1500ml)，明早稳破90！"
     }
   ],
   "records": [
@@ -382,19 +382,19 @@
       "date": "2026-11-11",
       "label": "Day 9 (周三)",
       "amWeight": null,
-      "pmWeight": null,
+      "pmWeight": 90.2,
       "hrv": null,
       "breakfast": "-",
       "lunch": "Kiro 金枪鱼三明治",
-      "dinner": "KFC 吮指原味鸡 × 4块",
-      "calories": 1420,
-      "protein": 106,
-      "carbs": 78,
-      "fat": 77,
+      "dinner": "KFC 吮指原味鸡 × 4块 + 睡前1奶",
+      "calories": 1545,
+      "protein": 114,
+      "carbs": 88,
+      "fat": 84,
       "water": 3,
       "activity": "杭州出差干活 + 开车回上海",
       "supplements": [],
-      "notes": "早饭轻断食；中午Kiro金枪鱼三明治+晚上4块原味鸡，饮水3瓶(1500ml)，全天仅1420kcal/106g蛋白，开车顺利返沪！"
+      "notes": "晚间体重直接创非运动脱水日新低90.20kg！全天1545kcal/114g蛋白，饮水3瓶(1500ml)，明早稳破90！"
     }
   ],
   "latestMealPhoto": {
