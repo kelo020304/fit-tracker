@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794322653574,
+  "updatedAt": 1794410942808,
   "rows": [
     {
       "day": 1,
@@ -178,6 +178,25 @@
         "蛋白粉"
       ],
       "notes": "🎉第一周官方放纵充能日(Refeed Day)！连续7天严格控卡+杭州长途自驾出差，全天2390kcal仍低于出差总消耗(2600+kcal)，蛋白质拉满225g！"
+    },
+    {
+      "day": 9,
+      "date": "2026-11-11",
+      "label": "Day 9 (周三)",
+      "amWeight": null,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "-",
+      "lunch": "Kiro 金枪鱼三明治",
+      "dinner": "KFC 吮指原味鸡 × 4块",
+      "calories": 1420,
+      "protein": 106,
+      "carbs": 78,
+      "fat": 77,
+      "water": 3,
+      "activity": "杭州出差干活 + 开车回上海",
+      "supplements": [],
+      "notes": "早饭轻断食；中午Kiro金枪鱼三明治+晚上4块原味鸡，饮水3瓶(1500ml)，全天仅1420kcal/106g蛋白，开车顺利返沪！"
     }
   ],
   "records": [
@@ -357,6 +376,25 @@
         "蛋白粉"
       ],
       "notes": "🎉第一周官方放纵充能日(Refeed Day)！连续7天严格控卡+杭州长途自驾出差，全天2390kcal仍低于出差总消耗(2600+kcal)，蛋白质拉满225g！"
+    },
+    {
+      "day": 9,
+      "date": "2026-11-11",
+      "label": "Day 9 (周三)",
+      "amWeight": null,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "-",
+      "lunch": "Kiro 金枪鱼三明治",
+      "dinner": "KFC 吮指原味鸡 × 4块",
+      "calories": 1420,
+      "protein": 106,
+      "carbs": 78,
+      "fat": 77,
+      "water": 3,
+      "activity": "杭州出差干活 + 开车回上海",
+      "supplements": [],
+      "notes": "早饭轻断食；中午Kiro金枪鱼三明治+晚上4块原味鸡，饮水3瓶(1500ml)，全天仅1420kcal/106g蛋白，开车顺利返沪！"
     }
   ],
   "latestMealPhoto": {
