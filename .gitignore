@@ -1,0 +1,2 @@
+# Local session raw transcript backups (contains environment trajectories and secrets)
+.session_backup/
