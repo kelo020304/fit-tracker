@@ -427,14 +427,14 @@
         hrv: null,
         breakfast: '-',
         lunch: '金枪鱼三明治 + 咖啡',
-        dinner: '',
-        water: 0,
-        activity: '',
-        supplements: ['茶氨酸'],
-        calories: 390,
-        protein: 23,
-        carbs: 39,
-        fat: 14
+        dinner: '下午蛋白粉咖啡 + KFC鸡翅&1蛋挞',
+        water: 1,
+        activity: '公司工作',
+        supplements: ['茶氨酸', '蛋白粉'],
+        calories: 940,
+        protein: 72,
+        carbs: 58,
+        fat: 42
       }
     ];
 
@@ -555,8 +555,10 @@
         if (r.amWeight == null) r.amWeight = 89.9;
         if (!r.breakfast) r.breakfast = '-';
         if (!r.lunch) r.lunch = '金枪鱼三明治 + 咖啡';
-        if (!r.calories) { r.calories = 390; r.protein = 23; r.carbs = 39; r.fat = 14; }
-        if (!Array.isArray(r.supplements) || r.supplements.length === 0) r.supplements = ['茶氨酸'];
+        if (!r.dinner) r.dinner = '下午蛋白粉咖啡 + KFC鸡翅&1蛋挞';
+        if (!r.water || r.water < 1) r.water = 1;
+        if (!r.calories || r.calories <= 390) { r.calories = 940; r.protein = 72; r.carbs = 58; r.fat = 42; }
+        if (!Array.isArray(r.supplements) || r.supplements.length < 2) r.supplements = ['茶氨酸', '蛋白粉'];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;

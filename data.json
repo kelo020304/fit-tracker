@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794455751576,
+  "updatedAt": 1794488929056,
   "rows": [
     {
       "day": 1,
@@ -207,17 +207,18 @@
       "hrv": null,
       "breakfast": "-",
       "lunch": "金枪鱼三明治 + 咖啡",
-      "dinner": "",
-      "calories": 390,
-      "protein": 23,
-      "carbs": 39,
-      "fat": 14,
-      "water": 0,
-      "activity": "",
+      "dinner": "下午蛋白粉咖啡 + KFC鸡翅&1蛋挞",
+      "calories": 940,
+      "protein": 72,
+      "carbs": 58,
+      "fat": 42,
+      "water": 1,
+      "activity": "公司工作",
       "supplements": [
-        "茶氨酸"
+        "茶氨酸",
+        "蛋白粉"
       ],
-      "notes": "🎉破90大关！常态满水早空腹89.90kg达成（精准命中昨晚89.80-89.90kg预测）！午餐金枪鱼三明治+咖啡+茶氨酸。"
+      "notes": "早起89.90kg破90大关！下午蛋白粉+咖啡+1杯水；晚去公司MT请客KFC克制未吃汉堡，仅吃鸡翅+1蛋挞，全天仅940kcal/72g蛋白。"
     }
   ],
   "records": [
@@ -426,17 +427,18 @@
       "hrv": null,
       "breakfast": "-",
       "lunch": "金枪鱼三明治 + 咖啡",
-      "dinner": "",
-      "calories": 390,
-      "protein": 23,
-      "carbs": 39,
-      "fat": 14,
-      "water": 0,
-      "activity": "",
+      "dinner": "下午蛋白粉咖啡 + KFC鸡翅&1蛋挞",
+      "calories": 940,
+      "protein": 72,
+      "carbs": 58,
+      "fat": 42,
+      "water": 1,
+      "activity": "公司工作",
       "supplements": [
-        "茶氨酸"
+        "茶氨酸",
+        "蛋白粉"
       ],
-      "notes": "🎉破90大关！常态满水早空腹89.90kg达成（精准命中昨晚89.80-89.90kg预测）！午餐金枪鱼三明治+咖啡+茶氨酸。"
+      "notes": "早起89.90kg破90大关！下午蛋白粉+咖啡+1杯水；晚去公司MT请客KFC克制未吃汉堡，仅吃鸡翅+1蛋挞，全天仅940kcal/72g蛋白。"
     }
   ],
   "latestMealPhoto": {
