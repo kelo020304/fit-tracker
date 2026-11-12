@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794412484972,
+  "updatedAt": 1794455751576,
   "rows": [
     {
       "day": 1,
@@ -197,6 +197,27 @@
       "activity": "杭州出差干活 + 开车回上海",
       "supplements": [],
       "notes": "晚间体重直接创非运动脱水日新低90.20kg！全天1545kcal/114g蛋白，饮水3瓶(1500ml)，明早稳破90！"
+    },
+    {
+      "day": 10,
+      "date": "2026-11-12",
+      "label": "Day 10 (周四)",
+      "amWeight": 89.9,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "-",
+      "lunch": "金枪鱼三明治 + 咖啡",
+      "dinner": "",
+      "calories": 390,
+      "protein": 23,
+      "carbs": 39,
+      "fat": 14,
+      "water": 0,
+      "activity": "",
+      "supplements": [
+        "茶氨酸"
+      ],
+      "notes": "🎉破90大关！常态满水早空腹89.90kg达成（精准命中昨晚89.80-89.90kg预测）！午餐金枪鱼三明治+咖啡+茶氨酸。"
     }
   ],
   "records": [
@@ -395,6 +416,27 @@
       "activity": "杭州出差干活 + 开车回上海",
       "supplements": [],
       "notes": "晚间体重直接创非运动脱水日新低90.20kg！全天1545kcal/114g蛋白，饮水3瓶(1500ml)，明早稳破90！"
+    },
+    {
+      "day": 10,
+      "date": "2026-11-12",
+      "label": "Day 10 (周四)",
+      "amWeight": 89.9,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "-",
+      "lunch": "金枪鱼三明治 + 咖啡",
+      "dinner": "",
+      "calories": 390,
+      "protein": 23,
+      "carbs": 39,
+      "fat": 14,
+      "water": 0,
+      "activity": "",
+      "supplements": [
+        "茶氨酸"
+      ],
+      "notes": "🎉破90大关！常态满水早空腹89.90kg达成（精准命中昨晚89.80-89.90kg预测）！午餐金枪鱼三明治+咖啡+茶氨酸。"
     }
   ],
   "latestMealPhoto": {

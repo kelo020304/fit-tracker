@@ -419,6 +419,22 @@
         protein: 114,
         carbs: 88,
         fat: 84
+      },
+      {
+        date: '2026-11-12',
+        amWeight: 89.9,
+        pmWeight: null,
+        hrv: null,
+        breakfast: '-',
+        lunch: '金枪鱼三明治 + 咖啡',
+        dinner: '',
+        water: 0,
+        activity: '',
+        supplements: ['茶氨酸'],
+        calories: 390,
+        protein: 23,
+        carbs: 39,
+        fat: 14
       }
     ];
 
@@ -535,6 +551,12 @@
         if (!r.activity) r.activity = '杭州出差干活 + 开车回上海';
         if (!r.calories || r.calories <= 1420) { r.calories = 1545; r.protein = 114; r.carbs = 88; r.fat = 84; }
         if (!Array.isArray(r.supplements)) r.supplements = [];
+      } else if (r.date === '2026-11-12') {
+        if (r.amWeight == null) r.amWeight = 89.9;
+        if (!r.breakfast) r.breakfast = '-';
+        if (!r.lunch) r.lunch = '金枪鱼三明治 + 咖啡';
+        if (!r.calories) { r.calories = 390; r.protein = 23; r.carbs = 39; r.fat = 14; }
+        if (!Array.isArray(r.supplements) || r.supplements.length === 0) r.supplements = ['茶氨酸'];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;
