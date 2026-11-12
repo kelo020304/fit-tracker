@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794488929056,
+  "updatedAt": 1794497527804,
   "rows": [
     {
       "day": 1,
@@ -203,7 +203,7 @@
       "date": "2026-11-12",
       "label": "Day 10 (周四)",
       "amWeight": 89.9,
-      "pmWeight": null,
+      "pmWeight": 90.2,
       "hrv": null,
       "breakfast": "-",
       "lunch": "金枪鱼三明治 + 咖啡",
@@ -218,7 +218,7 @@
         "茶氨酸",
         "蛋白粉"
       ],
-      "notes": "早起89.90kg破90大关！下午蛋白粉+咖啡+1杯水；晚去公司MT请客KFC克制未吃汉堡，仅吃鸡翅+1蛋挞，全天仅940kcal/72g蛋白。"
+      "notes": "早起89.90kg破90！晚间仅90.20kg（早晚差仅+0.3kg）！MT请客克制未吃汉堡，全天仅940kcal，明早预计下探89.6-89.7kg！"
     }
   ],
   "records": [
@@ -423,7 +423,7 @@
       "date": "2026-11-12",
       "label": "Day 10 (周四)",
       "amWeight": 89.9,
-      "pmWeight": null,
+      "pmWeight": 90.2,
       "hrv": null,
       "breakfast": "-",
       "lunch": "金枪鱼三明治 + 咖啡",
@@ -438,7 +438,7 @@
         "茶氨酸",
         "蛋白粉"
       ],
-      "notes": "早起89.90kg破90大关！下午蛋白粉+咖啡+1杯水；晚去公司MT请客KFC克制未吃汉堡，仅吃鸡翅+1蛋挞，全天仅940kcal/72g蛋白。"
+      "notes": "早起89.90kg破90！晚间仅90.20kg（早晚差仅+0.3kg）！MT请客克制未吃汉堡，全天仅940kcal，明早预计下探89.6-89.7kg！"
     }
   ],
   "latestMealPhoto": {
