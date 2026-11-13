@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794497527804,
+  "updatedAt": 1794535608598,
   "rows": [
     {
       "day": 1,
@@ -219,6 +219,25 @@
         "蛋白粉"
       ],
       "notes": "早起89.90kg破90！晚间仅90.20kg（早晚差仅+0.3kg）！MT请客克制未吃汉堡，全天仅940kcal，明早预计下探89.6-89.7kg！"
+    },
+    {
+      "day": 11,
+      "date": "2026-11-13",
+      "label": "Day 11 (周五)",
+      "amWeight": 89.55,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "燕麦奶 + 咖啡",
+      "lunch": "",
+      "dinner": "",
+      "calories": 140,
+      "protein": 3,
+      "carbs": 16,
+      "fat": 7,
+      "water": 0,
+      "activity": "",
+      "supplements": [],
+      "notes": "🎉89.55kg！精准命中昨晚89.55-89.65kg预测下限！较首周高点91.25kg净降1.70kg(3.4斤纯脂)！早餐燕麦奶咖啡。"
     }
   ],
   "records": [
@@ -439,6 +458,25 @@
         "蛋白粉"
       ],
       "notes": "早起89.90kg破90！晚间仅90.20kg（早晚差仅+0.3kg）！MT请客克制未吃汉堡，全天仅940kcal，明早预计下探89.6-89.7kg！"
+    },
+    {
+      "day": 11,
+      "date": "2026-11-13",
+      "label": "Day 11 (周五)",
+      "amWeight": 89.55,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "燕麦奶 + 咖啡",
+      "lunch": "",
+      "dinner": "",
+      "calories": 140,
+      "protein": 3,
+      "carbs": 16,
+      "fat": 7,
+      "water": 0,
+      "activity": "",
+      "supplements": [],
+      "notes": "🎉89.55kg！精准命中昨晚89.55-89.65kg预测下限！较首周高点91.25kg净降1.70kg(3.4斤纯脂)！早餐燕麦奶咖啡。"
     }
   ],
   "latestMealPhoto": {
