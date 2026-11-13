@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794561683037,
+  "updatedAt": 1794586987584,
   "rows": [
     {
       "day": 1,
@@ -225,19 +225,19 @@
       "date": "2026-11-13",
       "label": "Day 11 (周五)",
       "amWeight": 89.55,
-      "pmWeight": null,
+      "pmWeight": 90.1,
       "hrv": null,
       "breakfast": "燕麦奶 + 咖啡",
       "lunch": "Subway 金枪鱼(无芝士无酱)",
-      "dinner": "",
-      "calories": 560,
-      "protein": 30,
-      "carbs": 56,
-      "fat": 25,
-      "water": 1,
+      "dinner": "Biangbiang面",
+      "calories": 1180,
+      "protein": 50,
+      "carbs": 144,
+      "fat": 47,
+      "water": 2,
       "activity": "",
       "supplements": [],
-      "notes": "早起89.55kg神级命中预测！早餐燕麦奶咖啡+午餐Subway金枪鱼(去芝士无酱)+饮水1杯，累计560kcal/30g蛋白。"
+      "notes": "早起89.55kg创历史新低！晚餐Biangbiang面，晚间体重仅90.10kg创晚间历史新低（比周三周四90.2kg再降0.1kg）！明早破89.5kg！"
     }
   ],
   "records": [
@@ -464,19 +464,19 @@
       "date": "2026-11-13",
       "label": "Day 11 (周五)",
       "amWeight": 89.55,
-      "pmWeight": null,
+      "pmWeight": 90.1,
       "hrv": null,
       "breakfast": "燕麦奶 + 咖啡",
       "lunch": "Subway 金枪鱼(无芝士无酱)",
-      "dinner": "",
-      "calories": 560,
-      "protein": 30,
-      "carbs": 56,
-      "fat": 25,
-      "water": 1,
+      "dinner": "Biangbiang面",
+      "calories": 1180,
+      "protein": 50,
+      "carbs": 144,
+      "fat": 47,
+      "water": 2,
       "activity": "",
       "supplements": [],
-      "notes": "早起89.55kg神级命中预测！早餐燕麦奶咖啡+午餐Subway金枪鱼(去芝士无酱)+饮水1杯，累计560kcal/30g蛋白。"
+      "notes": "早起89.55kg创历史新低！晚餐Biangbiang面，晚间体重仅90.10kg创晚间历史新低（比周三周四90.2kg再降0.1kg）！明早破89.5kg！"
     }
   ],
   "latestMealPhoto": {

@@ -439,18 +439,18 @@
       {
         date: '2026-11-13',
         amWeight: 89.55,
-        pmWeight: null,
+        pmWeight: 90.1,
         hrv: null,
         breakfast: '燕麦奶 + 咖啡',
         lunch: 'Subway 金枪鱼(无芝士无酱)',
-        dinner: '',
-        water: 1,
+        dinner: 'Biangbiang面',
+        water: 2,
         activity: '',
         supplements: [],
-        calories: 560,
-        protein: 30,
-        carbs: 56,
-        fat: 25
+        calories: 1180,
+        protein: 50,
+        carbs: 144,
+        fat: 47
       }
     ];
 
@@ -578,10 +578,12 @@
         if (!Array.isArray(r.supplements) || r.supplements.length < 2) r.supplements = ['茶氨酸', '蛋白粉'];
       } else if (r.date === '2026-11-13') {
         if (r.amWeight == null) r.amWeight = 89.55;
+        if (r.pmWeight == null) r.pmWeight = 90.1;
         if (!r.breakfast) r.breakfast = '燕麦奶 + 咖啡';
         if (!r.lunch) r.lunch = 'Subway 金枪鱼(无芝士无酱)';
-        if (!r.water || r.water < 1) r.water = 1;
-        if (!r.calories || r.calories <= 140) { r.calories = 560; r.protein = 30; r.carbs = 56; r.fat = 25; }
+        if (!r.dinner) r.dinner = 'Biangbiang面';
+        if (!r.water || r.water < 2) r.water = 2;
+        if (!r.calories || r.calories <= 560) { r.calories = 1180; r.protein = 50; r.carbs = 144; r.fat = 47; }
         if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;
