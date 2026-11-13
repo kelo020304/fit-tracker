@@ -442,15 +442,15 @@
         pmWeight: null,
         hrv: null,
         breakfast: '燕麦奶 + 咖啡',
-        lunch: '',
+        lunch: 'Subway 金枪鱼(无芝士无酱)',
         dinner: '',
         water: 0,
         activity: '',
         supplements: [],
-        calories: 140,
-        protein: 3,
-        carbs: 16,
-        fat: 7
+        calories: 560,
+        protein: 30,
+        carbs: 56,
+        fat: 25
       }
     ];
 
@@ -579,7 +579,8 @@
       } else if (r.date === '2026-11-13') {
         if (r.amWeight == null) r.amWeight = 89.55;
         if (!r.breakfast) r.breakfast = '燕麦奶 + 咖啡';
-        if (!r.calories) { r.calories = 140; r.protein = 3; r.carbs = 16; r.fat = 7; }
+        if (!r.lunch) r.lunch = 'Subway 金枪鱼(无芝士无酱)';
+        if (!r.calories || r.calories <= 140) { r.calories = 560; r.protein = 30; r.carbs = 56; r.fat = 25; }
         if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;
