@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794548054404,
+  "updatedAt": 1794561683037,
   "rows": [
     {
       "day": 1,
@@ -234,10 +234,10 @@
       "protein": 30,
       "carbs": 56,
       "fat": 25,
-      "water": 0,
+      "water": 1,
       "activity": "",
       "supplements": [],
-      "notes": "早起89.55kg神级命中预测！早餐燕麦奶咖啡+午餐Subway金枪鱼(去芝士无酱)，早午累计仅560kcal/30g蛋白，自带健康油脂润肠。"
+      "notes": "早起89.55kg神级命中预测！早餐燕麦奶咖啡+午餐Subway金枪鱼(去芝士无酱)+饮水1杯，累计560kcal/30g蛋白。"
     }
   ],
   "records": [
@@ -473,10 +473,10 @@
       "protein": 30,
       "carbs": 56,
       "fat": 25,
-      "water": 0,
+      "water": 1,
       "activity": "",
       "supplements": [],
-      "notes": "早起89.55kg神级命中预测！早餐燕麦奶咖啡+午餐Subway金枪鱼(去芝士无酱)，早午累计仅560kcal/30g蛋白，自带健康油脂润肠。"
+      "notes": "早起89.55kg神级命中预测！早餐燕麦奶咖啡+午餐Subway金枪鱼(去芝士无酱)+饮水1杯，累计560kcal/30g蛋白。"
     }
   ],
   "latestMealPhoto": {
