@@ -460,7 +460,7 @@
         breakfast: '2个包子 + 1盒牛奶',
         lunch: '金枪鱼三明治(无酱无芝士)',
         dinner: '',
-        water: 0,
+        water: 1,
         activity: '羽毛球 3h',
         supplements: [],
         calories: 945,
@@ -606,6 +606,7 @@
         if (!r.breakfast) r.breakfast = '2个包子 + 1盒牛奶';
         if (!r.lunch) r.lunch = '金枪鱼三明治(无酱无芝士)';
         if (!r.activity) r.activity = '羽毛球 3h';
+        if (!r.water || r.water < 1) r.water = 1;
         if (!r.calories || r.calories <= 525) { r.calories = 945; r.protein = 49; r.carbs = 101; r.fat = 40; }
         if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {

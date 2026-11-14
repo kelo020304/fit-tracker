@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794632049083,
+  "updatedAt": 1794645349933,
   "rows": [
     {
       "day": 1,
@@ -253,10 +253,10 @@
       "protein": 49,
       "carbs": 101,
       "fat": 40,
-      "water": 0,
+      "water": 1,
       "activity": "羽毛球 3h",
       "supplements": [],
-      "notes": "89.60kg稳坐89！早餐2包子1牛奶，午餐金枪鱼三明治(无酱无芝士)，今晚羽毛球3h备战！"
+      "notes": "89.60kg稳坐89！早餐2包子1牛奶，午餐金枪鱼三明治(无酱无芝士)，下午补水1杯(500ml)，今晚羽毛球3h备战！"
     }
   ],
   "records": [
@@ -511,10 +511,10 @@
       "protein": 49,
       "carbs": 101,
       "fat": 40,
-      "water": 0,
+      "water": 1,
       "activity": "羽毛球 3h",
       "supplements": [],
-      "notes": "89.60kg稳坐89！早餐2包子1牛奶，午餐金枪鱼三明治(无酱无芝士)，今晚羽毛球3h备战！"
+      "notes": "89.60kg稳坐89！早餐2包子1牛奶，午餐金枪鱼三明治(无酱无芝士)，下午补水1杯(500ml)，今晚羽毛球3h备战！"
     }
   ],
   "latestMealPhoto": {
