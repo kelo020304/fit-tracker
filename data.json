@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794617393376,
+  "updatedAt": 1794617747233,
   "rows": [
     {
       "day": 1,
@@ -254,9 +254,9 @@
       "carbs": 61,
       "fat": 22,
       "water": 0,
-      "activity": "",
+      "activity": "羽毛球 3h",
       "supplements": [],
-      "notes": "89.60kg！再次精准卡进昨晚89.45-89.60kg预测区间！89kg平台彻底坐稳！早餐2个包子+1盒牛奶(525kcal/22g蛋白)。"
+      "notes": "89.60kg精准卡进昨晚预测！今晚计划3小时羽毛球大消耗！早餐2包子+1牛奶。"
     }
   ],
   "records": [
@@ -512,9 +512,9 @@
       "carbs": 61,
       "fat": 22,
       "water": 0,
-      "activity": "",
+      "activity": "羽毛球 3h",
       "supplements": [],
-      "notes": "89.60kg！再次精准卡进昨晚89.45-89.60kg预测区间！89kg平台彻底坐稳！早餐2个包子+1盒牛奶(525kcal/22g蛋白)。"
+      "notes": "89.60kg精准卡进昨晚预测！今晚计划3小时羽毛球大消耗！早餐2包子+1牛奶。"
     }
   ],
   "latestMealPhoto": {
