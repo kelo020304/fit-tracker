@@ -451,6 +451,22 @@
         protein: 50,
         carbs: 144,
         fat: 47
+      },
+      {
+        date: '2026-11-14',
+        amWeight: 89.6,
+        pmWeight: null,
+        hrv: null,
+        breakfast: '2个包子 + 1盒牛奶',
+        lunch: '',
+        dinner: '',
+        water: 0,
+        activity: '',
+        supplements: [],
+        calories: 525,
+        protein: 22,
+        carbs: 61,
+        fat: 22
       }
     ];
 
@@ -584,6 +600,11 @@
         if (!r.dinner) r.dinner = 'Biangbiang面';
         if (!r.water || r.water < 2) r.water = 2;
         if (!r.calories || r.calories <= 560) { r.calories = 1180; r.protein = 50; r.carbs = 144; r.fat = 47; }
+        if (!Array.isArray(r.supplements)) r.supplements = [];
+      } else if (r.date === '2026-11-14') {
+        if (r.amWeight == null) r.amWeight = 89.6;
+        if (!r.breakfast) r.breakfast = '2个包子 + 1盒牛奶';
+        if (!r.calories) { r.calories = 525; r.protein = 22; r.carbs = 61; r.fat = 22; }
         if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;

@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794586987584,
+  "updatedAt": 1794617393376,
   "rows": [
     {
       "day": 1,
@@ -238,6 +238,25 @@
       "activity": "",
       "supplements": [],
       "notes": "早起89.55kg创历史新低！晚餐Biangbiang面，晚间体重仅90.10kg创晚间历史新低（比周三周四90.2kg再降0.1kg）！明早破89.5kg！"
+    },
+    {
+      "day": 12,
+      "date": "2026-11-14",
+      "label": "Day 12 (周六)",
+      "amWeight": 89.6,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "2个包子 + 1盒牛奶",
+      "lunch": "",
+      "dinner": "",
+      "calories": 525,
+      "protein": 22,
+      "carbs": 61,
+      "fat": 22,
+      "water": 0,
+      "activity": "",
+      "supplements": [],
+      "notes": "89.60kg！再次精准卡进昨晚89.45-89.60kg预测区间！89kg平台彻底坐稳！早餐2个包子+1盒牛奶(525kcal/22g蛋白)。"
     }
   ],
   "records": [
@@ -477,6 +496,25 @@
       "activity": "",
       "supplements": [],
       "notes": "早起89.55kg创历史新低！晚餐Biangbiang面，晚间体重仅90.10kg创晚间历史新低（比周三周四90.2kg再降0.1kg）！明早破89.5kg！"
+    },
+    {
+      "day": 12,
+      "date": "2026-11-14",
+      "label": "Day 12 (周六)",
+      "amWeight": 89.6,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "2个包子 + 1盒牛奶",
+      "lunch": "",
+      "dinner": "",
+      "calories": 525,
+      "protein": 22,
+      "carbs": 61,
+      "fat": 22,
+      "water": 0,
+      "activity": "",
+      "supplements": [],
+      "notes": "89.60kg！再次精准卡进昨晚89.45-89.60kg预测区间！89kg平台彻底坐稳！早餐2个包子+1盒牛奶(525kcal/22g蛋白)。"
     }
   ],
   "latestMealPhoto": {
