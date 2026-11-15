@@ -1,6 +1,6 @@
 {
   "clientId": "captain_feishu_codex",
-  "updatedAt": 1794750306869,
+  "updatedAt": 1794758917790,
   "rows": [
     {
       "day": 1,
@@ -263,7 +263,7 @@
       "date": "2026-11-15",
       "label": "Day 13 (周日)",
       "amWeight": 89.25,
-      "pmWeight": null,
+      "pmWeight": 90.25,
       "hrv": null,
       "breakfast": "馄饨 + 小笼包",
       "lunch": "不吃午饭 (轻断食)",
@@ -542,7 +542,7 @@
       "date": "2026-11-15",
       "label": "Day 13 (周日)",
       "amWeight": 89.25,
-      "pmWeight": null,
+      "pmWeight": 90.25,
       "hrv": null,
       "breakfast": "馄饨 + 小笼包",
       "lunch": "不吃午饭 (轻断食)",
@@ -577,6 +577,7 @@
     "be39a0dd4d2a83d339fff79a3ce1e18c24f872709596f329e6e8e773834f2170",
     "4773eb7aafe30d98dc4499610461affee83ee614c88f618338ceaad3788cdd23",
     "eb09a3e9819ba88d112eb5690c5ca4c76574213e1e96a5adddf1e9c133288958",
-    "4a2bdc0040b87cf259b7895e45860ee293d2972bdd3ae36f604fc3b12809673f"
+    "4a2bdc0040b87cf259b7895e45860ee293d2972bdd3ae36f604fc3b12809673f",
+    "d9783173a3edda57032093c3d84e8e7aaeeb166c41ea0b2d8af841c4f9bd3726"
   ]
 }
