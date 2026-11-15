@@ -1,6 +1,6 @@
 {
   "clientId": "captain_feishu_codex",
-  "updatedAt": 1794739352386,
+  "updatedAt": 1794741943069,
   "rows": [
     {
       "day": 1,
@@ -272,7 +272,7 @@
       "protein": 91,
       "carbs": 130,
       "fat": 39,
-      "water": 1.0,
+      "water": 2.0,
       "activity": "计划今晚骑车回家（待完成，距离与时长待补充）",
       "supplements": [
         "蛋白粉"
@@ -551,7 +551,7 @@
       "protein": 91,
       "carbs": 130,
       "fat": 39,
-      "water": 1.0,
+      "water": 2.0,
       "activity": "计划今晚骑车回家（待完成，距离与时长待补充）",
       "supplements": [
         "蛋白粉"
@@ -574,6 +574,7 @@
   "_feishuMessageHashes": [
     "fa81ddb73777bd2b57f4c902080308e306677fcb45fc3c780ae8908fa0144674",
     "6b1950dd52e08bdd669c9ad6dc95886302150ad25d1a81a0b99b07b2668cf10f",
-    "be39a0dd4d2a83d339fff79a3ce1e18c24f872709596f329e6e8e773834f2170"
+    "be39a0dd4d2a83d339fff79a3ce1e18c24f872709596f329e6e8e773834f2170",
+    "4773eb7aafe30d98dc4499610461affee83ee614c88f618338ceaad3788cdd23"
   ]
 }
