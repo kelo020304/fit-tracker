@@ -1,6 +1,6 @@
 {
   "clientId": "captain_feishu_codex",
-  "updatedAt": 1794745749110,
+  "updatedAt": 1794750306869,
   "rows": [
     {
       "day": 1,
@@ -273,7 +273,7 @@
       "carbs": 130,
       "fat": 39,
       "water": 3.0,
-      "activity": "计划今晚骑车回家（待完成，距离与时长待补充）",
+      "activity": "计划今晚骑车回家（待完成，距离与时长待补充）；今晚骑车计划已取消（本人确认不骑车，未计入骑行运动量）",
       "supplements": [
         "蛋白粉"
       ],
@@ -552,7 +552,7 @@
       "carbs": 130,
       "fat": 39,
       "water": 3.0,
-      "activity": "计划今晚骑车回家（待完成，距离与时长待补充）",
+      "activity": "计划今晚骑车回家（待完成，距离与时长待补充）；今晚骑车计划已取消（本人确认不骑车，未计入骑行运动量）",
       "supplements": [
         "蛋白粉"
       ],
@@ -576,6 +576,7 @@
     "6b1950dd52e08bdd669c9ad6dc95886302150ad25d1a81a0b99b07b2668cf10f",
     "be39a0dd4d2a83d339fff79a3ce1e18c24f872709596f329e6e8e773834f2170",
     "4773eb7aafe30d98dc4499610461affee83ee614c88f618338ceaad3788cdd23",
-    "eb09a3e9819ba88d112eb5690c5ca4c76574213e1e96a5adddf1e9c133288958"
+    "eb09a3e9819ba88d112eb5690c5ca4c76574213e1e96a5adddf1e9c133288958",
+    "4a2bdc0040b87cf259b7895e45860ee293d2972bdd3ae36f604fc3b12809673f"
   ]
 }
