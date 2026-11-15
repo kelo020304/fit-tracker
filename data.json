@@ -1,6 +1,6 @@
 {
   "clientId": "captain_feishu_codex",
-  "updatedAt": 1794736016355,
+  "updatedAt": 1794736688915,
   "rows": [
     {
       "day": 1,
@@ -273,7 +273,7 @@
       "carbs": 130,
       "fat": 39,
       "water": 1.0,
-      "activity": "",
+      "activity": "计划今晚骑车回家（待完成，距离与时长待补充）",
       "supplements": [
         "蛋白粉"
       ],
@@ -552,7 +552,7 @@
       "carbs": 130,
       "fat": 39,
       "water": 1.0,
-      "activity": "",
+      "activity": "计划今晚骑车回家（待完成，距离与时长待补充）",
       "supplements": [
         "蛋白粉"
       ],
@@ -572,6 +572,7 @@
     "note": "鸡腿肉+嫩豆腐双蛋白达41g，加上底层米饭共约630 kcal！Day 8 早午两餐累计 1,120 kcal / 蛋白质 67g！"
   },
   "_feishuMessageHashes": [
-    "fa81ddb73777bd2b57f4c902080308e306677fcb45fc3c780ae8908fa0144674"
+    "fa81ddb73777bd2b57f4c902080308e306677fcb45fc3c780ae8908fa0144674",
+    "6b1950dd52e08bdd669c9ad6dc95886302150ad25d1a81a0b99b07b2668cf10f"
   ]
 }
