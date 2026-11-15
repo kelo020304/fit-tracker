@@ -1,6 +1,6 @@
 {
   "clientId": "agent_sync",
-  "updatedAt": 1794645349933,
+  "updatedAt": 1794717729954,
   "rows": [
     {
       "day": 1,
@@ -257,6 +257,25 @@
       "activity": "羽毛球 3h",
       "supplements": [],
       "notes": "89.60kg稳坐89！早餐2包子1牛奶，午餐金枪鱼三明治(无酱无芝士)，下午补水1杯(500ml)，今晚羽毛球3h备战！"
+    },
+    {
+      "day": 13,
+      "date": "2026-11-15",
+      "label": "Day 13 (周日)",
+      "amWeight": 89.25,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "馄饨 + 小笼包",
+      "lunch": "不吃午饭 (轻断食)",
+      "dinner": "",
+      "calories": 650,
+      "protein": 26,
+      "carbs": 65,
+      "fat": 28,
+      "water": 0,
+      "activity": "",
+      "supplements": [],
+      "notes": "89.25kg创历史新纪录！昨晚3小时羽毛球大见成效，早起净重直逼88kg！早餐经典馄饨小笼包，午餐执行轻断食。"
     }
   ],
   "records": [
@@ -515,6 +534,25 @@
       "activity": "羽毛球 3h",
       "supplements": [],
       "notes": "89.60kg稳坐89！早餐2包子1牛奶，午餐金枪鱼三明治(无酱无芝士)，下午补水1杯(500ml)，今晚羽毛球3h备战！"
+    },
+    {
+      "day": 13,
+      "date": "2026-11-15",
+      "label": "Day 13 (周日)",
+      "amWeight": 89.25,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "馄饨 + 小笼包",
+      "lunch": "不吃午饭 (轻断食)",
+      "dinner": "",
+      "calories": 650,
+      "protein": 26,
+      "carbs": 65,
+      "fat": 28,
+      "water": 0,
+      "activity": "",
+      "supplements": [],
+      "notes": "89.25kg创历史新纪录！昨晚3小时羽毛球大见成效，早起净重直逼88kg！早餐经典馄饨小笼包，午餐执行轻断食。"
     }
   ],
   "latestMealPhoto": {

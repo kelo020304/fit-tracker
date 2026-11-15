@@ -262,8 +262,8 @@
   <div class="md:hidden space-y-3" id="mobile-list"></div>
 
   <script>
-    const STORAGE_KEY = 'daily_fit_v12_cloud';
-    const META_KEY = 'daily_fit_v12_meta';
+    const STORAGE_KEY = 'daily_fit_v13_cloud';
+    const META_KEY = 'daily_fit_v13_meta';
     const CLIENT_ID = Math.random().toString(36).slice(2, 10);
     const STATE_SYNC_URL = 'https://ntfy.sh/captain_fit_state_db300ca2';
     const PERM_DB_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1a57ab09f2c79';
@@ -467,6 +467,22 @@
         protein: 49,
         carbs: 101,
         fat: 40
+      },
+      {
+        date: '2026-11-15',
+        amWeight: 89.25,
+        pmWeight: null,
+        hrv: null,
+        breakfast: '馄饨 + 小笼包',
+        lunch: '不吃午饭 (轻断食)',
+        dinner: '',
+        water: 0,
+        activity: '',
+        supplements: [],
+        calories: 650,
+        protein: 26,
+        carbs: 65,
+        fat: 28
       }
     ];
 
@@ -609,6 +625,12 @@
         if (!r.water || r.water < 1) r.water = 1;
         if (!r.calories || r.calories <= 525) { r.calories = 945; r.protein = 49; r.carbs = 101; r.fat = 40; }
         if (!Array.isArray(r.supplements)) r.supplements = [];
+      } else if (r.date === '2026-11-15') {
+        if (r.amWeight == null) r.amWeight = 89.25;
+        if (!r.breakfast) r.breakfast = '馄饨 + 小笼包';
+        if (!r.lunch) r.lunch = '不吃午饭 (轻断食)';
+        if (!r.calories || r.calories === 0) { r.calories = 650; r.protein = 26; r.carbs = 65; r.fat = 28; }
+        if (!Array.isArray(r.supplements)) r.supplements = [];
       } else {
         if (r.calories == null) r.calories = 0;
         if (r.protein == null) r.protein = 0;
@@ -633,22 +655,38 @@
       return !!(el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable));
     }
 
+    function mergeRowsWithDefault(targetRows) {
+      if (!Array.isArray(targetRows)) targetRows = [];
+      const map = new Map();
+      DEFAULT_DATA.forEach(r => map.set(r.date, JSON.parse(JSON.stringify(r))));
+      targetRows.forEach(r => {
+        if (!r || !r.date) return;
+        if (map.has(r.date)) {
+          const def = map.get(r.date);
+          map.set(r.date, Object.assign({}, def, r));
+        } else {
+          map.set(r.date, r);
+        }
+      });
+      const result = Array.from(map.values());
+      result.sort((a, b) => (a.date > b.date ? 1 : -1));
+      result.forEach(ensureRowMacros);
+      return result;
+    }
+
     function applyCloudPayload(data, forceApply) {
       if (!data) return false;
       if (!forceApply && data.clientId && data.clientId === CLIENT_ID) return false;
       if (!forceApply && isUserEditing()) return false;
       const cloudTime = Number(data.updatedAt) || 0;
-      if (forceApply || cloudTime > localUpdatedAt || !localUpdatedAt) {
+      if (forceApply || cloudTime > localUpdatedAt || !localUpdatedAt || (data.rows && data.rows.length > rows.length)) {
         if (Array.isArray(data.rows) && data.rows.length > 0) {
-          rows = data.rows.map(r => {
-            ensureRowMacros(r);
-            return r;
-          });
+          rows = mergeRowsWithDefault(data.rows);
         }
         if (data.latestMealPhoto && data.latestMealPhoto.title) {
           latestMealPhoto = Object.assign({}, latestMealPhoto, data.latestMealPhoto);
         }
-        localUpdatedAt = cloudTime;
+        localUpdatedAt = Math.max(cloudTime, localUpdatedAt || 0);
         localDirty = false;
         saveLocalCache();
         render();
@@ -678,8 +716,8 @@
         const savedRows = localStorage.getItem(STORAGE_KEY);
         const savedMeta = localStorage.getItem(META_KEY);
         if (savedRows) {
-          rows = JSON.parse(savedRows);
-          rows.forEach(ensureRowMacros);
+          const parsed = JSON.parse(savedRows);
+          rows = mergeRowsWithDefault(parsed);
         }
         if (savedMeta) {
           const m = JSON.parse(savedMeta);
@@ -694,6 +732,7 @@
       if (!rows || !rows.length) {
         rows = JSON.parse(JSON.stringify(DEFAULT_DATA));
       }
+      rows = mergeRowsWithDefault(rows);
       render();
       await smartSync(true);
       startRealtimeStream();
@@ -704,6 +743,18 @@
     }
 
     async function manualSyncButton() {
+      showStatus('正在全量拉取云端...');
+      try {
+        const res0 = await fetch('./data.json?_cb=' + Date.now(), { cache: 'no-store' });
+        if (res0.ok) {
+          const d = await res0.json();
+          if (d && Array.isArray(d.rows) && d.rows.length > 0) {
+            applyCloudPayload(d, true);
+            showStatus('✓ 已全量更新 (' + rows.length + ' 天)');
+            return;
+          }
+        }
+      } catch (e) {}
       await smartSync(false);
     }
 
@@ -712,7 +763,34 @@
       let bestData = null;
       let bestTime = 0;
 
-      // 1. Poll ntfy.sh with since=all and _cb= (CRITICAL: in ntfy.sh, &t= filters by title and returns 0 messages!)
+      // 0. Primary source of truth: fetch data.json directly from GitHub Pages
+      try {
+        const res0 = await fetch('./data.json?_cb=' + Date.now(), { cache: 'no-store' });
+        if (res0.ok) {
+          const obj0 = await res0.json();
+          if (obj0 && Array.isArray(obj0.rows) && obj0.rows.length > 0) {
+            const t0 = Number(obj0.updatedAt) || 1;
+            bestTime = t0;
+            bestData = obj0;
+          }
+        }
+      } catch (e) {}
+
+      // Fallback 0.1: Cross-origin raw github
+      if (!bestData) {
+        try {
+          const resRaw = await fetch('https://raw.githubusercontent.com/kelo020304/fit-tracker/master/data.json?_cb=' + Date.now(), { cache: 'no-store' });
+          if (resRaw.ok) {
+            const objRaw = await resRaw.json();
+            if (objRaw && Array.isArray(objRaw.rows) && objRaw.rows.length > 0) {
+              const tRaw = Number(objRaw.updatedAt) || 1;
+              if (tRaw > bestTime) { bestTime = tRaw; bestData = objRaw; }
+            }
+          }
+        } catch (e) {}
+      }
+
+      // 1. Poll ntfy.sh with since=all and _cb=
       try {
         const res = await fetch(STATE_SYNC_URL + '/json?poll=1&since=all&_cb=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
@@ -724,38 +802,53 @@
               if (env && env.message) {
                 const d = JSON.parse(env.message);
                 const t = Number(d.updatedAt) || 0;
-                if (t > bestTime) { bestTime = t; bestData = d; }
-                break;
+                if (t > bestTime && Array.isArray(d.rows) && d.rows.length >= (bestData ? bestData.rows.length : 1)) {
+                  bestTime = t;
+                  bestData = d;
+                  break;
+                }
               }
             } catch (e) {}
           }
         }
       } catch (e) {}
 
-      // 2. Also check permanent DB (restful-api.dev) in case ntfy 12h cache expired
+      // 2. Also check permanent DB (restful-api.dev)
       try {
         const res2 = await fetch(PERM_DB_URL + '?_cb=' + Date.now(), { cache: 'no-store' });
         if (res2.ok) {
           const obj = await res2.json();
           if (obj && obj.data) {
             const t2 = Number(obj.data.updatedAt) || 0;
-            if (t2 > bestTime) { bestTime = t2; bestData = obj.data; }
+            if (t2 > bestTime && Array.isArray(obj.data.rows) && obj.data.rows.length >= (bestData ? bestData.rows.length : 1)) {
+              bestTime = t2;
+              bestData = obj.data;
+            }
           }
         }
       } catch (e) {}
 
       if (bestData) {
+        if (bestData.rows && bestData.rows.length > rows.length) {
+          applyCloudPayload(bestData, true);
+          showStatus('✓ 云端已同步 (' + rows.length + ' 天)');
+          return;
+        }
         if (bestTime > localUpdatedAt || (bestTime === localUpdatedAt && !silent)) {
           applyCloudPayload(bestData, true);
           showStatus('✓ 云端已同步');
           return;
-        } else if (localUpdatedAt > bestTime) {
-          // Local data is newer than cloud! Push local to cloud instead of overwriting local with stale cloud data.
+        } else if (localUpdatedAt > bestTime && rows.length >= DEFAULT_DATA.length) {
           await saveLocal();
           return;
         }
       } else if (localDirty || !silent) {
-        await saveLocal();
+        if (rows.length >= DEFAULT_DATA.length) {
+          await saveLocal();
+        }
+        return;
+      }
+    }
         return;
       }
       showStatus('✓ 已是最新');
