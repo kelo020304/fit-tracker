@@ -276,215 +276,284 @@
     ];
 
     const DEFAULT_DATA = [
-      {
-        date: '2026-11-03',
-        amWeight: null,
-        pmWeight: 91.2,
-        hrv: null,
-        breakfast: '-',
-        lunch: '常规午餐',
-        dinner: '沙县鸡腿饭 + 2卤蛋',
-        water: 2,
-        activity: '羽毛球',
-        supplements: ['甘氨酸镁'],
-        calories: 1310,
-        protein: 78,
-        carbs: 125,
-        fat: 42
-      },
-      {
-        date: '2026-11-04',
-        amWeight: 90.8,
-        pmWeight: 91.7,
-        hrv: 42,
-        breakfast: '2茶叶蛋 + 光明优倍',
-        lunch: 'Subway 照烧鸡加蛋',
-        dinner: '蛋白粉 + 食堂奥尔良鸡排豆腐双蔬饭',
-        water: 4,
-        activity: '深蹲 + 弓箭步',
-        supplements: ['蛋白粉', '甘氨酸镁'],
-        calories: 1278,
-        protein: 110,
-        carbs: 96,
-        fat: 41
-      },
-      {
-        date: '2026-11-05',
-        amWeight: 91.25,
-        pmWeight: 91.65,
-        hrv: 68,
-        breakfast: '2茶叶蛋 + 光明优倍',
-        lunch: 'Subway 照烧鸡加蛋',
-        dinner: '铁板烧 (未吃炒饭)',
-        water: 4.5,
-        activity: '骑车 9.9km (40min)',
-        supplements: [],
-        calories: 1115,
-        protein: 93,
-        carbs: 66,
-        fat: 52
-      },
-      {
-        date: '2026-11-06',
-        amWeight: 90.95,
-        pmWeight: 91.05,
-        hrv: 51,
-        breakfast: '2茶叶蛋 优倍220ml',
-        lunch: 'Subway (不要芝士)',
-        dinner: '蛋白粉 + Subway鸡排 + 睡前1蛋1奶1把蓝莓',
-        water: 4.5,
-        activity: '早晚骑车 22.6km (110min)',
-        supplements: ['鱼油', '蛋白粉', '甘氨酸镁'],
-        calories: 1273,
-        protein: 109,
-        carbs: 118,
-        fat: 39
-      },
-      {
-        date: '2026-11-07',
-        amWeight: 90.75,
-        pmWeight: 90.25,
-        hrv: 71,
-        breakfast: '2茶叶蛋 优倍220ml',
-        lunch: 'Subway 照烧鸡 (无酱)',
-        dinner: '下午蛋白粉 + 金枪鱼&黑胡椒牛排百味卷(无酱)',
-        water: 6.5,
-        activity: '羽毛球 3h 补蓝莓 一个鸡蛋',
-        supplements: ['鱼油', '蛋白粉', '甘氨酸镁'],
-        calories: 1548,
-        protein: 122,
-        carbs: 141,
-        fat: 54
-      },
-      {
-        date: '2026-11-08',
-        amWeight: 89.7,
-        pmWeight: 90.55,
-        hrv: null,
-        breakfast: '2个肉包 + 1个鸡蛋',
-        lunch: 'Subway 原切鸡排 (无酱)',
-        dinner: '蛋白粉 + Subway金枪鱼 + 睡前1蛋1奶',
-        water: 3.5,
-        activity: '',
-        supplements: ['茶氨酸', '鱼油', '蛋白粉'],
-        calories: 1533,
-        protein: 109,
-        carbs: 146,
-        fat: 58
-      },
-      {
-        date: '2026-11-09',
-        amWeight: 90.2,
-        pmWeight: 90.4,
-        hrv: 69,
-        breakfast: '2茶叶蛋 优倍220ml + 咖啡',
-        lunch: 'Subway (无酱)',
-        dinner: '下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2煎豆腐',
-        water: 3,
-        activity: '',
-        supplements: ['茶氨酸', '鱼油', '蛋白粉', '甘氨酸镁'],
-        calories: 1360,
-        protein: 113,
-        carbs: 102,
-        fat: 56
-      },
-      {
-        date: '2026-11-10',
-        amWeight: 90.05,
-        pmWeight: null,
-        hrv: null,
-        breakfast: 'Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡',
-        lunch: '红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭',
-        dinner: '下午蛋白粉 + KFC秘汁全鸡×2 (🎉首周放纵餐)',
-        water: 2,
-        activity: '开车去杭州 (出差充能日)',
-        supplements: ['茶氨酸', '蛋白粉'],
-        calories: 2390,
-        protein: 225,
-        carbs: 134,
-        fat: 105
-      },
-      {
-        date: '2026-11-11',
-        amWeight: null,
-        pmWeight: 90.2,
-        hrv: null,
-        breakfast: '-',
-        lunch: 'Kiro 金枪鱼三明治',
-        dinner: 'KFC 吮指原味鸡 × 4块 + 睡前1奶',
-        water: 3,
-        activity: '杭州出差干活 + 开车回上海',
-        supplements: [],
-        calories: 1545,
-        protein: 114,
-        carbs: 88,
-        fat: 84
-      },
-      {
-        date: '2026-11-12',
-        amWeight: 89.9,
-        pmWeight: 90.2,
-        hrv: null,
-        breakfast: '-',
-        lunch: '金枪鱼三明治 + 咖啡',
-        dinner: '下午蛋白粉咖啡 + KFC鸡翅&1蛋挞',
-        water: 1,
-        activity: '公司工作',
-        supplements: ['茶氨酸', '蛋白粉'],
-        calories: 940,
-        protein: 72,
-        carbs: 58,
-        fat: 42
-      },
-      {
-        date: '2026-11-13',
-        amWeight: 89.55,
-        pmWeight: 90.1,
-        hrv: null,
-        breakfast: '燕麦奶 + 咖啡',
-        lunch: 'Subway 金枪鱼(无芝士无酱)',
-        dinner: 'Biangbiang面',
-        water: 2,
-        activity: '',
-        supplements: [],
-        calories: 1180,
-        protein: 50,
-        carbs: 144,
-        fat: 47
-      },
-      {
-        date: '2026-11-14',
-        amWeight: 89.6,
-        pmWeight: null,
-        hrv: null,
-        breakfast: '2个包子 + 1盒牛奶',
-        lunch: '金枪鱼三明治(无酱无芝士)',
-        dinner: '',
-        water: 1,
-        activity: '羽毛球 3h',
-        supplements: [],
-        calories: 945,
-        protein: 49,
-        carbs: 101,
-        fat: 40
-      },
-      {
-        date: '2026-11-15',
-        amWeight: 89.25,
-        pmWeight: null,
-        hrv: null,
-        breakfast: '馄饨 + 小笼包',
-        lunch: '不吃午饭 (轻断食)',
-        dinner: '',
-        water: 0,
-        activity: '',
-        supplements: [],
-        calories: 650,
-        protein: 26,
-        carbs: 65,
-        fat: 28
-      }
-    ];
+  {
+    "day": 1,
+    "date": "2026-11-03",
+    "label": "Day 1 (周二)",
+    "amWeight": null,
+    "pmWeight": 91.2,
+    "hrv": null,
+    "breakfast": "-",
+    "lunch": "常规午餐",
+    "dinner": "沙县鸡腿饭 + 2卤蛋",
+    "calories": 1310,
+    "protein": 78,
+    "carbs": 125,
+    "fat": 42,
+    "water": 2,
+    "activity": "羽毛球",
+    "supplements": [
+      "甘氨酸镁"
+    ],
+    "notes": "首日建档，晚间体重 91.2kg"
+  },
+  {
+    "day": 2,
+    "date": "2026-11-04",
+    "label": "Day 2 (周三)",
+    "amWeight": 90.8,
+    "pmWeight": 91.7,
+    "hrv": 42,
+    "breakfast": "2茶叶蛋 + 光明优倍",
+    "lunch": "Subway 照烧鸡加蛋",
+    "dinner": "蛋白粉 + 食堂奥尔良鸡排豆腐双蔬饭",
+    "calories": 1278,
+    "protein": 110,
+    "carbs": 96,
+    "fat": 41,
+    "water": 4,
+    "activity": "深蹲 + 弓箭步",
+    "supplements": [
+      "蛋白粉",
+      "甘氨酸镁"
+    ],
+    "notes": "高蛋白110g达标"
+  },
+  {
+    "day": 3,
+    "date": "2026-11-05",
+    "label": "Day 3 (周四)",
+    "amWeight": 91.25,
+    "pmWeight": 91.65,
+    "hrv": 68,
+    "breakfast": "2茶叶蛋 + 光明优倍",
+    "lunch": "Subway 照烧鸡加蛋",
+    "dinner": "铁板烧 (未吃炒饭)",
+    "calories": 1115,
+    "protein": 93,
+    "carbs": 66,
+    "fat": 52,
+    "water": 4.5,
+    "activity": "骑车 9.9km (40min)",
+    "supplements": [],
+    "notes": "HRV飙升至68ms，骑行9.9km"
+  },
+  {
+    "day": 4,
+    "date": "2026-11-06",
+    "label": "Day 4 (周五)",
+    "amWeight": 90.95,
+    "pmWeight": 91.05,
+    "hrv": 51,
+    "breakfast": "2茶叶蛋 优倍220ml",
+    "lunch": "Subway (不要芝士)",
+    "dinner": "蛋白粉 + Subway鸡排 + 睡前1蛋1奶1把蓝莓",
+    "calories": 1273,
+    "protein": 109,
+    "carbs": 118,
+    "fat": 39,
+    "water": 4.5,
+    "activity": "早晚骑车 22.6km (110min)",
+    "supplements": [
+      "鱼油",
+      "蛋白粉",
+      "甘氨酸镁"
+    ],
+    "notes": "早晚单车22.6km(110min)，早晚体重差仅0.1kg"
+  },
+  {
+    "day": 5,
+    "date": "2026-11-07",
+    "label": "Day 5 (周六)",
+    "amWeight": 90.75,
+    "pmWeight": 90.25,
+    "hrv": 71,
+    "breakfast": "2茶叶蛋 优倍220ml",
+    "lunch": "Subway 照烧鸡 (无酱)",
+    "dinner": "下午蛋白粉 + 金枪鱼&黑胡椒牛排百味卷(无酱)",
+    "calories": 1548,
+    "protein": 122,
+    "carbs": 141,
+    "fat": 54,
+    "water": 6.5,
+    "activity": "羽毛球 3h 补蓝莓 一个鸡蛋",
+    "supplements": [
+      "鱼油",
+      "蛋白粉",
+      "甘氨酸镁"
+    ],
+    "notes": "早起90.75kg，3h羽毛球后晚间体重直接掉到90.25kg！饮水6.5杯(3250ml)！"
+  },
+  {
+    "day": 6,
+    "date": "2026-11-08",
+    "label": "Day 6 (周日)",
+    "amWeight": 89.7,
+    "pmWeight": 90.55,
+    "hrv": null,
+    "breakfast": "2个肉包 + 1个鸡蛋",
+    "lunch": "Subway 原切鸡排 (无酱)",
+    "dinner": "蛋白粉 + Subway金枪鱼 + 睡前1蛋1奶",
+    "calories": 1533,
+    "protein": 109,
+    "carbs": 146,
+    "fat": 58,
+    "water": 3.5,
+    "activity": "",
+    "supplements": [
+      "茶氨酸",
+      "鱼油",
+      "蛋白粉"
+    ],
+    "notes": "早起89.7kg破90大关！晚间站直90.55kg！晚饭蛋白粉+Subway金枪鱼+睡前1蛋1奶(1533kcal/109g蛋白)！"
+  },
+  {
+    "day": 7,
+    "date": "2026-11-09",
+    "label": "Day 7 (周一)",
+    "amWeight": 90.2,
+    "pmWeight": 90.4,
+    "hrv": 69,
+    "breakfast": "2茶叶蛋 优倍220ml + 咖啡",
+    "lunch": "Subway (无酱)",
+    "dinner": "下午蛋白粉 + Subway鸡蛋金枪鱼双拼 + 夜宵1蛋2煎豆腐",
+    "calories": 1360,
+    "protein": 113,
+    "carbs": 102,
+    "fat": 56,
+    "water": 3,
+    "activity": "",
+    "supplements": [
+      "茶氨酸",
+      "鱼油",
+      "蛋白粉",
+      "甘氨酸镁"
+    ],
+    "notes": "早起90.20kg，晚间仅90.40kg(早晚差仅+0.2kg)！12-13点HRV 69ms！四大补剂全满贯，累计1360kcal/113g蛋白。"
+  },
+  {
+    "day": 8,
+    "date": "2026-11-10",
+    "label": "Day 8 (周二)",
+    "amWeight": 90.05,
+    "pmWeight": null,
+    "hrv": null,
+    "breakfast": "Subway热狗肠蛋方(去芝士) + 热牛奶 + 咖啡",
+    "lunch": "红烧鸡腿块 + 烧嫩豆腐 + 榄菜四季豆盖饭",
+    "dinner": "下午蛋白粉 + KFC秘汁全鸡×2 (🎉首周放纵餐)",
+    "calories": 2390,
+    "protein": 225,
+    "carbs": 134,
+    "fat": 105,
+    "water": 2,
+    "activity": "开车去杭州 (出差充能日)",
+    "supplements": [
+      "茶氨酸",
+      "蛋白粉"
+    ],
+    "notes": "🎉第一周官方放纵充能日(Refeed Day)！连续7天严格控卡+杭州长途自驾出差，全天2390kcal仍低于出差总消耗(2600+kcal)，蛋白质拉满225g！"
+  },
+  {
+    "day": 9,
+    "date": "2026-11-11",
+    "label": "Day 9 (周三)",
+    "amWeight": null,
+    "pmWeight": 90.2,
+    "hrv": null,
+    "breakfast": "-",
+    "lunch": "Kiro 金枪鱼三明治",
+    "dinner": "KFC 吮指原味鸡 × 4块 + 睡前1奶",
+    "calories": 1545,
+    "protein": 114,
+    "carbs": 88,
+    "fat": 84,
+    "water": 3,
+    "activity": "杭州出差干活 + 开车回上海",
+    "supplements": [],
+    "notes": "晚间体重直接创非运动脱水日新低90.20kg！全天1545kcal/114g蛋白，饮水3瓶(1500ml)，明早稳破90！"
+  },
+  {
+    "day": 10,
+    "date": "2026-11-12",
+    "label": "Day 10 (周四)",
+    "amWeight": 89.9,
+    "pmWeight": 90.2,
+    "hrv": null,
+    "breakfast": "-",
+    "lunch": "金枪鱼三明治 + 咖啡",
+    "dinner": "下午蛋白粉咖啡 + KFC鸡翅&1蛋挞",
+    "calories": 940,
+    "protein": 72,
+    "carbs": 58,
+    "fat": 42,
+    "water": 1,
+    "activity": "公司工作",
+    "supplements": [
+      "茶氨酸",
+      "蛋白粉"
+    ],
+    "notes": "早起89.90kg破90！晚间仅90.20kg（早晚差仅+0.3kg）！MT请客克制未吃汉堡，全天仅940kcal，明早预计下探89.6-89.7kg！"
+  },
+  {
+    "day": 11,
+    "date": "2026-11-13",
+    "label": "Day 11 (周五)",
+    "amWeight": 89.55,
+    "pmWeight": 90.1,
+    "hrv": null,
+    "breakfast": "燕麦奶 + 咖啡",
+    "lunch": "Subway 金枪鱼(无芝士无酱)",
+    "dinner": "Biangbiang面",
+    "calories": 1180,
+    "protein": 50,
+    "carbs": 144,
+    "fat": 47,
+    "water": 2,
+    "activity": "",
+    "supplements": [],
+    "notes": "早起89.55kg创历史新低！晚餐Biangbiang面，晚间体重仅90.10kg创晚间历史新低（比周三周四90.2kg再降0.1kg）！明早破89.5kg！"
+  },
+  {
+    "day": 12,
+    "date": "2026-11-14",
+    "label": "Day 12 (周六)",
+    "amWeight": 89.6,
+    "pmWeight": null,
+    "hrv": null,
+    "breakfast": "2个包子 + 1盒牛奶",
+    "lunch": "金枪鱼三明治(无酱无芝士)",
+    "dinner": "",
+    "calories": 945,
+    "protein": 49,
+    "carbs": 101,
+    "fat": 40,
+    "water": 1,
+    "activity": "羽毛球 3h",
+    "supplements": [],
+    "notes": "89.60kg稳坐89！早餐2包子1牛奶，午餐金枪鱼三明治(无酱无芝士)，下午补水1杯(500ml)，今晚羽毛球3h备战！"
+  },
+  {
+    "day": 13,
+    "date": "2026-11-15",
+    "label": "Day 13 (周日)",
+    "amWeight": 89.25,
+    "pmWeight": null,
+    "hrv": null,
+    "breakfast": "馄饨 + 小笼包",
+    "lunch": "不吃午饭 (轻断食)",
+    "dinner": "Subway 照烧鸡三明治 + 单独一份照烧鸡（无芝士、无额外酱）+ 蛋白粉（营养估算）",
+    "calories": 1270,
+    "protein": 91,
+    "carbs": 130,
+    "fat": 39,
+    "water": 1.0,
+    "activity": "",
+    "supplements": [
+      "蛋白粉"
+    ],
+    "notes": "89.25kg创历史新纪录！昨晚3小时羽毛球大见成效，早起净重直逼88kg！早餐经典馄饨小笼包，午餐执行轻断食。；晚餐估算暂按15厘米三明治、额外1份照烧鸡、蛋白粉1份约30g冲水；实际尺寸与粉量未确认。饮水新增1杯500ml。；飞书新增餐食营养为估算值"
+  }
+];
 
     let rows = [];
     let localUpdatedAt = 0;
@@ -696,14 +765,43 @@
       return false;
     }
 
+    // Full state exceeds ntfy's 4096-byte message limit. The local Codex bridge
+    // sends bounded zlib/base64 chunks; legacy plain JSON remains supported.
+    const stateChunks = new Map();
+    async function decodeStateMessage(message) {
+      const obj = JSON.parse(message);
+      if (obj.format !== 'fit-state-zlib-v1') return obj;
+      if (!Number.isSafeInteger(obj.revision) || !Number.isInteger(obj.part) ||
+          !Number.isInteger(obj.total) || obj.total < 1 || obj.total > 256 ||
+          obj.part < 0 || obj.part >= obj.total || typeof obj.data !== 'string' ||
+          obj.data.length > 3000) return null;
+      const key = String(obj.revision);
+      let bundle = stateChunks.get(key);
+      if (!bundle) {
+        if (stateChunks.size >= 32) stateChunks.delete(stateChunks.keys().next().value);
+        bundle = { total: obj.total, parts: new Map() };
+        stateChunks.set(key, bundle);
+      }
+      if (bundle.total !== obj.total) return null;
+      bundle.parts.set(obj.part, obj.data);
+      if (bundle.parts.size !== bundle.total) return null;
+      let encoded = '';
+      for (let i = 0; i < bundle.total; i++) encoded += bundle.parts.get(i);
+      stateChunks.delete(key);
+      const bytes = Uint8Array.from(atob(encoded), c => c.charCodeAt(0));
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate'));
+      const decoded = JSON.parse(await new Response(stream).text());
+      return decoded.updatedAt === obj.revision ? decoded : null;
+    }
+
     function startRealtimeStream() {
       try {
         const es = new EventSource(STATE_SYNC_URL + '/sse');
-        es.onmessage = (ev) => {
+        es.onmessage = async (ev) => {
           try {
             const env = JSON.parse(ev.data);
             if (env && env.message) {
-              const data = JSON.parse(env.message);
+              const data = await decodeStateMessage(env.message);
               applyCloudPayload(data, false);
             }
           } catch (e) {}
@@ -800,7 +898,8 @@
             try {
               const env = JSON.parse(lines[i]);
               if (env && env.message) {
-                const d = JSON.parse(env.message);
+                const d = await decodeStateMessage(env.message);
+                if (!d) continue;
                 const t = Number(d.updatedAt) || 0;
                 if (t > bestTime && Array.isArray(d.rows) && d.rows.length >= (bestData ? bestData.rows.length : 1)) {
                   bestTime = t;

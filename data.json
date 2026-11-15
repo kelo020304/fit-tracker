@@ -1,6 +1,6 @@
 {
-  "clientId": "agent_sync",
-  "updatedAt": 1794717729954,
+  "clientId": "captain_feishu_codex",
+  "updatedAt": 1794736016355,
   "rows": [
     {
       "day": 1,
@@ -267,15 +267,17 @@
       "hrv": null,
       "breakfast": "馄饨 + 小笼包",
       "lunch": "不吃午饭 (轻断食)",
-      "dinner": "",
-      "calories": 650,
-      "protein": 26,
-      "carbs": 65,
-      "fat": 28,
-      "water": 0,
+      "dinner": "Subway 照烧鸡三明治 + 单独一份照烧鸡（无芝士、无额外酱）+ 蛋白粉（营养估算）",
+      "calories": 1270,
+      "protein": 91,
+      "carbs": 130,
+      "fat": 39,
+      "water": 1.0,
       "activity": "",
-      "supplements": [],
-      "notes": "89.25kg创历史新纪录！昨晚3小时羽毛球大见成效，早起净重直逼88kg！早餐经典馄饨小笼包，午餐执行轻断食。"
+      "supplements": [
+        "蛋白粉"
+      ],
+      "notes": "89.25kg创历史新纪录！昨晚3小时羽毛球大见成效，早起净重直逼88kg！早餐经典馄饨小笼包，午餐执行轻断食。；晚餐估算暂按15厘米三明治、额外1份照烧鸡、蛋白粉1份约30g冲水；实际尺寸与粉量未确认。饮水新增1杯500ml。；飞书新增餐食营养为估算值"
     }
   ],
   "records": [
@@ -544,15 +546,17 @@
       "hrv": null,
       "breakfast": "馄饨 + 小笼包",
       "lunch": "不吃午饭 (轻断食)",
-      "dinner": "",
-      "calories": 650,
-      "protein": 26,
-      "carbs": 65,
-      "fat": 28,
-      "water": 0,
+      "dinner": "Subway 照烧鸡三明治 + 单独一份照烧鸡（无芝士、无额外酱）+ 蛋白粉（营养估算）",
+      "calories": 1270,
+      "protein": 91,
+      "carbs": 130,
+      "fat": 39,
+      "water": 1.0,
       "activity": "",
-      "supplements": [],
-      "notes": "89.25kg创历史新纪录！昨晚3小时羽毛球大见成效，早起净重直逼88kg！早餐经典馄饨小笼包，午餐执行轻断食。"
+      "supplements": [
+        "蛋白粉"
+      ],
+      "notes": "89.25kg创历史新纪录！昨晚3小时羽毛球大见成效，早起净重直逼88kg！早餐经典馄饨小笼包，午餐执行轻断食。；晚餐估算暂按15厘米三明治、额外1份照烧鸡、蛋白粉1份约30g冲水；实际尺寸与粉量未确认。饮水新增1杯500ml。；飞书新增餐食营养为估算值"
     }
   ],
   "latestMealPhoto": {
@@ -566,5 +570,8 @@
     "carbs": 61,
     "fat": 24,
     "note": "鸡腿肉+嫩豆腐双蛋白达41g，加上底层米饭共约630 kcal！Day 8 早午两餐累计 1,120 kcal / 蛋白质 67g！"
-  }
+  },
+  "_feishuMessageHashes": [
+    "fa81ddb73777bd2b57f4c902080308e306677fcb45fc3c780ae8908fa0144674"
+  ]
 }
