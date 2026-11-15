@@ -74,6 +74,17 @@
     </div>
   </div>
 
+  <form id="weight-form" onsubmit="saveWeightEntry(event)" class="bg-white border border-slate-200 rounded-2xl p-3 space-y-2">
+    <div class="font-semibold text-sm">记录体重 <span class="font-normal text-xs text-slate-500">可补记往日</span></div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+      <label class="text-xs">日期<input id="weight-date" type="date" required class="border border-slate-200 rounded-lg p-2 block" /></label>
+      <label class="text-xs">时段<select id="weight-period" class="border border-slate-200 rounded-lg p-2 block w-full"><option value="amWeight">早起</option><option value="pmWeight">晚间</option></select></label>
+      <label class="text-xs">体重（kg）<input id="weight-value" type="number" inputmode="decimal" min="20" max="350" step="0.01" required placeholder="例如 89.60" class="border border-slate-200 rounded-lg p-2 block" /></label>
+      <button type="submit" class="bg-slate-900 text-white rounded-lg p-2 self-end">保存体重</button>
+    </div>
+    <p id="weight-feedback" role="status" aria-live="polite" class="text-xs text-slate-500">选择日期和时段，输入后点保存。</p>
+  </form>
+
   <!-- 6 Symmetrical Summary Cards: 3x2 on iPhone, 1x6 on Widescreen PC -->
   <div class="grid grid-cols-2 lg:grid-cols-6 gap-2.5 md:gap-3.5">
     <!-- 1. Morning Weight -->
@@ -83,7 +94,7 @@
         <span class="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600 font-semibold text-[10px] whitespace-nowrap" id="stat-diff">↓ 0.4</span>
       </div>
       <div class="mt-1.5 flex items-baseline justify-between gap-1">
-        <input type="number" inputmode="decimal" step="0.1" id="stat-am" value="90.8" placeholder="点此填"
+        <input type="number" inputmode="decimal" step="0.01" id="stat-am" value="90.8" placeholder="点此填"
           onchange="updateTodayField('amWeight', this.value)"
           class="flex-1 text-xl md:text-2xl font-bold text-slate-900 tracking-tight placeholder:text-xs placeholder:font-normal placeholder:text-slate-300" />
         <span class="text-xs text-slate-400 shrink-0">kg</span>
@@ -97,7 +108,7 @@
         <span class="text-slate-400 text-[10px] whitespace-nowrap" id="stat-pm-sub">昨 91.2</span>
       </div>
       <div class="mt-1.5 flex items-baseline justify-between gap-1">
-        <input type="number" inputmode="decimal" step="0.1" id="stat-pm" value="" placeholder="点此填"
+        <input type="number" inputmode="decimal" step="0.01" id="stat-pm" value="" placeholder="点此填"
           onchange="updateTodayField('pmWeight', this.value)"
           class="flex-1 text-xl md:text-2xl font-bold text-slate-900 tracking-tight placeholder:text-sm placeholder:font-medium placeholder:text-blue-500/70" />
         <span class="text-xs text-slate-400 shrink-0">kg</span>
@@ -831,6 +842,7 @@
         rows = JSON.parse(JSON.stringify(DEFAULT_DATA));
       }
       rows = mergeRowsWithDefault(rows);
+      document.getElementById('weight-date').value = new Date().toLocaleDateString('en-CA', {timeZone: 'Asia/Shanghai'});
       render();
       await smartSync(true);
       startRealtimeStream();
@@ -841,18 +853,11 @@
     }
 
     async function manualSyncButton() {
-      showStatus('正在全量拉取云端...');
-      try {
-        const res0 = await fetch('./data.json?_cb=' + Date.now(), { cache: 'no-store' });
-        if (res0.ok) {
-          const d = await res0.json();
-          if (d && Array.isArray(d.rows) && d.rows.length > 0) {
-            applyCloudPayload(d, true);
-            showStatus('✓ 已全量更新 (' + rows.length + ' 天)');
-            return;
-          }
-        }
-      } catch (e) {}
+      // Never replace unsent edits with the older static data.json.
+      if (localDirty) {
+        await saveLocal();
+        return;
+      }
       await smartSync(false);
     }
 
@@ -981,9 +986,33 @@
       });
     }
 
+    async function publishState(payload) {
+      const raw = JSON.stringify(payload);
+      const bytes = new TextEncoder().encode(raw);
+      let messages = [raw];
+      if (bytes.length > 4000) {
+        const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate'));
+        const packed = new Uint8Array(await new Response(stream).arrayBuffer());
+        let binary = '';
+        for (const byte of packed) binary += String.fromCharCode(byte);
+        const encoded = btoa(binary);
+        const total = Math.ceil(encoded.length / 3000);
+        messages = Array.from({length: total}, (_, part) => JSON.stringify({
+          format: 'fit-state-zlib-v1', revision: payload.updatedAt,
+          part, total, data: encoded.slice(part * 3000, (part + 1) * 3000)
+        }));
+      }
+      for (const message of messages) {
+        const response = await fetch(STATE_SYNC_URL, {method: 'POST', body: message});
+        if (!response.ok) throw new Error('State publish failed');
+      }
+      return true;
+    }
+
     async function saveLocal() {
       localUpdatedAt = Date.now();
       localDirty = true;
+      const revision = localUpdatedAt;
       saveLocalCache();
       showStatus('正在保存...');
       const cleanRows = rows.map(r => ({
@@ -1029,23 +1058,25 @@
 
       try {
         const [r1, r2] = await Promise.allSettled([
-          fetch(STATE_SYNC_URL, { method: 'POST', body: JSON.stringify(fullPayload) }),
+          publishState(fullPayload),
           fetch(PERM_DB_URL, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: 'captain-fit-tracker', data: permPayload })
           })
         ]);
-        if ((r1.status === 'fulfilled' && r1.value.ok) || (r2.status === 'fulfilled' && r2.value.ok)) {
-          localDirty = false;
+        if (r1.status === 'fulfilled' && r1.value === true) {
+          if (localUpdatedAt === revision) localDirty = false;
           saveLocalCache();
           showStatus('✓ 已实时同步云端');
+          return true;
         } else {
           showStatus('✓ 已存本机');
         }
       } catch (e) {
         showStatus('✓ 已存本机');
       }
+      return false;
     }
 
     async function updateMealPhotoField(field, val) {
@@ -1312,6 +1343,28 @@
       saveLocal();
     }
 
+    async function saveWeightEntry(event) {
+      event.preventDefault();
+      const date = document.getElementById('weight-date').value;
+      const field = document.getElementById('weight-period').value;
+      const value = Number(document.getElementById('weight-value').value);
+      const feedback = document.getElementById('weight-feedback');
+      const record = rows.find(r => r.date === date);
+      if (!record) {
+        feedback.textContent = '此日期尚未建档，请先新增对应日期。';
+        return;
+      }
+      if (!['amWeight', 'pmWeight'].includes(field) || !Number.isFinite(value) || value < 20 || value > 350) {
+        feedback.textContent = '请输入 20–350 kg 范围内的体重。';
+        return;
+      }
+      record[field] = value;
+      render();
+      feedback.textContent = '正在保存…';
+      const sent = await saveLocal();
+      feedback.textContent = `${date} ${field === 'amWeight' ? '早起' : '晚间'} ${value.toFixed(2)} kg：${sent ? '已保存并发送云端' : '已存本机，云端待重试（点同步）'}`;
+    }
+
     function updateTodayField(field, val) {
       if (!rows || !rows.length) return;
       updateField(rows.length - 1, field, val);
@@ -1454,12 +1507,12 @@
             ${i >= 2 ? `<button onclick="deleteRow(${i})" class="ml-1 text-[10px] text-rose-500 hover:underline">删</button>` : ''}
           </td>
           <td class="py-3 px-2">
-            <input type="number" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
+            <input type="number" step="0.01" value="${r.amWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'amWeight', this.value)"
               class="w-14 font-bold text-emerald-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
           </td>
           <td class="py-3 px-2">
-            <input type="number" step="0.1" value="${r.pmWeight ?? ''}" placeholder="-"
+            <input type="number" step="0.01" value="${r.pmWeight ?? ''}" placeholder="-"
               onchange="updateField(${i}, 'pmWeight', this.value)"
               class="w-14 font-bold text-blue-600 placeholder-slate-300 focus:bg-slate-100 rounded-md px-1 py-0.5" />
           </td>
@@ -1528,13 +1581,13 @@
           <div class="grid grid-cols-3 gap-2">
             <label class="bg-slate-50 px-2.5 py-2 rounded-xl border border-slate-100 block">
               <div class="text-[10px] text-slate-400 whitespace-nowrap">🌅 早起 (kg)</div>
-              <input type="number" inputmode="decimal" step="0.1" value="${r.amWeight ?? ''}" placeholder="-"
+              <input type="number" inputmode="decimal" step="0.01" value="${r.amWeight ?? ''}" placeholder="-"
                 onchange="updateField(${i}, 'amWeight', this.value)"
                 class="w-full font-bold text-emerald-600 text-sm mt-0.5" />
             </label>
             <label class="bg-slate-50 px-2.5 py-2 rounded-xl border border-slate-100 block">
               <div class="text-[10px] text-slate-400 whitespace-nowrap">🌙 睡前 (kg)</div>
-              <input type="number" inputmode="decimal" step="0.1" value="${r.pmWeight ?? ''}" placeholder="-"
+              <input type="number" inputmode="decimal" step="0.01" value="${r.pmWeight ?? ''}" placeholder="-"
                 onchange="updateField(${i}, 'pmWeight', this.value)"
                 class="w-full font-bold text-blue-600 text-sm mt-0.5" />
             </label>
