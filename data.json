@@ -1,6 +1,6 @@
 {
   "clientId": "captain_feishu_codex",
-  "updatedAt": 1794758917790,
+  "updatedAt": 1794795063411,
   "rows": [
     {
       "day": 1,
@@ -278,6 +278,25 @@
         "蛋白粉"
       ],
       "notes": "89.25kg创历史新纪录！昨晚3小时羽毛球大见成效，早起净重直逼88kg！早餐经典馄饨小笼包，午餐执行轻断食。；晚餐估算暂按15厘米三明治、额外1份照烧鸡、蛋白粉1份约30g冲水；实际尺寸与粉量未确认。饮水新增1杯500ml。；飞书新增餐食营养为估算值"
+    },
+    {
+      "day": 14,
+      "date": "2026-11-16",
+      "label": "Day 14 (周一)",
+      "amWeight": 89.7,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "热干面（暂按普通1碗，份量及芝麻酱用量未知，营养估算）",
+      "lunch": "",
+      "dinner": "",
+      "calories": 600,
+      "protein": 16,
+      "carbs": 80,
+      "fat": 24,
+      "water": 0.0,
+      "activity": "",
+      "supplements": [],
+      "notes": "早餐营养暂估600 kcal；未确认份量、芝麻酱及额外配料，后续可修正。；飞书新增餐食营养为估算值"
     }
   ],
   "records": [
@@ -557,6 +576,25 @@
         "蛋白粉"
       ],
       "notes": "89.25kg创历史新纪录！昨晚3小时羽毛球大见成效，早起净重直逼88kg！早餐经典馄饨小笼包，午餐执行轻断食。；晚餐估算暂按15厘米三明治、额外1份照烧鸡、蛋白粉1份约30g冲水；实际尺寸与粉量未确认。饮水新增1杯500ml。；飞书新增餐食营养为估算值"
+    },
+    {
+      "day": 14,
+      "date": "2026-11-16",
+      "label": "Day 14 (周一)",
+      "amWeight": 89.7,
+      "pmWeight": null,
+      "hrv": null,
+      "breakfast": "热干面（暂按普通1碗，份量及芝麻酱用量未知，营养估算）",
+      "lunch": "",
+      "dinner": "",
+      "calories": 600,
+      "protein": 16,
+      "carbs": 80,
+      "fat": 24,
+      "water": 0.0,
+      "activity": "",
+      "supplements": [],
+      "notes": "早餐营养暂估600 kcal；未确认份量、芝麻酱及额外配料，后续可修正。；飞书新增餐食营养为估算值"
     }
   ],
   "latestMealPhoto": {
@@ -578,6 +616,7 @@
     "4773eb7aafe30d98dc4499610461affee83ee614c88f618338ceaad3788cdd23",
     "eb09a3e9819ba88d112eb5690c5ca4c76574213e1e96a5adddf1e9c133288958",
     "4a2bdc0040b87cf259b7895e45860ee293d2972bdd3ae36f604fc3b12809673f",
-    "d9783173a3edda57032093c3d84e8e7aaeeb166c41ea0b2d8af841c4f9bd3726"
+    "d9783173a3edda57032093c3d84e8e7aaeeb166c41ea0b2d8af841c4f9bd3726",
+    "b5825906584624e866f108552820ebb48e6f58be294e61c62a92025e22ca51c5"
   ]
 }
